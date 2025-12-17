@@ -1,0 +1,523 @@
+[
+  {
+    "id": "CAS-2023-001",
+    "status": "PENDING",
+    "submissionDate": "2023-10-26",
+    "patient": {
+      "id": "PAT-8842",
+      "birthDate": "1965-05-12",
+      "civilStatus": "Marié",
+      "job": "Maçon",
+      "bloodGroup": "O+",
+      "gender": "M",
+      "vitals": {
+        "temperature": 37.2,
+        "pulse": 95,
+        "weight": 88,
+        "height": 178,
+        "bloodPressure": "160/95",
+        "heartRate": 98
+      }
+    },
+    "consultation": {
+      "reason": "Douleur thoracique constrictive",
+      "symptoms": [
+        {
+          "location": "Rétrosternale",
+          "startDate": "2023-10-26T08:00:00",
+          "frequency": "Continue",
+          "duration": "4 heures",
+          "intensity": 9,
+          "triggerActivity": "Effort physique intense (port de charge)"
+        },
+        {
+          "location": "Bras gauche",
+          "startDate": "2023-10-26T08:30:00",
+          "frequency": "Intermittente",
+          "duration": "10 min",
+          "intensity": 6,
+          "triggerActivity": "Aucune"
+        }
+      ],
+      "physicalDiagnosis": [
+        {
+          "name": "Auscultation Cardiaque",
+          "result": "Bruits du cœur réguliers mais rapides",
+          "observation": "Pas de souffle audible"
+        },
+        {
+          "name": "Examen Pulmonaire",
+          "result": "Murmure vésiculaire normal",
+          "observation": "R.A.S"
+        }
+      ]
+    },
+    "history": {
+      "familyHistory": [
+        "Père décédé d'un infarctus du myocarde à 60 ans",
+        "Mère diabétique type 2"
+      ],
+      "allergies": [],
+      "chronicDiseases": [
+        {
+          "name": "Hypertension Artérielle",
+          "startDate": "2015-02-10",
+          "observation": "Observance thérapeutique médiocre",
+          "treatments": "Ramipril 10mg"
+        },
+        {
+          "name": "Dyslipidémie",
+          "startDate": "2018-06-20",
+          "observation": "Cholestérol élevé",
+          "treatments": "Atorvastatine 20mg"
+        }
+      ],
+      "surgeries": [],
+      "hospitalizations": []
+    },
+    "exams": [
+      {
+        "examName": "ECG 12 dérivations",
+        "result": "Sus-décalage du segment ST en DII, DIII et aVF",
+        "anatomy": "Cœur",
+        "requestDate": "2023-10-26"
+      },
+      {
+        "examName": "Troponine I",
+        "result": "Élevée (1.5 ng/mL)",
+        "anatomy": "Sang",
+        "requestDate": "2023-10-26"
+      }
+    ],
+    "treatments": [
+      {
+        "drugName": "Aspirine",
+        "quantity": "300mg",
+        "duration": "Dose unique",
+        "instruction": "A mâcher immédiatement",
+        "frequency": "Une fois"
+      },
+      {
+        "drugName": "Trinitrine",
+        "quantity": "0.4mg",
+        "duration": "Si douleur persiste",
+        "instruction": "Spray sublingual",
+        "frequency": "Toutes les 5 min (max 3)"
+      }
+    ]
+  },
+  {
+    "id": "CAS-2023-002",
+    "status": "PENDING",
+    "submissionDate": "2023-10-25",
+    "patient": {
+      "id": "PAT-9931",
+      "birthDate": "2001-11-03",
+      "civilStatus": "Célibataire",
+      "job": "Étudiante",
+      "bloodGroup": "A-",
+      "gender": "F",
+      "lastMenstrualPeriod": "2023-10-01",
+      "vitals": {
+        "temperature": 39.8,
+        "pulse": 110,
+        "weight": 55,
+        "height": 165,
+        "bloodPressure": "100/60",
+        "heartRate": 112
+      }
+    },
+    "consultation": {
+      "reason": "Fièvre élevée et frissons",
+      "symptoms": [
+        {
+          "location": "Général",
+          "startDate": "2023-10-23",
+          "frequency": "Cyclique",
+          "duration": "3 jours",
+          "intensity": 8,
+          "triggerActivity": "Soirée"
+        },
+        {
+          "location": "Tête",
+          "startDate": "2023-10-24",
+          "frequency": "Constante",
+          "duration": "48h",
+          "intensity": 7,
+          "triggerActivity": "Lumière"
+        }
+      ],
+      "physicalDiagnosis": [
+        {
+          "name": "Palpation Abdominale",
+          "result": "Splénomégalie modérée",
+          "observation": "Sensibilité hypochondre gauche"
+        },
+        {
+          "name": "Examen cutané",
+          "result": "Pâleur conjonctivale",
+          "observation": "Pas d'éruption cutanée"
+        }
+      ]
+    },
+    "history": {
+      "familyHistory": [],
+      "allergies": [
+        {
+          "name": "Pénicilline",
+          "manifestation": "Urticaire géant",
+          "trigger": "Prise d'amoxicilline"
+        }
+      ],
+      "chronicDiseases": [],
+      "surgeries": [
+        {
+          "name": "Appendicectomie",
+          "date": "2015-08-14",
+          "treatment": "Chirurgie laparoscopique",
+          "observation": "Suites simples"
+        }
+      ],
+      "hospitalizations": []
+    },
+    "exams": [
+      {
+        "examName": "Goutte épaisse",
+        "result": "Positive - Plasmodium Falciparum",
+        "anatomy": "Sang",
+        "requestDate": "2023-10-25"
+      },
+      {
+        "examName": "NFS (Hémogramme)",
+        "result": "Anémie (Hb 9g/dL), Thrombopénie",
+        "anatomy": "Sang",
+        "requestDate": "2023-10-25"
+      }
+    ],
+    "treatments": [
+      {
+        "drugName": "Artéméther / Luméfantrine",
+        "quantity": "80/480 mg",
+        "duration": "3 jours",
+        "instruction": "Prendre avec un repas gras",
+        "frequency": "2 fois par jour"
+      },
+      {
+        "drugName": "Paracétamol",
+        "quantity": "1g",
+        "duration": "5 jours",
+        "instruction": "Si fièvre > 38.5°C",
+        "frequency": "Toutes les 6 heures"
+      }
+    ]
+  },
+  {
+    "id": "CAS-2023-003",
+    "status": "PENDING",
+    "submissionDate": "2023-10-24",
+    "patient": {
+      "id": "PAT-3321",
+      "birthDate": "2009-02-14",
+      "civilStatus": "Célibataire",
+      "job": "Collégien",
+      "bloodGroup": "B+",
+      "gender": "M",
+      "vitals": {
+        "temperature": 37.0,
+        "pulse": 90,
+        "weight": 45,
+        "height": 155,
+        "bloodPressure": "110/70",
+        "heartRate": 92
+      }
+    },
+    "consultation": {
+      "reason": "Difficultés respiratoires (Dyspnée)",
+      "symptoms": [
+        {
+          "location": "Thorax",
+          "startDate": "2023-10-24T14:00:00",
+          "frequency": "Aiguë",
+          "duration": "Depuis 2h",
+          "intensity": 7,
+          "triggerActivity": "Cours d'EPS (Sport)"
+        }
+      ],
+      "physicalDiagnosis": [
+        {
+          "name": "Auscultation Pulmonaire",
+          "result": "Sibilants diffus bilatéraux",
+          "observation": "Temps expiratoire allongé"
+        },
+        {
+          "name": "Saturation O2",
+          "result": "94% air ambiant",
+          "observation": "Légère cyanose des lèvres"
+        }
+      ]
+    },
+    "history": {
+      "familyHistory": [
+        "Mère asthmatique",
+        "Frère eczéma atopique"
+      ],
+      "allergies": [
+        {
+          "name": "Acariens",
+          "manifestation": "Rhinite chronique",
+          "trigger": "Poussière"
+        },
+        {
+          "name": "Poils de chat",
+          "manifestation": "Yeux rouges, éternuements",
+          "trigger": "Contact animal"
+        }
+      ],
+      "chronicDiseases": [
+        {
+          "name": "Asthme",
+          "startDate": "2014-05-01",
+          "observation": "Asthme persistant léger",
+          "treatments": "Ventoline si besoin"
+        }
+      ],
+      "surgeries": [],
+      "hospitalizations": [
+        {
+          "startDate": "2019-12-10",
+          "endDate": "2019-12-12",
+          "description": "Crise d'asthme sévère sur infection virale"
+        }
+      ]
+    },
+    "exams": [
+      {
+        "examName": "Débit expiratoire de pointe (DEP)",
+        "result": "250 L/min (60% de la théorique)",
+        "anatomy": "Poumons",
+        "requestDate": "2023-10-24"
+      }
+    ],
+    "treatments": [
+      {
+        "drugName": "Salbutamol (Ventoline)",
+        "quantity": "2 bouffées",
+        "duration": "Immédiat",
+        "instruction": "Avec chambre d'inhalation",
+        "frequency": "A répéter toutes les 20 min si besoin"
+      },
+      {
+        "drugName": "Prednisolone",
+        "quantity": "40mg",
+        "duration": "3 jours",
+        "instruction": "Le matin au petit déjeuner",
+        "frequency": "1 fois par jour"
+      }
+    ]
+  },
+  {
+    "id": "CAS-2023-004",
+    "status": "PENDING",
+    "submissionDate": "2023-10-22",
+    "patient": {
+      "id": "PAT-7756",
+      "birthDate": "1978-09-30",
+      "civilStatus": "Divorcée",
+      "job": "Institutrice",
+      "bloodGroup": "AB+",
+      "gender": "F",
+      "lastMenstrualPeriod": "2023-10-10",
+      "vitals": {
+        "temperature": 37.5,
+        "pulse": 82,
+        "weight": 92,
+        "height": 162,
+        "bloodPressure": "145/90",
+        "heartRate": 84
+      }
+    },
+    "consultation": {
+      "reason": "Polyurie et soif intense (Syndrome polyuro-polydipsique)",
+      "symptoms": [
+        {
+          "location": "Général",
+          "startDate": "2023-09-01",
+          "frequency": "Quotidienne",
+          "duration": "2 mois",
+          "intensity": 5,
+          "triggerActivity": "Aucune"
+        },
+        {
+          "location": "Vessie",
+          "startDate": "2023-09-01",
+          "frequency": "6 levers par nuit",
+          "duration": "2 mois",
+          "intensity": 6,
+          "triggerActivity": "Nuit"
+        }
+      ],
+      "physicalDiagnosis": [
+        {
+          "name": "Examen Pieds",
+          "result": "Sensibilité conservée",
+          "observation": "Peau sèche, hyperkératose talons"
+        },
+        {
+          "name": "IMC",
+          "result": "35.1 (Obésité grade 2)",
+          "observation": "Tour de taille 102cm"
+        }
+      ]
+    },
+    "history": {
+      "familyHistory": [
+        "Deux parents diabétiques type 2"
+      ],
+      "allergies": [],
+      "chronicDiseases": [
+        {
+          "name": "Diabète de type 2",
+          "startDate": "2023-10-22",
+          "observation": "Découverte fortuite ce jour (suspecté)",
+          "treatments": "Aucun (Naïve de traitement)"
+        }
+      ],
+      "surgeries": [
+        {
+          "name": "Césarienne",
+          "date": "2005-06-12",
+          "treatment": "Anesthésie péridurale",
+          "observation": "Macrosomie fœtale (4.2kg)"
+        }
+      ],
+      "hospitalizations": []
+    },
+    "exams": [
+      {
+        "examName": "Glycémie à jeun",
+        "result": "2.8 g/L",
+        "anatomy": "Sang",
+        "requestDate": "2023-10-22"
+      },
+      {
+        "examName": "Hémoglobine Glyquée (HbA1c)",
+        "result": "9.2%",
+        "anatomy": "Sang",
+        "requestDate": "2023-10-22"
+      },
+      {
+        "examName": "Bandelette Urinaire",
+        "result": "Glycosurie +++, Cétonurie traces",
+        "anatomy": "Urines",
+        "requestDate": "2023-10-22"
+      }
+    ],
+    "treatments": [
+      {
+        "drugName": "Metformine",
+        "quantity": "500mg",
+        "duration": "Indéterminée",
+        "instruction": "Au milieu du repas",
+        "frequency": "1 comprimé soir (semaine 1) puis matin et soir"
+      },
+      {
+        "drugName": "Règles Hygiéno-diététiques",
+        "quantity": "N/A",
+        "duration": "A vie",
+        "instruction": "Réduction sucres rapides, activité physique 30min/j",
+        "frequency": "Quotidien"
+      }
+    ]
+  },
+  {
+    "id": "CAS-2023-005",
+    "status": "PENDING",
+    "submissionDate": "2023-10-26",
+    "patient": {
+      "id": "PAT-5501",
+      "birthDate": "1995-03-22",
+      "civilStatus": "Célibataire",
+      "job": "Serveur",
+      "bloodGroup": "A+",
+      "gender": "M",
+      "vitals": {
+        "temperature": 38.1,
+        "pulse": 92,
+        "weight": 70,
+        "height": 180,
+        "bloodPressure": "125/75",
+        "heartRate": 92
+      }
+    },
+    "consultation": {
+      "reason": "Douleur fosse iliaque droite",
+      "symptoms": [
+        {
+          "location": "Abdomen (FID)",
+          "startDate": "2023-10-25T18:00:00",
+          "frequency": "Progressive",
+          "duration": "14 heures",
+          "intensity": 8,
+          "triggerActivity": "Marche, Toux"
+        },
+        {
+          "location": "Estomac",
+          "startDate": "2023-10-25T16:00:00",
+          "frequency": "Initiale",
+          "duration": "2 heures",
+          "intensity": 4,
+          "triggerActivity": "Repas"
+        }
+      ],
+      "physicalDiagnosis": [
+        {
+          "name": "Palpation Abdominale",
+          "result": "Défense en fosse iliaque droite",
+          "observation": "Signe de McBurney positif"
+        },
+        {
+          "name": "Toucher Rectal",
+          "result": "Douleur à droite",
+          "observation": "Pas de méléna"
+        }
+      ]
+    },
+    "history": {
+      "familyHistory": [],
+      "allergies": [],
+      "chronicDiseases": [],
+      "surgeries": [],
+      "hospitalizations": []
+    },
+    "exams": [
+      {
+        "examName": "Échographie Abdominale",
+        "result": "Appendice tubulaire, incompressible, diamètre 9mm",
+        "anatomy": "Abdomen",
+        "requestDate": "2023-10-26"
+      },
+      {
+        "examName": "NFS (Leucocytes)",
+        "result": "Hyperleucocytose à 14.000/mm3 (Neutrophiles)",
+        "anatomy": "Sang",
+        "requestDate": "2023-10-26"
+      }
+    ],
+    "treatments": [
+      {
+        "drugName": "Paracétamol (Perfusion)",
+        "quantity": "1g",
+        "duration": "En attente bloc",
+        "instruction": "IV lent",
+        "frequency": "Toutes les 6h"
+      },
+      {
+        "drugName": "Consultation Chirurgie",
+        "quantity": "1",
+        "duration": "Immédiat",
+        "instruction": "Avis chirurgical pour appendicectomie",
+        "frequency": "Unique"
+      }
+    ]
+  }
+]
