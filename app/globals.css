@@ -10,6 +10,13 @@
   --foreground-secondary: #617989;
 }
 
+html {
+  font-size: 14px;
+  line-height: 1.4; /* Reduce line height for more compact text */
+  overflow-x: hidden;
+
+}
+
 /* Class-based dark mode (controlled by JavaScript) */
 .dark {
   --background: #101A22;
