@@ -1,0 +1,105 @@
+{
+  "navbar": {
+    "dashboard": "Dashboard",
+    "patients": "Patients",
+    "parameters": "Parameters",
+    "medicalExpert": "Medical Expert"
+  },
+  "hero": {
+    "badge": "Trusted by 500+ Medical Experts",
+    "title": "Validate Clinical Cases with",
+    "titleHighlight": "Expert Precision",
+    "description": "Build a reliable dataset of verified medical cases. Our platform enables medical experts to review, validate, and ensure the accuracy of clinical records for better healthcare outcomes.",
+    "ctaPrimary": "Start Validating",
+    "ctaSecondary": "Learn More",
+    "stats": {
+      "cases": "Cases Validated",
+      "casesValue": "10K+",
+      "accuracy": "Accuracy Rate",
+      "accuracyValue": "98%",
+      "specialties": "Medical Specialties",
+      "specialtiesValue": "50+"
+    },
+    "card": {
+      "caseNumber": "Clinical Case #2847",
+      "department": "Cardiology Department",
+      "pendingReview": "Pending Review",
+      "historyVerified": "Patient history verified",
+      "symptomsDocumented": "Symptoms documented",
+      "diagnosisAwaiting": "Diagnosis awaiting validation",
+      "treatmentPending": "Treatment plan pending",
+      "reviewCase": "Review Case"
+    },
+    "caseValidated": "Case Validated",
+    "expertsReviewing": "3 experts reviewing"
+  },
+  "features": {
+    "sectionLabel": "Features",
+    "title": "Everything You Need for Case Validation",
+    "description": "Our platform provides all the tools medical experts need to efficiently review and validate clinical cases with confidence.",
+    "learnMore": "Learn more",
+    "caseSubmission": {
+      "title": "Case Submission",
+      "description": "Easily submit clinical cases with comprehensive patient data, symptoms, diagnoses, and treatment plans through our intuitive interface."
+    },
+    "expertReview": {
+      "title": "Expert Review",
+      "description": "Connect with qualified medical professionals who thoroughly examine each case, ensuring accuracy and completeness of clinical information."
+    },
+    "validationStatus": {
+      "title": "Validation Status",
+      "description": "Track the validation progress of each case in real-time with clear status indicators and detailed feedback from reviewing experts."
+    },
+    "builtFor": {
+      "title": "Built for Medical Professionals",
+      "description": "MedExpert is designed with the unique needs of healthcare professionals in mind, ensuring a seamless workflow for clinical case management.",
+      "hipaa": "HIPAA compliant data handling",
+      "multiSpecialty": "Multi-specialty support",
+      "collaborative": "Collaborative review workflows",
+      "auditTrails": "Detailed audit trails"
+    },
+    "stats": {
+      "uptime": "Uptime guarantee",
+      "uptimeValue": "99.9%",
+      "support": "Expert support",
+      "supportValue": "24/7",
+      "responseTime": "Avg. response time",
+      "responseTimeValue": "<2min",
+      "experts": "Active experts",
+      "expertsValue": "500+"
+    }
+  },
+  "cta": {
+    "title": "Ready to Improve Clinical Data Quality?",
+    "description": "Join thousands of medical professionals who trust MedExpert for validating clinical cases. Start building a more reliable healthcare dataset today.",
+    "getStarted": "Get Started Free",
+    "contactSales": "Contact Sales",
+    "trustedBy": "Trusted by leading healthcare institutions",
+    "hospital": "Hospital"
+  },
+  "footer": {
+    "description": "Building reliable medical datasets through expert validation. Empowering healthcare professionals with accurate clinical data.",
+    "product": "Product",
+    "features": "Features",
+    "pricing": "Pricing",
+    "security": "Security",
+    "updates": "Updates",
+    "company": "Company",
+    "about": "About",
+    "careers": "Careers",
+    "press": "Press",
+    "partners": "Partners",
+    "resources": "Resources",
+    "documentation": "Documentation",
+    "apiReference": "API Reference",
+    "guides": "Guides",
+    "support": "Support",
+    "legal": "Legal",
+    "privacy": "Privacy",
+    "terms": "Terms",
+    "hipaa": "HIPAA",
+    "compliance": "Compliance",
+    "copyright": "MedExpert. All rights reserved.",
+    "systemsOperational": "All systems operational"
+  }
+}

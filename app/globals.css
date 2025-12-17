@@ -1,0 +1,25 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  /* Light mode defaults */
+  --background: #F6F7F8;
+  --background-white: #FFFFFF;
+  --foreground: #111518;
+  --foreground-secondary: #617989;
+}
+
+/* Class-based dark mode (controlled by JavaScript) */
+.dark {
+  --background: #101A22;
+  --background-white: #1A2632;
+  --foreground: #E5E7EB;
+  --foreground-secondary: #9CA3AF;
+}
+
+body {
+  background-color: var(--background);
+  color: var(--foreground);
+  transition: background-color 0.2s ease, color 0.2s ease;
+}

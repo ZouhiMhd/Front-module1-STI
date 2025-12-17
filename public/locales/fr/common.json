@@ -1,0 +1,105 @@
+{
+  "navbar": {
+    "dashboard": "Tableau de bord",
+    "patients": "Patients",
+    "parameters": "Paramètres",
+    "medicalExpert": "Expert Médical"
+  },
+  "hero": {
+    "badge": "Approuvé par plus de 500 experts médicaux",
+    "title": "Validez les cas cliniques avec",
+    "titleHighlight": "Précision d'Expert",
+    "description": "Construisez un ensemble de données fiables de cas médicaux vérifiés. Notre plateforme permet aux experts médicaux d'examiner, de valider et d'assurer l'exactitude des dossiers cliniques pour de meilleurs résultats de santé.",
+    "ctaPrimary": "Commencer la validation",
+    "ctaSecondary": "En savoir plus",
+    "stats": {
+      "cases": "Cas validés",
+      "casesValue": "10K+",
+      "accuracy": "Taux de précision",
+      "accuracyValue": "98%",
+      "specialties": "Spécialités médicales",
+      "specialtiesValue": "50+"
+    },
+    "card": {
+      "caseNumber": "Cas clinique #2847",
+      "department": "Service de cardiologie",
+      "pendingReview": "En attente de révision",
+      "historyVerified": "Historique patient vérifié",
+      "symptomsDocumented": "Symptômes documentés",
+      "diagnosisAwaiting": "Diagnostic en attente de validation",
+      "treatmentPending": "Plan de traitement en attente",
+      "reviewCase": "Examiner le cas"
+    },
+    "caseValidated": "Cas validé",
+    "expertsReviewing": "3 experts en révision"
+  },
+  "features": {
+    "sectionLabel": "Fonctionnalités",
+    "title": "Tout ce dont vous avez besoin pour la validation des cas",
+    "description": "Notre plateforme fournit tous les outils dont les experts médicaux ont besoin pour examiner et valider efficacement les cas cliniques en toute confiance.",
+    "learnMore": "En savoir plus",
+    "caseSubmission": {
+      "title": "Soumission de cas",
+      "description": "Soumettez facilement des cas cliniques avec des données patient complètes, symptômes, diagnostics et plans de traitement via notre interface intuitive."
+    },
+    "expertReview": {
+      "title": "Révision par expert",
+      "description": "Connectez-vous avec des professionnels médicaux qualifiés qui examinent minutieusement chaque cas, garantissant l'exactitude et l'exhaustivité des informations cliniques."
+    },
+    "validationStatus": {
+      "title": "Statut de validation",
+      "description": "Suivez la progression de la validation de chaque cas en temps réel avec des indicateurs de statut clairs et des retours détaillés des experts réviseurs."
+    },
+    "builtFor": {
+      "title": "Conçu pour les professionnels de santé",
+      "description": "MedExpert est conçu en tenant compte des besoins uniques des professionnels de santé, assurant un flux de travail fluide pour la gestion des cas cliniques.",
+      "hipaa": "Gestion des données conforme HIPAA",
+      "multiSpecialty": "Support multi-spécialités",
+      "collaborative": "Flux de travail de révision collaboratifs",
+      "auditTrails": "Pistes d'audit détaillées"
+    },
+    "stats": {
+      "uptime": "Garantie de disponibilité",
+      "uptimeValue": "99,9%",
+      "support": "Support expert",
+      "supportValue": "24/7",
+      "responseTime": "Temps de réponse moyen",
+      "responseTimeValue": "<2min",
+      "experts": "Experts actifs",
+      "expertsValue": "500+"
+    }
+  },
+  "cta": {
+    "title": "Prêt à améliorer la qualité des données cliniques ?",
+    "description": "Rejoignez des milliers de professionnels médicaux qui font confiance à MedExpert pour valider les cas cliniques. Commencez à construire un ensemble de données de santé plus fiable dès aujourd'hui.",
+    "getStarted": "Commencer gratuitement",
+    "contactSales": "Contacter les ventes",
+    "trustedBy": "Approuvé par les principales institutions de santé",
+    "hospital": "Hôpital"
+  },
+  "footer": {
+    "description": "Construction d'ensembles de données médicales fiables grâce à la validation par des experts. Accompagner les professionnels de santé avec des données cliniques précises.",
+    "product": "Produit",
+    "features": "Fonctionnalités",
+    "pricing": "Tarification",
+    "security": "Sécurité",
+    "updates": "Mises à jour",
+    "company": "Entreprise",
+    "about": "À propos",
+    "careers": "Carrières",
+    "press": "Presse",
+    "partners": "Partenaires",
+    "resources": "Ressources",
+    "documentation": "Documentation",
+    "apiReference": "Référence API",
+    "guides": "Guides",
+    "support": "Support",
+    "legal": "Légal",
+    "privacy": "Confidentialité",
+    "terms": "Conditions",
+    "hipaa": "HIPAA",
+    "compliance": "Conformité",
+    "copyright": "MedExpert. Tous droits réservés.",
+    "systemsOperational": "Tous les systèmes opérationnels"
+  }
+}
