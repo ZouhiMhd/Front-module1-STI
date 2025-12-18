@@ -1,75 +1,187 @@
 [
   {
     "id": "CAS-2023-001",
-    "status": "PENDING",
-    "submissionDate": "2023-10-26",
+    "status": "VALIDATED",
+    "submissionDate": "2023-04-09",
     "patient": {
-      "id": "PAT-8842",
-      "birthDate": "1965-05-12",
-      "civilStatus": "Marié",
-      "job": "Maçon",
-      "bloodGroup": "O+",
+      "id": "PAT-18453",
+      "birthDate": "1978-08-04",
+      "civilStatus": "Célibataire",
+      "job": "Enseignant",
+      "bloodGroup": "B-",
       "gender": "M",
       "vitals": {
-        "temperature": 37.2,
-        "pulse": 95,
-        "weight": 88,
-        "height": 178,
-        "bloodPressure": "160/95",
-        "heartRate": 98
+        "temperature": 37.4,
+        "pulse": 68,
+        "weight": 60,
+        "height": 177,
+        "bloodPressure": "112/83",
+        "heartRate": 70
       }
     },
     "consultation": {
-      "reason": "Douleur thoracique constrictive",
+      "reason": "Patient se plaint de palpitations",
       "symptoms": [
         {
-          "location": "Rétrosternale",
-          "startDate": "2023-10-26T08:00:00",
-          "frequency": "Continue",
-          "duration": "4 heures",
-          "intensity": 9,
-          "triggerActivity": "Effort physique intense (port de charge)"
-        },
+          "location": "Zone spécifique",
+          "startDate": "2023-04-06",
+          "frequency": "Progressive",
+          "duration": "1 jours",
+          "intensity": 7,
+          "triggerActivity": "Aucune"
+        }
+      ],
+      "physicalDiagnosis": [
         {
-          "location": "Bras gauche",
-          "startDate": "2023-10-26T08:30:00",
-          "frequency": "Intermittente",
-          "duration": "10 min",
+          "name": "Examen clinique",
+          "result": "Signes évocateurs de hypertension",
+          "observation": "État général conservé"
+        }
+      ]
+    },
+    "history": {
+      "familyHistory": [],
+      "allergies": [],
+      "chronicDiseases": [],
+      "surgeries": [],
+      "hospitalizations": []
+    },
+    "exams": [
+      {
+        "examName": "doppler",
+        "result": "Résultats anormaux confirmant le diagnostic",
+        "anatomy": "Zone concernée",
+        "requestDate": "2023-08-26"
+      }
+    ],
+    "treatments": [
+      {
+        "drugName": "amiodarone",
+        "quantity": "1 boite",
+        "duration": "7 jours",
+        "storage": "Sec",
+        "instruction": "Prendre pendant les repas",
+        "frequency": "2 fois par jour"
+      }
+    ]
+  },
+  {
+    "id": "CAS-2023-002",
+    "status": "PENDING",
+    "submissionDate": "2023-11-16",
+    "patient": {
+      "id": "PAT-25884",
+      "birthDate": "1969-07-05",
+      "civilStatus": "Veuf",
+      "job": "Commerçant",
+      "bloodGroup": "A+",
+      "gender": "M",
+      "vitals": {
+        "temperature": 37.2,
+        "pulse": 86,
+        "weight": 70,
+        "height": 157,
+        "bloodPressure": "128/89",
+        "heartRate": 92
+      }
+    },
+    "consultation": {
+      "reason": "Patient se plaint de palpitations",
+      "symptoms": [
+        {
+          "location": "Zone spécifique",
+          "startDate": "2023-12-26",
+          "frequency": "Progressive",
+          "duration": "7 jours",
           "intensity": 6,
           "triggerActivity": "Aucune"
         }
       ],
       "physicalDiagnosis": [
         {
-          "name": "Auscultation Cardiaque",
-          "result": "Bruits du cœur réguliers mais rapides",
-          "observation": "Pas de souffle audible"
-        },
+          "name": "Examen clinique",
+          "result": "Signes évocateurs de thrombose veineuse",
+          "observation": "État général conservé"
+        }
+      ]
+    },
+    "history": {
+      "familyHistory": [],
+      "allergies": [],
+      "chronicDiseases": [],
+      "surgeries": [],
+      "hospitalizations": []
+    },
+    "exams": [
+      {
+        "examName": "test d'effort",
+        "result": "Résultats anormaux confirmant le diagnostic",
+        "anatomy": "Zone concernée",
+        "requestDate": "2023-11-17"
+      }
+    ],
+    "treatments": [
+      {
+        "drugName": "bisoprolol",
+        "quantity": "1 boite",
+        "duration": "7 jours",
+        "storage": "Sec",
+        "instruction": "Prendre pendant les repas",
+        "frequency": "2 fois par jour"
+      }
+    ]
+  },
+  {
+    "id": "CAS-2023-003",
+    "status": "PENDING",
+    "submissionDate": "2023-10-08",
+    "patient": {
+      "id": "PAT-99944",
+      "birthDate": "1993-11-18",
+      "civilStatus": "Célibataire",
+      "job": "Ingénieur",
+      "bloodGroup": "B-",
+      "gender": "M",
+      "vitals": {
+        "temperature": 36.6,
+        "pulse": 89,
+        "weight": 94,
+        "height": 166,
+        "bloodPressure": "118/82",
+        "heartRate": 64
+      }
+    },
+    "consultation": {
+      "reason": "Patient se plaint de bradycardie",
+      "symptoms": [
         {
-          "name": "Examen Pulmonaire",
-          "result": "Murmure vésiculaire normal",
-          "observation": "R.A.S"
+          "location": "Zone spécifique",
+          "startDate": "2023-01-24",
+          "frequency": "Progressive",
+          "duration": "1 jours",
+          "intensity": 8,
+          "triggerActivity": "Aucune"
+        }
+      ],
+      "physicalDiagnosis": [
+        {
+          "name": "Examen clinique",
+          "result": "Signes évocateurs de myocarde",
+          "observation": "État général conservé"
         }
       ]
     },
     "history": {
       "familyHistory": [
-        "Père décédé d'un infarctus du myocarde à 60 ans",
-        "Mère diabétique type 2"
+        "Père: Hypertension"
       ],
       "allergies": [],
       "chronicDiseases": [
         {
-          "name": "Hypertension Artérielle",
-          "startDate": "2015-02-10",
-          "observation": "Observance thérapeutique médiocre",
-          "treatments": "Ramipril 10mg"
-        },
-        {
-          "name": "Dyslipidémie",
-          "startDate": "2018-06-20",
-          "observation": "Cholestérol élevé",
-          "treatments": "Atorvastatine 20mg"
+          "name": "myocarde",
+          "startDate": "2020-01-01",
+          "observation": "Suivi régulier",
+          "treatments": "ramipril"
         }
       ],
       "surgeries": [],
@@ -77,86 +189,626 @@
     },
     "exams": [
       {
-        "examName": "ECG 12 dérivations",
-        "result": "Sus-décalage du segment ST en DII, DIII et aVF",
-        "anatomy": "Cœur",
-        "requestDate": "2023-10-26"
-      },
-      {
-        "examName": "Troponine I",
-        "result": "Élevée (1.5 ng/mL)",
-        "anatomy": "Sang",
-        "requestDate": "2023-10-26"
+        "examName": "doppler",
+        "result": "Résultats anormaux confirmant le diagnostic",
+        "anatomy": "Zone concernée",
+        "requestDate": "2023-07-11"
       }
     ],
     "treatments": [
       {
-        "drugName": "Aspirine",
-        "quantity": "300mg",
-        "duration": "Dose unique",
-        "instruction": "A mâcher immédiatement",
-        "frequency": "Une fois"
-      },
-      {
-        "drugName": "Trinitrine",
-        "quantity": "0.4mg",
-        "duration": "Si douleur persiste",
-        "instruction": "Spray sublingual",
-        "frequency": "Toutes les 5 min (max 3)"
+        "drugName": "ramipril",
+        "quantity": "1 boite",
+        "duration": "7 jours",
+        "storage": "Sec",
+        "instruction": "Prendre pendant les repas",
+        "frequency": "2 fois par jour"
       }
     ]
   },
   {
-    "id": "CAS-2023-002",
+    "id": "CAS-2023-004",
     "status": "PENDING",
-    "submissionDate": "2023-10-25",
+    "submissionDate": "2023-03-26",
     "patient": {
-      "id": "PAT-9931",
-      "birthDate": "2001-11-03",
-      "civilStatus": "Célibataire",
-      "job": "Étudiante",
+      "id": "PAT-29011",
+      "birthDate": "2003-04-13",
+      "civilStatus": "Divorcé",
+      "job": "Enseignant",
       "bloodGroup": "A-",
       "gender": "F",
-      "lastMenstrualPeriod": "2023-10-01",
       "vitals": {
-        "temperature": 39.8,
-        "pulse": 110,
-        "weight": 55,
-        "height": 165,
-        "bloodPressure": "100/60",
-        "heartRate": 112
+        "temperature": 36.7,
+        "pulse": 63,
+        "weight": 96,
+        "height": 154,
+        "bloodPressure": "130/75",
+        "heartRate": 80
       }
     },
     "consultation": {
-      "reason": "Fièvre élevée et frissons",
+      "reason": "Patient se plaint de palpitations",
       "symptoms": [
         {
-          "location": "Général",
-          "startDate": "2023-10-23",
-          "frequency": "Cyclique",
-          "duration": "3 jours",
-          "intensity": 8,
-          "triggerActivity": "Soirée"
-        },
-        {
-          "location": "Tête",
-          "startDate": "2023-10-24",
+          "location": "Zone spécifique",
+          "startDate": "2023-01-08",
           "frequency": "Constante",
-          "duration": "48h",
-          "intensity": 7,
-          "triggerActivity": "Lumière"
+          "duration": "6 jours",
+          "intensity": 9,
+          "triggerActivity": "Aucune"
         }
       ],
       "physicalDiagnosis": [
         {
-          "name": "Palpation Abdominale",
-          "result": "Splénomégalie modérée",
-          "observation": "Sensibilité hypochondre gauche"
-        },
+          "name": "Examen clinique",
+          "result": "Signes évocateurs de péricardite",
+          "observation": "État général conservé"
+        }
+      ]
+    },
+    "history": {
+      "familyHistory": [
+        "Père: Hypertension"
+      ],
+      "allergies": [],
+      "chronicDiseases": [],
+      "surgeries": [],
+      "hospitalizations": []
+    },
+    "exams": [
+      {
+        "examName": "bnp",
+        "result": "Résultats anormaux confirmant le diagnostic",
+        "anatomy": "Zone concernée",
+        "requestDate": "2023-10-25"
+      }
+    ],
+    "treatments": [
+      {
+        "drugName": "amiodarone",
+        "quantity": "1 boite",
+        "duration": "7 jours",
+        "storage": "Sec",
+        "instruction": "Prendre pendant les repas",
+        "frequency": "2 fois par jour"
+      }
+    ]
+  },
+  {
+    "id": "CAS-2023-005",
+    "status": "PENDING",
+    "submissionDate": "2023-07-10",
+    "patient": {
+      "id": "PAT-97154",
+      "birthDate": "1964-04-12",
+      "civilStatus": "Veuf",
+      "job": "Retraité",
+      "bloodGroup": "A+",
+      "gender": "M",
+      "vitals": {
+        "temperature": 36.9,
+        "pulse": 82,
+        "weight": 71,
+        "height": 179,
+        "bloodPressure": "119/71",
+        "heartRate": 94
+      }
+    },
+    "consultation": {
+      "reason": "Patient se plaint de douleur bras gauche",
+      "symptoms": [
         {
-          "name": "Examen cutané",
-          "result": "Pâleur conjonctivale",
-          "observation": "Pas d'éruption cutanée"
+          "location": "Zone spécifique",
+          "startDate": "2023-11-21",
+          "frequency": "Constante",
+          "duration": "5 jours",
+          "intensity": 4,
+          "triggerActivity": "Aucune"
+        }
+      ],
+      "physicalDiagnosis": [
+        {
+          "name": "Examen clinique",
+          "result": "Signes évocateurs de valvulopathie",
+          "observation": "État général conservé"
+        }
+      ]
+    },
+    "history": {
+      "familyHistory": [
+        "Père: Hypertension"
+      ],
+      "allergies": [],
+      "chronicDiseases": [
+        {
+          "name": "valvulopathie",
+          "startDate": "2020-01-01",
+          "observation": "Suivi régulier",
+          "treatments": "diurétique"
+        }
+      ],
+      "surgeries": [],
+      "hospitalizations": []
+    },
+    "exams": [
+      {
+        "examName": "troponine",
+        "result": "Résultats anormaux confirmant le diagnostic",
+        "anatomy": "Zone concernée",
+        "requestDate": "2023-05-27"
+      }
+    ],
+    "treatments": [
+      {
+        "drugName": "diurétique",
+        "quantity": "1 boite",
+        "duration": "7 jours",
+        "storage": "Sec",
+        "instruction": "Prendre pendant les repas",
+        "frequency": "2 fois par jour"
+      }
+    ]
+  },
+  {
+    "id": "CAS-2023-006",
+    "status": "PENDING",
+    "submissionDate": "2023-08-05",
+    "patient": {
+      "id": "PAT-32298",
+      "birthDate": "1947-10-16",
+      "civilStatus": "Célibataire",
+      "job": "Enseignant",
+      "bloodGroup": "B+",
+      "gender": "F",
+      "vitals": {
+        "temperature": 37.1,
+        "pulse": 84,
+        "weight": 86,
+        "height": 185,
+        "bloodPressure": "130/84",
+        "heartRate": 97
+      }
+    },
+    "consultation": {
+      "reason": "Patient se plaint de oedème membres inférieurs",
+      "symptoms": [
+        {
+          "location": "Zone spécifique",
+          "startDate": "2023-08-10",
+          "frequency": "Constante",
+          "duration": "10 jours",
+          "intensity": 8,
+          "triggerActivity": "Aucune"
+        }
+      ],
+      "physicalDiagnosis": [
+        {
+          "name": "Examen clinique",
+          "result": "Signes évocateurs de péricardite",
+          "observation": "État général conservé"
+        }
+      ]
+    },
+    "history": {
+      "familyHistory": [
+        "Père: Hypertension"
+      ],
+      "allergies": [],
+      "chronicDiseases": [],
+      "surgeries": [],
+      "hospitalizations": []
+    },
+    "exams": [
+      {
+        "examName": "troponine",
+        "result": "Résultats anormaux confirmant le diagnostic",
+        "anatomy": "Zone concernée",
+        "requestDate": "2023-10-10"
+      }
+    ],
+    "treatments": [
+      {
+        "drugName": "aspirine",
+        "quantity": "1 boite",
+        "duration": "7 jours",
+        "storage": "Sec",
+        "instruction": "Prendre pendant les repas",
+        "frequency": "2 fois par jour"
+      }
+    ]
+  },
+  {
+    "id": "CAS-2023-007",
+    "status": "PENDING",
+    "submissionDate": "2023-12-23",
+    "patient": {
+      "id": "PAT-34971",
+      "birthDate": "1959-08-18",
+      "civilStatus": "Divorcé",
+      "job": "Retraité",
+      "bloodGroup": "AB+",
+      "gender": "M",
+      "vitals": {
+        "temperature": 36.9,
+        "pulse": 80,
+        "weight": 64,
+        "height": 169,
+        "bloodPressure": "118/72",
+        "heartRate": 66
+      }
+    },
+    "consultation": {
+      "reason": "Patient se plaint de purpura",
+      "symptoms": [
+        {
+          "location": "Zone spécifique",
+          "startDate": "2023-04-15",
+          "frequency": "Intermittente",
+          "duration": "4 jours",
+          "intensity": 3,
+          "triggerActivity": "Aucune"
+        }
+      ],
+      "physicalDiagnosis": [
+        {
+          "name": "Examen clinique",
+          "result": "Signes évocateurs de herpès",
+          "observation": "État général conservé"
+        }
+      ]
+    },
+    "history": {
+      "familyHistory": [],
+      "allergies": [],
+      "chronicDiseases": [
+        {
+          "name": "herpès",
+          "startDate": "2020-01-01",
+          "observation": "Suivi régulier",
+          "treatments": "diprosone"
+        }
+      ],
+      "surgeries": [],
+      "hospitalizations": []
+    },
+    "exams": [
+      {
+        "examName": "dermatoscopie",
+        "result": "Résultats anormaux confirmant le diagnostic",
+        "anatomy": "Zone concernée",
+        "requestDate": "2023-05-30"
+      }
+    ],
+    "treatments": [
+      {
+        "drugName": "diprosone",
+        "quantity": "1 boite",
+        "duration": "7 jours",
+        "storage": "Sec",
+        "instruction": "Prendre pendant les repas",
+        "frequency": "2 fois par jour"
+      }
+    ]
+  },
+  {
+    "id": "CAS-2023-008",
+    "status": "PENDING",
+    "submissionDate": "2023-06-01",
+    "patient": {
+      "id": "PAT-79024",
+      "birthDate": "1970-03-17",
+      "civilStatus": "Divorcé",
+      "job": "Commerçant",
+      "bloodGroup": "A-",
+      "gender": "M",
+      "vitals": {
+        "temperature": 37.1,
+        "pulse": 76,
+        "weight": 58,
+        "height": 157,
+        "bloodPressure": "124/87",
+        "heartRate": 98
+      }
+    },
+    "consultation": {
+      "reason": "Patient se plaint de ulcère",
+      "symptoms": [
+        {
+          "location": "Zone spécifique",
+          "startDate": "2023-08-05",
+          "frequency": "Intermittente",
+          "duration": "4 jours",
+          "intensity": 6,
+          "triggerActivity": "Aucune"
+        }
+      ],
+      "physicalDiagnosis": [
+        {
+          "name": "Examen clinique",
+          "result": "Signes évocateurs de zona",
+          "observation": "État général conservé"
+        }
+      ]
+    },
+    "history": {
+      "familyHistory": [],
+      "allergies": [],
+      "chronicDiseases": [],
+      "surgeries": [],
+      "hospitalizations": []
+    },
+    "exams": [
+      {
+        "examName": "test allergologique",
+        "result": "Résultats anormaux confirmant le diagnostic",
+        "anatomy": "Zone concernée",
+        "requestDate": "2023-09-18"
+      }
+    ],
+    "treatments": [
+      {
+        "drugName": "locoid",
+        "quantity": "1 boite",
+        "duration": "7 jours",
+        "storage": "Sec",
+        "instruction": "Prendre pendant les repas",
+        "frequency": "2 fois par jour"
+      }
+    ]
+  },
+  {
+    "id": "CAS-2023-009",
+    "status": "VALIDATED",
+    "submissionDate": "2023-06-22",
+    "patient": {
+      "id": "PAT-86631",
+      "birthDate": "1970-07-21",
+      "civilStatus": "Marié",
+      "job": "Commerçant",
+      "bloodGroup": "B-",
+      "gender": "M",
+      "vitals": {
+        "temperature": 37.3,
+        "pulse": 70,
+        "weight": 89,
+        "height": 166,
+        "bloodPressure": "110/73",
+        "heartRate": 85
+      }
+    },
+    "consultation": {
+      "reason": "Patient se plaint de croute",
+      "symptoms": [
+        {
+          "location": "Zone spécifique",
+          "startDate": "2023-06-14",
+          "frequency": "Progressive",
+          "duration": "10 jours",
+          "intensity": 3,
+          "triggerActivity": "Aucune"
+        }
+      ],
+      "physicalDiagnosis": [
+        {
+          "name": "Examen clinique",
+          "result": "Signes évocateurs de lichen plan",
+          "observation": "État général conservé"
+        }
+      ]
+    },
+    "history": {
+      "familyHistory": [
+        "Père: Hypertension"
+      ],
+      "allergies": [],
+      "chronicDiseases": [
+        {
+          "name": "lichen plan",
+          "startDate": "2020-01-01",
+          "observation": "Suivi régulier",
+          "treatments": "rétinoïde"
+        }
+      ],
+      "surgeries": [],
+      "hospitalizations": []
+    },
+    "exams": [
+      {
+        "examName": "test allergologique",
+        "result": "Résultats anormaux confirmant le diagnostic",
+        "anatomy": "Zone concernée",
+        "requestDate": "2023-10-18"
+      }
+    ],
+    "treatments": [
+      {
+        "drugName": "rétinoïde",
+        "quantity": "1 boite",
+        "duration": "7 jours",
+        "storage": "Sec",
+        "instruction": "Prendre pendant les repas",
+        "frequency": "2 fois par jour"
+      }
+    ]
+  },
+  {
+    "id": "CAS-2023-010",
+    "status": "VALIDATED",
+    "submissionDate": "2023-08-31",
+    "patient": {
+      "id": "PAT-63738",
+      "birthDate": "1994-04-06",
+      "civilStatus": "Divorcé",
+      "job": "Retraité",
+      "bloodGroup": "O+",
+      "gender": "F",
+      "vitals": {
+        "temperature": 37,
+        "pulse": 70,
+        "weight": 98,
+        "height": 157,
+        "bloodPressure": "135/77",
+        "heartRate": 89
+      }
+    },
+    "consultation": {
+      "reason": "Patient se plaint de squame",
+      "symptoms": [
+        {
+          "location": "Zone spécifique",
+          "startDate": "2023-08-02",
+          "frequency": "Intermittente",
+          "duration": "9 jours",
+          "intensity": 3,
+          "triggerActivity": "Aucune"
+        }
+      ],
+      "physicalDiagnosis": [
+        {
+          "name": "Examen clinique",
+          "result": "Signes évocateurs de pemphigus",
+          "observation": "État général conservé"
+        }
+      ]
+    },
+    "history": {
+      "familyHistory": [],
+      "allergies": [],
+      "chronicDiseases": [],
+      "surgeries": [],
+      "hospitalizations": []
+    },
+    "exams": [
+      {
+        "examName": "dermatoscopie",
+        "result": "Résultats anormaux confirmant le diagnostic",
+        "anatomy": "Zone concernée",
+        "requestDate": "2023-07-11"
+      }
+    ],
+    "treatments": [
+      {
+        "drugName": "dermocorticoïde",
+        "quantity": "1 boite",
+        "duration": "7 jours",
+        "storage": "Sec",
+        "instruction": "Prendre pendant les repas",
+        "frequency": "2 fois par jour"
+      }
+    ]
+  },
+  {
+    "id": "CAS-2023-011",
+    "status": "PENDING",
+    "submissionDate": "2023-02-04",
+    "patient": {
+      "id": "PAT-93935",
+      "birthDate": "1955-03-09",
+      "civilStatus": "Veuf",
+      "job": "Ingénieur",
+      "bloodGroup": "B-",
+      "gender": "F",
+      "vitals": {
+        "temperature": 37,
+        "pulse": 88,
+        "weight": 95,
+        "height": 159,
+        "bloodPressure": "137/78",
+        "heartRate": 90
+      }
+    },
+    "consultation": {
+      "reason": "Patient se plaint de squame",
+      "symptoms": [
+        {
+          "location": "Zone spécifique",
+          "startDate": "2023-02-14",
+          "frequency": "Progressive",
+          "duration": "3 jours",
+          "intensity": 9,
+          "triggerActivity": "Aucune"
+        }
+      ],
+      "physicalDiagnosis": [
+        {
+          "name": "Examen clinique",
+          "result": "Signes évocateurs de impétigo",
+          "observation": "État général conservé"
+        }
+      ]
+    },
+    "history": {
+      "familyHistory": [
+        "Père: Hypertension"
+      ],
+      "allergies": [],
+      "chronicDiseases": [
+        {
+          "name": "impétigo",
+          "startDate": "2020-01-01",
+          "observation": "Suivi régulier",
+          "treatments": "diprosone"
+        }
+      ],
+      "surgeries": [],
+      "hospitalizations": []
+    },
+    "exams": [
+      {
+        "examName": "biopsie cutanée",
+        "result": "Résultats anormaux confirmant le diagnostic",
+        "anatomy": "Zone concernée",
+        "requestDate": "2023-04-30"
+      }
+    ],
+    "treatments": [
+      {
+        "drugName": "diprosone",
+        "quantity": "1 boite",
+        "duration": "7 jours",
+        "storage": "Sec",
+        "instruction": "Prendre pendant les repas",
+        "frequency": "2 fois par jour"
+      }
+    ]
+  },
+  {
+    "id": "CAS-2023-012",
+    "status": "PENDING",
+    "submissionDate": "2023-05-17",
+    "patient": {
+      "id": "PAT-81005",
+      "birthDate": "1956-06-02",
+      "civilStatus": "Divorcé",
+      "job": "Sans emploi",
+      "bloodGroup": "O-",
+      "gender": "F",
+      "vitals": {
+        "temperature": 37.2,
+        "pulse": 97,
+        "weight": 77,
+        "height": 155,
+        "bloodPressure": "134/89",
+        "heartRate": 99
+      }
+    },
+    "consultation": {
+      "reason": "Patient se plaint de plaie",
+      "symptoms": [
+        {
+          "location": "Zone spécifique",
+          "startDate": "2023-05-08",
+          "frequency": "Constante",
+          "duration": "6 jours",
+          "intensity": 7,
+          "triggerActivity": "Aucune"
+        }
+      ],
+      "physicalDiagnosis": [
+        {
+          "name": "Examen clinique",
+          "result": "Signes évocateurs de rosacée",
+          "observation": "État général conservé"
         }
       ]
     },
@@ -165,320 +817,213 @@
       "allergies": [
         {
           "name": "Pénicilline",
-          "manifestation": "Urticaire géant",
-          "trigger": "Prise d'amoxicilline"
+          "manifestation": "Urticaire",
+          "trigger": "Prise médicament"
         }
       ],
       "chronicDiseases": [],
-      "surgeries": [
-        {
-          "name": "Appendicectomie",
-          "date": "2015-08-14",
-          "treatment": "Chirurgie laparoscopique",
-          "observation": "Suites simples"
-        }
-      ],
+      "surgeries": [],
       "hospitalizations": []
     },
     "exams": [
       {
-        "examName": "Goutte épaisse",
-        "result": "Positive - Plasmodium Falciparum",
-        "anatomy": "Sang",
-        "requestDate": "2023-10-25"
-      },
-      {
-        "examName": "NFS (Hémogramme)",
-        "result": "Anémie (Hb 9g/dL), Thrombopénie",
-        "anatomy": "Sang",
-        "requestDate": "2023-10-25"
+        "examName": "prélèvement mycologique",
+        "result": "Résultats anormaux confirmant le diagnostic",
+        "anatomy": "Zone concernée",
+        "requestDate": "2023-01-24"
       }
     ],
     "treatments": [
       {
-        "drugName": "Artéméther / Luméfantrine",
-        "quantity": "80/480 mg",
-        "duration": "3 jours",
-        "instruction": "Prendre avec un repas gras",
+        "drugName": "diprosone",
+        "quantity": "1 boite",
+        "duration": "7 jours",
+        "storage": "Sec",
+        "instruction": "Prendre pendant les repas",
         "frequency": "2 fois par jour"
-      },
-      {
-        "drugName": "Paracétamol",
-        "quantity": "1g",
-        "duration": "5 jours",
-        "instruction": "Si fièvre > 38.5°C",
-        "frequency": "Toutes les 6 heures"
       }
     ]
   },
   {
-    "id": "CAS-2023-003",
+    "id": "CAS-2023-013",
     "status": "PENDING",
-    "submissionDate": "2023-10-24",
+    "submissionDate": "2023-03-29",
     "patient": {
-      "id": "PAT-3321",
-      "birthDate": "2009-02-14",
+      "id": "PAT-12377",
+      "birthDate": "2021-02-16",
       "civilStatus": "Célibataire",
-      "job": "Collégien",
+      "job": "Écolier",
       "bloodGroup": "B+",
-      "gender": "M",
+      "gender": "F",
       "vitals": {
-        "temperature": 37.0,
-        "pulse": 90,
-        "weight": 45,
-        "height": 155,
-        "bloodPressure": "110/70",
-        "heartRate": 92
+        "temperature": 37,
+        "pulse": 60,
+        "weight": 57,
+        "height": 171,
+        "bloodPressure": "121/77",
+        "heartRate": 88
       }
     },
     "consultation": {
-      "reason": "Difficultés respiratoires (Dyspnée)",
+      "reason": "Patient se plaint de pleurs incessants",
       "symptoms": [
         {
-          "location": "Thorax",
-          "startDate": "2023-10-24T14:00:00",
-          "frequency": "Aiguë",
-          "duration": "Depuis 2h",
-          "intensity": 7,
-          "triggerActivity": "Cours d'EPS (Sport)"
+          "location": "Zone spécifique",
+          "startDate": "2023-02-07",
+          "frequency": "Intermittente",
+          "duration": "3 jours",
+          "intensity": 5,
+          "triggerActivity": "Aucune"
         }
       ],
       "physicalDiagnosis": [
         {
-          "name": "Auscultation Pulmonaire",
-          "result": "Sibilants diffus bilatéraux",
-          "observation": "Temps expiratoire allongé"
-        },
-        {
-          "name": "Saturation O2",
-          "result": "94% air ambiant",
-          "observation": "Légère cyanose des lèvres"
+          "name": "Examen clinique",
+          "result": "Signes évocateurs de rougeole",
+          "observation": "État général conservé"
         }
       ]
     },
     "history": {
       "familyHistory": [
-        "Mère asthmatique",
-        "Frère eczéma atopique"
+        "Père: Hypertension"
       ],
-      "allergies": [
-        {
-          "name": "Acariens",
-          "manifestation": "Rhinite chronique",
-          "trigger": "Poussière"
-        },
-        {
-          "name": "Poils de chat",
-          "manifestation": "Yeux rouges, éternuements",
-          "trigger": "Contact animal"
-        }
-      ],
-      "chronicDiseases": [
-        {
-          "name": "Asthme",
-          "startDate": "2014-05-01",
-          "observation": "Asthme persistant léger",
-          "treatments": "Ventoline si besoin"
-        }
-      ],
+      "allergies": [],
+      "chronicDiseases": [],
       "surgeries": [],
-      "hospitalizations": [
-        {
-          "startDate": "2019-12-10",
-          "endDate": "2019-12-12",
-          "description": "Crise d'asthme sévère sur infection virale"
-        }
-      ]
+      "hospitalizations": []
     },
     "exams": [
       {
-        "examName": "Débit expiratoire de pointe (DEP)",
-        "result": "250 L/min (60% de la théorique)",
-        "anatomy": "Poumons",
-        "requestDate": "2023-10-24"
+        "examName": "périmètre crânien",
+        "result": "Résultats anormaux confirmant le diagnostic",
+        "anatomy": "Zone concernée",
+        "requestDate": "2023-08-13"
       }
     ],
     "treatments": [
       {
-        "drugName": "Salbutamol (Ventoline)",
-        "quantity": "2 bouffées",
-        "duration": "Immédiat",
-        "instruction": "Avec chambre d'inhalation",
-        "frequency": "A répéter toutes les 20 min si besoin"
-      },
-      {
-        "drugName": "Prednisolone",
-        "quantity": "40mg",
-        "duration": "3 jours",
-        "instruction": "Le matin au petit déjeuner",
-        "frequency": "1 fois par jour"
+        "drugName": "soluté de réhydratation",
+        "quantity": "1 boite",
+        "duration": "7 jours",
+        "storage": "Sec",
+        "instruction": "Prendre pendant les repas",
+        "frequency": "2 fois par jour"
       }
     ]
   },
   {
-    "id": "CAS-2023-004",
+    "id": "CAS-2023-014",
     "status": "PENDING",
-    "submissionDate": "2023-10-22",
+    "submissionDate": "2023-04-21",
     "patient": {
-      "id": "PAT-7756",
-      "birthDate": "1978-09-30",
-      "civilStatus": "Divorcée",
-      "job": "Institutrice",
+      "id": "PAT-90680",
+      "birthDate": "2013-01-12",
+      "civilStatus": "Célibataire",
+      "job": "Écolier",
       "bloodGroup": "AB+",
       "gender": "F",
-      "lastMenstrualPeriod": "2023-10-10",
       "vitals": {
-        "temperature": 37.5,
-        "pulse": 82,
-        "weight": 92,
-        "height": 162,
-        "bloodPressure": "145/90",
-        "heartRate": 84
+        "temperature": 36.8,
+        "pulse": 76,
+        "weight": 63,
+        "height": 172,
+        "bloodPressure": "126/79",
+        "heartRate": 80
       }
     },
     "consultation": {
-      "reason": "Polyurie et soif intense (Syndrome polyuro-polydipsique)",
+      "reason": "Patient se plaint de diarrhée",
       "symptoms": [
         {
-          "location": "Général",
-          "startDate": "2023-09-01",
-          "frequency": "Quotidienne",
-          "duration": "2 mois",
-          "intensity": 5,
+          "location": "Zone spécifique",
+          "startDate": "2023-04-09",
+          "frequency": "Constante",
+          "duration": "4 jours",
+          "intensity": 3,
           "triggerActivity": "Aucune"
-        },
-        {
-          "location": "Vessie",
-          "startDate": "2023-09-01",
-          "frequency": "6 levers par nuit",
-          "duration": "2 mois",
-          "intensity": 6,
-          "triggerActivity": "Nuit"
         }
       ],
       "physicalDiagnosis": [
         {
-          "name": "Examen Pieds",
-          "result": "Sensibilité conservée",
-          "observation": "Peau sèche, hyperkératose talons"
-        },
-        {
-          "name": "IMC",
-          "result": "35.1 (Obésité grade 2)",
-          "observation": "Tour de taille 102cm"
+          "name": "Examen clinique",
+          "result": "Signes évocateurs de gastro-entérite",
+          "observation": "État général conservé"
         }
       ]
     },
     "history": {
       "familyHistory": [
-        "Deux parents diabétiques type 2"
+        "Père: Hypertension"
       ],
       "allergies": [],
       "chronicDiseases": [
         {
-          "name": "Diabète de type 2",
-          "startDate": "2023-10-22",
-          "observation": "Découverte fortuite ce jour (suspecté)",
-          "treatments": "Aucun (Naïve de traitement)"
+          "name": "gastro-entérite",
+          "startDate": "2020-01-01",
+          "observation": "Suivi régulier",
+          "treatments": "soluté de réhydratation"
         }
       ],
-      "surgeries": [
-        {
-          "name": "Césarienne",
-          "date": "2005-06-12",
-          "treatment": "Anesthésie péridurale",
-          "observation": "Macrosomie fœtale (4.2kg)"
-        }
-      ],
+      "surgeries": [],
       "hospitalizations": []
     },
     "exams": [
       {
-        "examName": "Glycémie à jeun",
-        "result": "2.8 g/L",
-        "anatomy": "Sang",
-        "requestDate": "2023-10-22"
-      },
-      {
-        "examName": "Hémoglobine Glyquée (HbA1c)",
-        "result": "9.2%",
-        "anatomy": "Sang",
-        "requestDate": "2023-10-22"
-      },
-      {
-        "examName": "Bandelette Urinaire",
-        "result": "Glycosurie +++, Cétonurie traces",
-        "anatomy": "Urines",
-        "requestDate": "2023-10-22"
+        "examName": "carnet de santé",
+        "result": "Résultats anormaux confirmant le diagnostic",
+        "anatomy": "Zone concernée",
+        "requestDate": "2023-08-29"
       }
     ],
     "treatments": [
       {
-        "drugName": "Metformine",
-        "quantity": "500mg",
-        "duration": "Indéterminée",
-        "instruction": "Au milieu du repas",
-        "frequency": "1 comprimé soir (semaine 1) puis matin et soir"
-      },
-      {
-        "drugName": "Règles Hygiéno-diététiques",
-        "quantity": "N/A",
-        "duration": "A vie",
-        "instruction": "Réduction sucres rapides, activité physique 30min/j",
-        "frequency": "Quotidien"
+        "drugName": "soluté de réhydratation",
+        "quantity": "1 boite",
+        "duration": "7 jours",
+        "storage": "Sec",
+        "instruction": "Prendre pendant les repas",
+        "frequency": "2 fois par jour"
       }
     ]
   },
   {
-    "id": "CAS-2023-005",
-    "status": "PENDING",
-    "submissionDate": "2023-10-26",
+    "id": "CAS-2023-015",
+    "status": "VALIDATED",
+    "submissionDate": "2023-10-15",
     "patient": {
-      "id": "PAT-5501",
-      "birthDate": "1995-03-22",
+      "id": "PAT-43028",
+      "birthDate": "2024-03-23",
       "civilStatus": "Célibataire",
-      "job": "Serveur",
-      "bloodGroup": "A+",
-      "gender": "M",
+      "job": "Écolier",
+      "bloodGroup": "O-",
+      "gender": "F",
       "vitals": {
-        "temperature": 38.1,
-        "pulse": 92,
-        "weight": 70,
+        "temperature": 37.1,
+        "pulse": 81,
+        "weight": 75,
         "height": 180,
-        "bloodPressure": "125/75",
-        "heartRate": 92
+        "bloodPressure": "130/90",
+        "heartRate": 71
       }
     },
     "consultation": {
-      "reason": "Douleur fosse iliaque droite",
+      "reason": "Patient se plaint de refus de tétée",
       "symptoms": [
         {
-          "location": "Abdomen (FID)",
-          "startDate": "2023-10-25T18:00:00",
-          "frequency": "Progressive",
-          "duration": "14 heures",
-          "intensity": 8,
-          "triggerActivity": "Marche, Toux"
-        },
-        {
-          "location": "Estomac",
-          "startDate": "2023-10-25T16:00:00",
-          "frequency": "Initiale",
-          "duration": "2 heures",
+          "location": "Zone spécifique",
+          "startDate": "2023-03-21",
+          "frequency": "Constante",
+          "duration": "4 jours",
           "intensity": 4,
-          "triggerActivity": "Repas"
+          "triggerActivity": "Aucune"
         }
       ],
       "physicalDiagnosis": [
         {
-          "name": "Palpation Abdominale",
-          "result": "Défense en fosse iliaque droite",
-          "observation": "Signe de McBurney positif"
-        },
-        {
-          "name": "Toucher Rectal",
-          "result": "Douleur à droite",
-          "observation": "Pas de méléna"
+          "name": "Examen clinique",
+          "result": "Signes évocateurs de rhinopharyngite",
+          "observation": "État général conservé"
         }
       ]
     },
@@ -491,32 +1036,1770 @@
     },
     "exams": [
       {
-        "examName": "Échographie Abdominale",
-        "result": "Appendice tubulaire, incompressible, diamètre 9mm",
-        "anatomy": "Abdomen",
-        "requestDate": "2023-10-26"
-      },
-      {
-        "examName": "NFS (Leucocytes)",
-        "result": "Hyperleucocytose à 14.000/mm3 (Neutrophiles)",
-        "anatomy": "Sang",
-        "requestDate": "2023-10-26"
+        "examName": "mesure taille",
+        "result": "Résultats anormaux confirmant le diagnostic",
+        "anatomy": "Zone concernée",
+        "requestDate": "2023-04-19"
       }
     ],
     "treatments": [
       {
-        "drugName": "Paracétamol (Perfusion)",
-        "quantity": "1g",
-        "duration": "En attente bloc",
-        "instruction": "IV lent",
-        "frequency": "Toutes les 6h"
-      },
+        "drugName": "soluté de réhydratation",
+        "quantity": "1 boite",
+        "duration": "7 jours",
+        "storage": "Sec",
+        "instruction": "Prendre pendant les repas",
+        "frequency": "2 fois par jour"
+      }
+    ]
+  },
+  {
+    "id": "CAS-2023-016",
+    "status": "VALIDATED",
+    "submissionDate": "2023-01-23",
+    "patient": {
+      "id": "PAT-65551",
+      "birthDate": "2024-09-29",
+      "civilStatus": "Célibataire",
+      "job": "Écolier",
+      "bloodGroup": "O-",
+      "gender": "F",
+      "vitals": {
+        "temperature": 37,
+        "pulse": 70,
+        "weight": 99,
+        "height": 161,
+        "bloodPressure": "113/72",
+        "heartRate": 62
+      }
+    },
+    "consultation": {
+      "reason": "Patient se plaint de diarrhée",
+      "symptoms": [
+        {
+          "location": "Zone spécifique",
+          "startDate": "2023-07-04",
+          "frequency": "Intermittente",
+          "duration": "1 jours",
+          "intensity": 6,
+          "triggerActivity": "Aucune"
+        }
+      ],
+      "physicalDiagnosis": [
+        {
+          "name": "Examen clinique",
+          "result": "Signes évocateurs de rhinopharyngite",
+          "observation": "État général conservé"
+        }
+      ]
+    },
+    "history": {
+      "familyHistory": [
+        "Père: Hypertension"
+      ],
+      "allergies": [],
+      "chronicDiseases": [
+        {
+          "name": "rhinopharyngite",
+          "startDate": "2020-01-01",
+          "observation": "Suivi régulier",
+          "treatments": "mouche-bébé"
+        }
+      ],
+      "surgeries": [],
+      "hospitalizations": []
+    },
+    "exams": [
       {
-        "drugName": "Consultation Chirurgie",
-        "quantity": "1",
-        "duration": "Immédiat",
-        "instruction": "Avis chirurgical pour appendicectomie",
-        "frequency": "Unique"
+        "examName": "périmètre crânien",
+        "result": "Résultats anormaux confirmant le diagnostic",
+        "anatomy": "Zone concernée",
+        "requestDate": "2023-03-15"
+      }
+    ],
+    "treatments": [
+      {
+        "drugName": "mouche-bébé",
+        "quantity": "1 boite",
+        "duration": "7 jours",
+        "storage": "Sec",
+        "instruction": "Prendre pendant les repas",
+        "frequency": "2 fois par jour"
+      }
+    ]
+  },
+  {
+    "id": "CAS-2023-017",
+    "status": "PENDING",
+    "submissionDate": "2023-12-17",
+    "patient": {
+      "id": "PAT-18041",
+      "birthDate": "2017-05-05",
+      "civilStatus": "Célibataire",
+      "job": "Écolier",
+      "bloodGroup": "A+",
+      "gender": "M",
+      "vitals": {
+        "temperature": 36.6,
+        "pulse": 100,
+        "weight": 84,
+        "height": 163,
+        "bloodPressure": "129/83",
+        "heartRate": 91
+      }
+    },
+    "consultation": {
+      "reason": "Patient se plaint de pleurs incessants",
+      "symptoms": [
+        {
+          "location": "Zone spécifique",
+          "startDate": "2023-04-13",
+          "frequency": "Progressive",
+          "duration": "9 jours",
+          "intensity": 6,
+          "triggerActivity": "Aucune"
+        }
+      ],
+      "physicalDiagnosis": [
+        {
+          "name": "Examen clinique",
+          "result": "Signes évocateurs de érythème fessier",
+          "observation": "État général conservé"
+        }
+      ]
+    },
+    "history": {
+      "familyHistory": [],
+      "allergies": [],
+      "chronicDiseases": [],
+      "surgeries": [],
+      "hospitalizations": []
+    },
+    "exams": [
+      {
+        "examName": "mesure taille",
+        "result": "Résultats anormaux confirmant le diagnostic",
+        "anatomy": "Zone concernée",
+        "requestDate": "2022-12-31"
+      }
+    ],
+    "treatments": [
+      {
+        "drugName": "sérum physiologique",
+        "quantity": "1 boite",
+        "duration": "7 jours",
+        "storage": "Sec",
+        "instruction": "Prendre pendant les repas",
+        "frequency": "2 fois par jour"
+      }
+    ]
+  },
+  {
+    "id": "CAS-2023-018",
+    "status": "PENDING",
+    "submissionDate": "2023-03-22",
+    "patient": {
+      "id": "PAT-13640",
+      "birthDate": "2022-11-01",
+      "civilStatus": "Célibataire",
+      "job": "Écolier",
+      "bloodGroup": "O-",
+      "gender": "M",
+      "vitals": {
+        "temperature": 36.8,
+        "pulse": 100,
+        "weight": 80,
+        "height": 177,
+        "bloodPressure": "121/77",
+        "heartRate": 79
+      }
+    },
+    "consultation": {
+      "reason": "Patient se plaint de toux",
+      "symptoms": [
+        {
+          "location": "Zone spécifique",
+          "startDate": "2023-09-21",
+          "frequency": "Progressive",
+          "duration": "10 jours",
+          "intensity": 7,
+          "triggerActivity": "Aucune"
+        }
+      ],
+      "physicalDiagnosis": [
+        {
+          "name": "Examen clinique",
+          "result": "Signes évocateurs de asthme du nourrisson",
+          "observation": "État général conservé"
+        }
+      ]
+    },
+    "history": {
+      "familyHistory": [
+        "Père: Hypertension"
+      ],
+      "allergies": [],
+      "chronicDiseases": [],
+      "surgeries": [],
+      "hospitalizations": []
+    },
+    "exams": [
+      {
+        "examName": "périmètre crânien",
+        "result": "Résultats anormaux confirmant le diagnostic",
+        "anatomy": "Zone concernée",
+        "requestDate": "2023-08-28"
+      }
+    ],
+    "treatments": [
+      {
+        "drugName": "amoxicilline",
+        "quantity": "1 boite",
+        "duration": "7 jours",
+        "storage": "Sec",
+        "instruction": "Prendre pendant les repas",
+        "frequency": "2 fois par jour"
+      }
+    ]
+  },
+  {
+    "id": "CAS-2023-019",
+    "status": "VALIDATED",
+    "submissionDate": "2023-06-08",
+    "patient": {
+      "id": "PAT-26347",
+      "birthDate": "2005-03-20",
+      "civilStatus": "Divorcé",
+      "job": "Commerçant",
+      "bloodGroup": "O-",
+      "gender": "M",
+      "vitals": {
+        "temperature": 36.8,
+        "pulse": 88,
+        "weight": 75,
+        "height": 177,
+        "bloodPressure": "135/90",
+        "heartRate": 79
+      }
+    },
+    "consultation": {
+      "reason": "Patient se plaint de vertige",
+      "symptoms": [
+        {
+          "location": "Zone spécifique",
+          "startDate": "2023-11-27",
+          "frequency": "Progressive",
+          "duration": "7 jours",
+          "intensity": 4,
+          "triggerActivity": "Aucune"
+        }
+      ],
+      "physicalDiagnosis": [
+        {
+          "name": "Examen clinique",
+          "result": "Signes évocateurs de tremblements essentiels",
+          "observation": "État général conservé"
+        }
+      ]
+    },
+    "history": {
+      "familyHistory": [],
+      "allergies": [],
+      "chronicDiseases": [
+        {
+          "name": "tremblements essentiels",
+          "startDate": "2020-01-01",
+          "observation": "Suivi régulier",
+          "treatments": "valproate"
+        }
+      ],
+      "surgeries": [],
+      "hospitalizations": []
+    },
+    "exams": [
+      {
+        "examName": "emg",
+        "result": "Résultats anormaux confirmant le diagnostic",
+        "anatomy": "Zone concernée",
+        "requestDate": "2023-12-31"
+      }
+    ],
+    "treatments": [
+      {
+        "drugName": "valproate",
+        "quantity": "1 boite",
+        "duration": "7 jours",
+        "storage": "Sec",
+        "instruction": "Prendre pendant les repas",
+        "frequency": "2 fois par jour"
+      }
+    ]
+  },
+  {
+    "id": "CAS-2023-020",
+    "status": "PENDING",
+    "submissionDate": "2023-09-05",
+    "patient": {
+      "id": "PAT-82196",
+      "birthDate": "1953-07-04",
+      "civilStatus": "Veuf",
+      "job": "Sans emploi",
+      "bloodGroup": "A-",
+      "gender": "F",
+      "vitals": {
+        "temperature": 37.1,
+        "pulse": 94,
+        "weight": 88,
+        "height": 169,
+        "bloodPressure": "137/81",
+        "heartRate": 78
+      }
+    },
+    "consultation": {
+      "reason": "Patient se plaint de perte de connaissance",
+      "symptoms": [
+        {
+          "location": "Zone spécifique",
+          "startDate": "2023-11-23",
+          "frequency": "Intermittente",
+          "duration": "3 jours",
+          "intensity": 3,
+          "triggerActivity": "Aucune"
+        }
+      ],
+      "physicalDiagnosis": [
+        {
+          "name": "Examen clinique",
+          "result": "Signes évocateurs de sciatique",
+          "observation": "État général conservé"
+        }
+      ]
+    },
+    "history": {
+      "familyHistory": [],
+      "allergies": [
+        {
+          "name": "Pénicilline",
+          "manifestation": "Urticaire",
+          "trigger": "Prise médicament"
+        }
+      ],
+      "chronicDiseases": [],
+      "surgeries": [],
+      "hospitalizations": []
+    },
+    "exams": [
+      {
+        "examName": "doppler tsa",
+        "result": "Résultats anormaux confirmant le diagnostic",
+        "anatomy": "Zone concernée",
+        "requestDate": "2023-01-26"
+      }
+    ],
+    "treatments": [
+      {
+        "drugName": "antiépileptique",
+        "quantity": "1 boite",
+        "duration": "7 jours",
+        "storage": "Sec",
+        "instruction": "Prendre pendant les repas",
+        "frequency": "2 fois par jour"
+      }
+    ]
+  },
+  {
+    "id": "CAS-2023-021",
+    "status": "PENDING",
+    "submissionDate": "2023-12-24",
+    "patient": {
+      "id": "PAT-50919",
+      "birthDate": "1969-08-21",
+      "civilStatus": "Célibataire",
+      "job": "Commerçant",
+      "bloodGroup": "B-",
+      "gender": "M",
+      "vitals": {
+        "temperature": 36.7,
+        "pulse": 74,
+        "weight": 53,
+        "height": 189,
+        "bloodPressure": "124/87",
+        "heartRate": 72
+      }
+    },
+    "consultation": {
+      "reason": "Patient se plaint de mal de tête",
+      "symptoms": [
+        {
+          "location": "Zone spécifique",
+          "startDate": "2023-01-12",
+          "frequency": "Progressive",
+          "duration": "10 jours",
+          "intensity": 3,
+          "triggerActivity": "Aucune"
+        }
+      ],
+      "physicalDiagnosis": [
+        {
+          "name": "Examen clinique",
+          "result": "Signes évocateurs de sla",
+          "observation": "État général conservé"
+        }
+      ]
+    },
+    "history": {
+      "familyHistory": [],
+      "allergies": [],
+      "chronicDiseases": [
+        {
+          "name": "sla",
+          "startDate": "2020-01-01",
+          "observation": "Suivi régulier",
+          "treatments": "thrombolyse"
+        }
+      ],
+      "surgeries": [],
+      "hospitalizations": []
+    },
+    "exams": [
+      {
+        "examName": "irm cérébrale",
+        "result": "Résultats anormaux confirmant le diagnostic",
+        "anatomy": "Zone concernée",
+        "requestDate": "2023-03-28"
+      }
+    ],
+    "treatments": [
+      {
+        "drugName": "thrombolyse",
+        "quantity": "1 boite",
+        "duration": "7 jours",
+        "storage": "Sec",
+        "instruction": "Prendre pendant les repas",
+        "frequency": "2 fois par jour"
+      }
+    ]
+  },
+  {
+    "id": "CAS-2023-022",
+    "status": "PENDING",
+    "submissionDate": "2023-01-07",
+    "patient": {
+      "id": "PAT-17807",
+      "birthDate": "1976-10-17",
+      "civilStatus": "Célibataire",
+      "job": "Sans emploi",
+      "bloodGroup": "O+",
+      "gender": "M",
+      "vitals": {
+        "temperature": 36.6,
+        "pulse": 75,
+        "weight": 79,
+        "height": 187,
+        "bloodPressure": "118/85",
+        "heartRate": 86
+      }
+    },
+    "consultation": {
+      "reason": "Patient se plaint de paralysie",
+      "symptoms": [
+        {
+          "location": "Zone spécifique",
+          "startDate": "2023-06-05",
+          "frequency": "Progressive",
+          "duration": "7 jours",
+          "intensity": 3,
+          "triggerActivity": "Aucune"
+        }
+      ],
+      "physicalDiagnosis": [
+        {
+          "name": "Examen clinique",
+          "result": "Signes évocateurs de sclérose en plaques",
+          "observation": "État général conservé"
+        }
+      ]
+    },
+    "history": {
+      "familyHistory": [
+        "Père: Hypertension"
+      ],
+      "allergies": [],
+      "chronicDiseases": [],
+      "surgeries": [],
+      "hospitalizations": []
+    },
+    "exams": [
+      {
+        "examName": "emg",
+        "result": "Résultats anormaux confirmant le diagnostic",
+        "anatomy": "Zone concernée",
+        "requestDate": "2023-08-30"
+      }
+    ],
+    "treatments": [
+      {
+        "drugName": "levodopa",
+        "quantity": "1 boite",
+        "duration": "7 jours",
+        "storage": "Sec",
+        "instruction": "Prendre pendant les repas",
+        "frequency": "2 fois par jour"
+      }
+    ]
+  },
+  {
+    "id": "CAS-2023-023",
+    "status": "VALIDATED",
+    "submissionDate": "2023-09-18",
+    "patient": {
+      "id": "PAT-12584",
+      "birthDate": "1947-06-01",
+      "civilStatus": "Célibataire",
+      "job": "Ouvrier",
+      "bloodGroup": "B-",
+      "gender": "F",
+      "vitals": {
+        "temperature": 37,
+        "pulse": 70,
+        "weight": 69,
+        "height": 190,
+        "bloodPressure": "129/76",
+        "heartRate": 83
+      }
+    },
+    "consultation": {
+      "reason": "Patient se plaint de céphalée",
+      "symptoms": [
+        {
+          "location": "Zone spécifique",
+          "startDate": "2023-10-15",
+          "frequency": "Constante",
+          "duration": "6 jours",
+          "intensity": 9,
+          "triggerActivity": "Aucune"
+        }
+      ],
+      "physicalDiagnosis": [
+        {
+          "name": "Examen clinique",
+          "result": "Signes évocateurs de parkinson",
+          "observation": "État général conservé"
+        }
+      ]
+    },
+    "history": {
+      "familyHistory": [],
+      "allergies": [],
+      "chronicDiseases": [],
+      "surgeries": [],
+      "hospitalizations": []
+    },
+    "exams": [
+      {
+        "examName": "ponction lombaire",
+        "result": "Résultats anormaux confirmant le diagnostic",
+        "anatomy": "Zone concernée",
+        "requestDate": "2023-08-31"
+      }
+    ],
+    "treatments": [
+      {
+        "drugName": "valproate",
+        "quantity": "1 boite",
+        "duration": "7 jours",
+        "storage": "Sec",
+        "instruction": "Prendre pendant les repas",
+        "frequency": "2 fois par jour"
+      }
+    ]
+  },
+  {
+    "id": "CAS-2023-024",
+    "status": "PENDING",
+    "submissionDate": "2023-03-27",
+    "patient": {
+      "id": "PAT-10927",
+      "birthDate": "1970-01-27",
+      "civilStatus": "Divorcé",
+      "job": "Commerçant",
+      "bloodGroup": "AB+",
+      "gender": "M",
+      "vitals": {
+        "temperature": 36.6,
+        "pulse": 69,
+        "weight": 81,
+        "height": 188,
+        "bloodPressure": "140/75",
+        "heartRate": 68
+      }
+    },
+    "consultation": {
+      "reason": "Patient se plaint de fourmillement",
+      "symptoms": [
+        {
+          "location": "Zone spécifique",
+          "startDate": "2023-01-30",
+          "frequency": "Intermittente",
+          "duration": "2 jours",
+          "intensity": 5,
+          "triggerActivity": "Aucune"
+        }
+      ],
+      "physicalDiagnosis": [
+        {
+          "name": "Examen clinique",
+          "result": "Signes évocateurs de sciatique",
+          "observation": "État général conservé"
+        }
+      ]
+    },
+    "history": {
+      "familyHistory": [
+        "Père: Hypertension"
+      ],
+      "allergies": [],
+      "chronicDiseases": [
+        {
+          "name": "sciatique",
+          "startDate": "2020-01-01",
+          "observation": "Suivi régulier",
+          "treatments": "lamotrigine"
+        }
+      ],
+      "surgeries": [],
+      "hospitalizations": []
+    },
+    "exams": [
+      {
+        "examName": "emg",
+        "result": "Résultats anormaux confirmant le diagnostic",
+        "anatomy": "Zone concernée",
+        "requestDate": "2023-05-11"
+      }
+    ],
+    "treatments": [
+      {
+        "drugName": "lamotrigine",
+        "quantity": "1 boite",
+        "duration": "7 jours",
+        "storage": "Sec",
+        "instruction": "Prendre pendant les repas",
+        "frequency": "2 fois par jour"
+      }
+    ]
+  },
+  {
+    "id": "CAS-2023-025",
+    "status": "PENDING",
+    "submissionDate": "2023-04-14",
+    "patient": {
+      "id": "PAT-55932",
+      "birthDate": "1961-02-25",
+      "civilStatus": "Marié",
+      "job": "Ingénieur",
+      "bloodGroup": "O-",
+      "gender": "F",
+      "vitals": {
+        "temperature": 36.6,
+        "pulse": 74,
+        "weight": 50,
+        "height": 159,
+        "bloodPressure": "138/74",
+        "heartRate": 83
+      }
+    },
+    "consultation": {
+      "reason": "Patient se plaint de douleur articulaire",
+      "symptoms": [
+        {
+          "location": "Zone spécifique",
+          "startDate": "2023-10-29",
+          "frequency": "Constante",
+          "duration": "6 jours",
+          "intensity": 6,
+          "triggerActivity": "Aucune"
+        }
+      ],
+      "physicalDiagnosis": [
+        {
+          "name": "Examen clinique",
+          "result": "Signes évocateurs de ménisque",
+          "observation": "État général conservé"
+        }
+      ]
+    },
+    "history": {
+      "familyHistory": [
+        "Père: Hypertension"
+      ],
+      "allergies": [],
+      "chronicDiseases": [],
+      "surgeries": [],
+      "hospitalizations": []
+    },
+    "exams": [
+      {
+        "examName": "irm ostéo-articulaire",
+        "result": "Résultats anormaux confirmant le diagnostic",
+        "anatomy": "Zone concernée",
+        "requestDate": "2023-09-16"
+      }
+    ],
+    "treatments": [
+      {
+        "drugName": "infiltration",
+        "quantity": "1 boite",
+        "duration": "7 jours",
+        "storage": "Sec",
+        "instruction": "Prendre pendant les repas",
+        "frequency": "2 fois par jour"
+      }
+    ]
+  },
+  {
+    "id": "CAS-2023-026",
+    "status": "PENDING",
+    "submissionDate": "2023-08-02",
+    "patient": {
+      "id": "PAT-48828",
+      "birthDate": "1964-08-22",
+      "civilStatus": "Veuf",
+      "job": "Enseignant",
+      "bloodGroup": "O+",
+      "gender": "F",
+      "vitals": {
+        "temperature": 37.1,
+        "pulse": 67,
+        "weight": 77,
+        "height": 170,
+        "bloodPressure": "111/77",
+        "heartRate": 93
+      }
+    },
+    "consultation": {
+      "reason": "Patient se plaint de boiterie",
+      "symptoms": [
+        {
+          "location": "Zone spécifique",
+          "startDate": "2023-05-22",
+          "frequency": "Constante",
+          "duration": "5 jours",
+          "intensity": 7,
+          "triggerActivity": "Aucune"
+        }
+      ],
+      "physicalDiagnosis": [
+        {
+          "name": "Examen clinique",
+          "result": "Signes évocateurs de rupture ligament croisé",
+          "observation": "État général conservé"
+        }
+      ]
+    },
+    "history": {
+      "familyHistory": [
+        "Père: Hypertension"
+      ],
+      "allergies": [],
+      "chronicDiseases": [],
+      "surgeries": [],
+      "hospitalizations": []
+    },
+    "exams": [
+      {
+        "examName": "scanner osseux",
+        "result": "Résultats anormaux confirmant le diagnostic",
+        "anatomy": "Zone concernée",
+        "requestDate": "2023-02-05"
+      }
+    ],
+    "treatments": [
+      {
+        "drugName": "attelle",
+        "quantity": "1 boite",
+        "duration": "7 jours",
+        "storage": "Sec",
+        "instruction": "Prendre pendant les repas",
+        "frequency": "2 fois par jour"
+      }
+    ]
+  },
+  {
+    "id": "CAS-2023-027",
+    "status": "PENDING",
+    "submissionDate": "2023-04-30",
+    "patient": {
+      "id": "PAT-39921",
+      "birthDate": "1954-10-26",
+      "civilStatus": "Veuf",
+      "job": "Ouvrier",
+      "bloodGroup": "AB+",
+      "gender": "F",
+      "vitals": {
+        "temperature": 36.7,
+        "pulse": 98,
+        "weight": 58,
+        "height": 166,
+        "bloodPressure": "115/88",
+        "heartRate": 84
+      }
+    },
+    "consultation": {
+      "reason": "Patient se plaint de impuissance fonctionnelle",
+      "symptoms": [
+        {
+          "location": "Zone spécifique",
+          "startDate": "2023-12-06",
+          "frequency": "Progressive",
+          "duration": "8 jours",
+          "intensity": 6,
+          "triggerActivity": "Aucune"
+        }
+      ],
+      "physicalDiagnosis": [
+        {
+          "name": "Examen clinique",
+          "result": "Signes évocateurs de entorse",
+          "observation": "État général conservé"
+        }
+      ]
+    },
+    "history": {
+      "familyHistory": [
+        "Père: Hypertension"
+      ],
+      "allergies": [],
+      "chronicDiseases": [],
+      "surgeries": [],
+      "hospitalizations": []
+    },
+    "exams": [
+      {
+        "examName": "radio",
+        "result": "Résultats anormaux confirmant le diagnostic",
+        "anatomy": "Zone concernée",
+        "requestDate": "2023-11-15"
+      }
+    ],
+    "treatments": [
+      {
+        "drugName": "infiltration",
+        "quantity": "1 boite",
+        "duration": "7 jours",
+        "storage": "Sec",
+        "instruction": "Prendre pendant les repas",
+        "frequency": "2 fois par jour"
+      }
+    ]
+  },
+  {
+    "id": "CAS-2023-028",
+    "status": "VALIDATED",
+    "submissionDate": "2023-09-23",
+    "patient": {
+      "id": "PAT-15611",
+      "birthDate": "1981-05-27",
+      "civilStatus": "Célibataire",
+      "job": "Enseignant",
+      "bloodGroup": "B-",
+      "gender": "M",
+      "vitals": {
+        "temperature": 36.9,
+        "pulse": 61,
+        "weight": 88,
+        "height": 155,
+        "bloodPressure": "121/89",
+        "heartRate": 80
+      }
+    },
+    "consultation": {
+      "reason": "Patient se plaint de boiterie",
+      "symptoms": [
+        {
+          "location": "Zone spécifique",
+          "startDate": "2023-05-27",
+          "frequency": "Progressive",
+          "duration": "6 jours",
+          "intensity": 3,
+          "triggerActivity": "Aucune"
+        }
+      ],
+      "physicalDiagnosis": [
+        {
+          "name": "Examen clinique",
+          "result": "Signes évocateurs de entorse",
+          "observation": "État général conservé"
+        }
+      ]
+    },
+    "history": {
+      "familyHistory": [
+        "Père: Hypertension"
+      ],
+      "allergies": [],
+      "chronicDiseases": [
+        {
+          "name": "entorse",
+          "startDate": "2020-01-01",
+          "observation": "Suivi régulier",
+          "treatments": "ostéosynthèse"
+        }
+      ],
+      "surgeries": [],
+      "hospitalizations": []
+    },
+    "exams": [
+      {
+        "examName": "radio",
+        "result": "Résultats anormaux confirmant le diagnostic",
+        "anatomy": "Zone concernée",
+        "requestDate": "2023-04-12"
+      }
+    ],
+    "treatments": [
+      {
+        "drugName": "ostéosynthèse",
+        "quantity": "1 boite",
+        "duration": "7 jours",
+        "storage": "Sec",
+        "instruction": "Prendre pendant les repas",
+        "frequency": "2 fois par jour"
+      }
+    ]
+  },
+  {
+    "id": "CAS-2023-029",
+    "status": "PENDING",
+    "submissionDate": "2023-06-25",
+    "patient": {
+      "id": "PAT-79869",
+      "birthDate": "1991-06-18",
+      "civilStatus": "Divorcé",
+      "job": "Sans emploi",
+      "bloodGroup": "A+",
+      "gender": "M",
+      "vitals": {
+        "temperature": 36.5,
+        "pulse": 63,
+        "weight": 61,
+        "height": 189,
+        "bloodPressure": "130/78",
+        "heartRate": 93
+      }
+    },
+    "consultation": {
+      "reason": "Patient se plaint de cervicalgie",
+      "symptoms": [
+        {
+          "location": "Zone spécifique",
+          "startDate": "2023-04-17",
+          "frequency": "Intermittente",
+          "duration": "5 jours",
+          "intensity": 9,
+          "triggerActivity": "Aucune"
+        }
+      ],
+      "physicalDiagnosis": [
+        {
+          "name": "Examen clinique",
+          "result": "Signes évocateurs de luxation",
+          "observation": "État général conservé"
+        }
+      ]
+    },
+    "history": {
+      "familyHistory": [],
+      "allergies": [],
+      "chronicDiseases": [],
+      "surgeries": [],
+      "hospitalizations": []
+    },
+    "exams": [
+      {
+        "examName": "irm ostéo-articulaire",
+        "result": "Résultats anormaux confirmant le diagnostic",
+        "anatomy": "Zone concernée",
+        "requestDate": "2023-12-20"
+      }
+    ],
+    "treatments": [
+      {
+        "drugName": "attelle",
+        "quantity": "1 boite",
+        "duration": "7 jours",
+        "storage": "Sec",
+        "instruction": "Prendre pendant les repas",
+        "frequency": "2 fois par jour"
+      }
+    ]
+  },
+  {
+    "id": "CAS-2023-030",
+    "status": "VALIDATED",
+    "submissionDate": "2023-09-29",
+    "patient": {
+      "id": "PAT-10155",
+      "birthDate": "1950-10-15",
+      "civilStatus": "Veuf",
+      "job": "Sans emploi",
+      "bloodGroup": "B+",
+      "gender": "M",
+      "vitals": {
+        "temperature": 37.1,
+        "pulse": 70,
+        "weight": 97,
+        "height": 161,
+        "bloodPressure": "128/86",
+        "heartRate": 90
+      }
+    },
+    "consultation": {
+      "reason": "Patient se plaint de raideur",
+      "symptoms": [
+        {
+          "location": "Zone spécifique",
+          "startDate": "2023-02-06",
+          "frequency": "Progressive",
+          "duration": "6 jours",
+          "intensity": 5,
+          "triggerActivity": "Aucune"
+        }
+      ],
+      "physicalDiagnosis": [
+        {
+          "name": "Examen clinique",
+          "result": "Signes évocateurs de luxation",
+          "observation": "État général conservé"
+        }
+      ]
+    },
+    "history": {
+      "familyHistory": [],
+      "allergies": [],
+      "chronicDiseases": [],
+      "surgeries": [],
+      "hospitalizations": []
+    },
+    "exams": [
+      {
+        "examName": "irm ostéo-articulaire",
+        "result": "Résultats anormaux confirmant le diagnostic",
+        "anatomy": "Zone concernée",
+        "requestDate": "2023-10-06"
+      }
+    ],
+    "treatments": [
+      {
+        "drugName": "prothèse",
+        "quantity": "1 boite",
+        "duration": "7 jours",
+        "storage": "Sec",
+        "instruction": "Prendre pendant les repas",
+        "frequency": "2 fois par jour"
+      }
+    ]
+  },
+  {
+    "id": "CAS-2023-031",
+    "status": "VALIDATED",
+    "submissionDate": "2023-03-26",
+    "patient": {
+      "id": "PAT-67597",
+      "birthDate": "1977-06-29",
+      "civilStatus": "Marié",
+      "job": "Ouvrier",
+      "bloodGroup": "B+",
+      "gender": "F",
+      "vitals": {
+        "temperature": 36.7,
+        "pulse": 74,
+        "weight": 87,
+        "height": 158,
+        "bloodPressure": "137/90",
+        "heartRate": 83
+      }
+    },
+    "consultation": {
+      "reason": "Patient se plaint de douleur abdominale aiguë",
+      "symptoms": [
+        {
+          "location": "Zone spécifique",
+          "startDate": "2023-10-26",
+          "frequency": "Constante",
+          "duration": "3 jours",
+          "intensity": 4,
+          "triggerActivity": "Aucune"
+        }
+      ],
+      "physicalDiagnosis": [
+        {
+          "name": "Examen clinique",
+          "result": "Signes évocateurs de hernie inguinale",
+          "observation": "État général conservé"
+        }
+      ]
+    },
+    "history": {
+      "familyHistory": [],
+      "allergies": [],
+      "chronicDiseases": [
+        {
+          "name": "hernie inguinale",
+          "startDate": "2020-01-01",
+          "observation": "Suivi régulier",
+          "treatments": "exérèse"
+        }
+      ],
+      "surgeries": [],
+      "hospitalizations": []
+    },
+    "exams": [
+      {
+        "examName": "échographie",
+        "result": "Résultats anormaux confirmant le diagnostic",
+        "anatomy": "Zone concernée",
+        "requestDate": "2023-08-25"
+      }
+    ],
+    "treatments": [
+      {
+        "drugName": "exérèse",
+        "quantity": "1 boite",
+        "duration": "7 jours",
+        "storage": "Sec",
+        "instruction": "Prendre pendant les repas",
+        "frequency": "2 fois par jour"
+      }
+    ]
+  },
+  {
+    "id": "CAS-2023-032",
+    "status": "PENDING",
+    "submissionDate": "2023-11-03",
+    "patient": {
+      "id": "PAT-83488",
+      "birthDate": "1952-07-16",
+      "civilStatus": "Veuf",
+      "job": "Ouvrier",
+      "bloodGroup": "A-",
+      "gender": "M",
+      "vitals": {
+        "temperature": 36.8,
+        "pulse": 72,
+        "weight": 96,
+        "height": 158,
+        "bloodPressure": "140/83",
+        "heartRate": 79
+      }
+    },
+    "consultation": {
+      "reason": "Patient se plaint de défense abdominale",
+      "symptoms": [
+        {
+          "location": "Zone spécifique",
+          "startDate": "2023-06-24",
+          "frequency": "Progressive",
+          "duration": "2 jours",
+          "intensity": 7,
+          "triggerActivity": "Aucune"
+        }
+      ],
+      "physicalDiagnosis": [
+        {
+          "name": "Examen clinique",
+          "result": "Signes évocateurs de polype",
+          "observation": "État général conservé"
+        }
+      ]
+    },
+    "history": {
+      "familyHistory": [],
+      "allergies": [
+        {
+          "name": "Pénicilline",
+          "manifestation": "Urticaire",
+          "trigger": "Prise médicament"
+        }
+      ],
+      "chronicDiseases": [],
+      "surgeries": [],
+      "hospitalizations": []
+    },
+    "exams": [
+      {
+        "examName": "scanner abdominal",
+        "result": "Résultats anormaux confirmant le diagnostic",
+        "anatomy": "Zone concernée",
+        "requestDate": "2023-10-16"
+      }
+    ],
+    "treatments": [
+      {
+        "drugName": "suture",
+        "quantity": "1 boite",
+        "duration": "7 jours",
+        "storage": "Sec",
+        "instruction": "Prendre pendant les repas",
+        "frequency": "2 fois par jour"
+      }
+    ]
+  },
+  {
+    "id": "CAS-2023-033",
+    "status": "VALIDATED",
+    "submissionDate": "2023-05-26",
+    "patient": {
+      "id": "PAT-84996",
+      "birthDate": "1977-10-25",
+      "civilStatus": "Marié",
+      "job": "Enseignant",
+      "bloodGroup": "A-",
+      "gender": "F",
+      "vitals": {
+        "temperature": 37,
+        "pulse": 93,
+        "weight": 55,
+        "height": 165,
+        "bloodPressure": "110/86",
+        "heartRate": 65
+      }
+    },
+    "consultation": {
+      "reason": "Patient se plaint de douleur abdominale aiguë",
+      "symptoms": [
+        {
+          "location": "Zone spécifique",
+          "startDate": "2023-06-21",
+          "frequency": "Intermittente",
+          "duration": "10 jours",
+          "intensity": 8,
+          "triggerActivity": "Aucune"
+        }
+      ],
+      "physicalDiagnosis": [
+        {
+          "name": "Examen clinique",
+          "result": "Signes évocateurs de hémorroïdes",
+          "observation": "État général conservé"
+        }
+      ]
+    },
+    "history": {
+      "familyHistory": [],
+      "allergies": [
+        {
+          "name": "Pénicilline",
+          "manifestation": "Urticaire",
+          "trigger": "Prise médicament"
+        }
+      ],
+      "chronicDiseases": [],
+      "surgeries": [],
+      "hospitalizations": []
+    },
+    "exams": [
+      {
+        "examName": "tca",
+        "result": "Résultats anormaux confirmant le diagnostic",
+        "anatomy": "Zone concernée",
+        "requestDate": "2023-10-24"
+      }
+    ],
+    "treatments": [
+      {
+        "drugName": "drainage",
+        "quantity": "1 boite",
+        "duration": "7 jours",
+        "storage": "Sec",
+        "instruction": "Prendre pendant les repas",
+        "frequency": "2 fois par jour"
+      }
+    ]
+  },
+  {
+    "id": "CAS-2023-034",
+    "status": "PENDING",
+    "submissionDate": "2023-04-16",
+    "patient": {
+      "id": "PAT-80153",
+      "birthDate": "1973-12-14",
+      "civilStatus": "Célibataire",
+      "job": "Ingénieur",
+      "bloodGroup": "O-",
+      "gender": "M",
+      "vitals": {
+        "temperature": 36.8,
+        "pulse": 61,
+        "weight": 100,
+        "height": 186,
+        "bloodPressure": "135/80",
+        "heartRate": 86
+      }
+    },
+    "consultation": {
+      "reason": "Patient se plaint de saignement",
+      "symptoms": [
+        {
+          "location": "Zone spécifique",
+          "startDate": "2023-07-30",
+          "frequency": "Progressive",
+          "duration": "6 jours",
+          "intensity": 4,
+          "triggerActivity": "Aucune"
+        }
+      ],
+      "physicalDiagnosis": [
+        {
+          "name": "Examen clinique",
+          "result": "Signes évocateurs de hémorroïdes",
+          "observation": "État général conservé"
+        }
+      ]
+    },
+    "history": {
+      "familyHistory": [],
+      "allergies": [
+        {
+          "name": "Pénicilline",
+          "manifestation": "Urticaire",
+          "trigger": "Prise médicament"
+        }
+      ],
+      "chronicDiseases": [],
+      "surgeries": [],
+      "hospitalizations": []
+    },
+    "exams": [
+      {
+        "examName": "tpm",
+        "result": "Résultats anormaux confirmant le diagnostic",
+        "anatomy": "Zone concernée",
+        "requestDate": "2023-11-04"
+      }
+    ],
+    "treatments": [
+      {
+        "drugName": "coelioscopie",
+        "quantity": "1 boite",
+        "duration": "7 jours",
+        "storage": "Sec",
+        "instruction": "Prendre pendant les repas",
+        "frequency": "2 fois par jour"
+      }
+    ]
+  },
+  {
+    "id": "CAS-2023-035",
+    "status": "PENDING",
+    "submissionDate": "2023-03-30",
+    "patient": {
+      "id": "PAT-93533",
+      "birthDate": "1966-04-26",
+      "civilStatus": "Marié",
+      "job": "Retraité",
+      "bloodGroup": "A+",
+      "gender": "M",
+      "vitals": {
+        "temperature": 37.4,
+        "pulse": 64,
+        "weight": 76,
+        "height": 188,
+        "bloodPressure": "126/82",
+        "heartRate": 100
+      }
+    },
+    "consultation": {
+      "reason": "Patient se plaint de saignement",
+      "symptoms": [
+        {
+          "location": "Zone spécifique",
+          "startDate": "2023-01-19",
+          "frequency": "Constante",
+          "duration": "3 jours",
+          "intensity": 4,
+          "triggerActivity": "Aucune"
+        }
+      ],
+      "physicalDiagnosis": [
+        {
+          "name": "Examen clinique",
+          "result": "Signes évocateurs de péritonite",
+          "observation": "État général conservé"
+        }
+      ]
+    },
+    "history": {
+      "familyHistory": [
+        "Père: Hypertension"
+      ],
+      "allergies": [],
+      "chronicDiseases": [
+        {
+          "name": "péritonite",
+          "startDate": "2020-01-01",
+          "observation": "Suivi régulier",
+          "treatments": "cholécystectomie"
+        }
+      ],
+      "surgeries": [],
+      "hospitalizations": []
+    },
+    "exams": [
+      {
+        "examName": "groupage sanguin",
+        "result": "Résultats anormaux confirmant le diagnostic",
+        "anatomy": "Zone concernée",
+        "requestDate": "2023-07-21"
+      }
+    ],
+    "treatments": [
+      {
+        "drugName": "cholécystectomie",
+        "quantity": "1 boite",
+        "duration": "7 jours",
+        "storage": "Sec",
+        "instruction": "Prendre pendant les repas",
+        "frequency": "2 fois par jour"
+      }
+    ]
+  },
+  {
+    "id": "CAS-2023-036",
+    "status": "PENDING",
+    "submissionDate": "2023-10-08",
+    "patient": {
+      "id": "PAT-40036",
+      "birthDate": "1989-04-12",
+      "civilStatus": "Veuf",
+      "job": "Enseignant",
+      "bloodGroup": "B-",
+      "gender": "M",
+      "vitals": {
+        "temperature": 36.7,
+        "pulse": 99,
+        "weight": 99,
+        "height": 187,
+        "bloodPressure": "114/85",
+        "heartRate": 76
+      }
+    },
+    "consultation": {
+      "reason": "Patient se plaint de vomissement fécaloïde",
+      "symptoms": [
+        {
+          "location": "Zone spécifique",
+          "startDate": "2023-12-28",
+          "frequency": "Constante",
+          "duration": "5 jours",
+          "intensity": 6,
+          "triggerActivity": "Aucune"
+        }
+      ],
+      "physicalDiagnosis": [
+        {
+          "name": "Examen clinique",
+          "result": "Signes évocateurs de kyste pilonidal",
+          "observation": "État général conservé"
+        }
+      ]
+    },
+    "history": {
+      "familyHistory": [],
+      "allergies": [],
+      "chronicDiseases": [],
+      "surgeries": [],
+      "hospitalizations": []
+    },
+    "exams": [
+      {
+        "examName": "échographie",
+        "result": "Résultats anormaux confirmant le diagnostic",
+        "anatomy": "Zone concernée",
+        "requestDate": "2023-09-21"
+      }
+    ],
+    "treatments": [
+      {
+        "drugName": "suture",
+        "quantity": "1 boite",
+        "duration": "7 jours",
+        "storage": "Sec",
+        "instruction": "Prendre pendant les repas",
+        "frequency": "2 fois par jour"
+      }
+    ]
+  },
+  {
+    "id": "CAS-2023-037",
+    "status": "PENDING",
+    "submissionDate": "2023-02-16",
+    "patient": {
+      "id": "PAT-45868",
+      "birthDate": "1980-03-20",
+      "civilStatus": "Célibataire",
+      "job": "Enseignant",
+      "bloodGroup": "O-",
+      "gender": "F",
+      "vitals": {
+        "temperature": 36.6,
+        "pulse": 62,
+        "weight": 51,
+        "height": 155,
+        "bloodPressure": "137/90",
+        "heartRate": 60
+      }
+    },
+    "consultation": {
+      "reason": "Patient se plaint de Fatigue générale",
+      "symptoms": [
+        {
+          "location": "Corps entier",
+          "startDate": "2023-02-10",
+          "frequency": "Constante",
+          "duration": "9 jours",
+          "intensity": 7,
+          "triggerActivity": "Aucune"
+        }
+      ],
+      "physicalDiagnosis": [
+        {
+          "name": "Examen clinique",
+          "result": "Signes évocateurs de Grippe saisonnière",
+          "observation": "État général conservé"
+        }
+      ]
+    },
+    "history": {
+      "familyHistory": [],
+      "allergies": [],
+      "chronicDiseases": [],
+      "surgeries": [],
+      "hospitalizations": []
+    },
+    "exams": [
+      {
+        "examName": "Prise de sang",
+        "result": "Résultats anormaux confirmant le diagnostic",
+        "anatomy": "Zone concernée",
+        "requestDate": "2023-07-17"
+      }
+    ],
+    "treatments": [
+      {
+        "drugName": "Paracétamol",
+        "quantity": "1 boite",
+        "duration": "7 jours",
+        "storage": "Sec",
+        "instruction": "Prendre pendant les repas",
+        "frequency": "2 fois par jour"
+      }
+    ]
+  },
+  {
+    "id": "CAS-2023-038",
+    "status": "PENDING",
+    "submissionDate": "2023-11-25",
+    "patient": {
+      "id": "PAT-27975",
+      "birthDate": "2001-11-01",
+      "civilStatus": "Marié",
+      "job": "Ingénieur",
+      "bloodGroup": "AB+",
+      "gender": "M",
+      "vitals": {
+        "temperature": 37.4,
+        "pulse": 87,
+        "weight": 81,
+        "height": 183,
+        "bloodPressure": "120/82",
+        "heartRate": 86
+      }
+    },
+    "consultation": {
+      "reason": "Patient se plaint de Fatigue générale",
+      "symptoms": [
+        {
+          "location": "Corps entier",
+          "startDate": "2023-11-18",
+          "frequency": "Progressive",
+          "duration": "9 jours",
+          "intensity": 8,
+          "triggerActivity": "Aucune"
+        }
+      ],
+      "physicalDiagnosis": [
+        {
+          "name": "Examen clinique",
+          "result": "Signes évocateurs de Grippe saisonnière",
+          "observation": "État général conservé"
+        }
+      ]
+    },
+    "history": {
+      "familyHistory": [
+        "Père: Hypertension"
+      ],
+      "allergies": [],
+      "chronicDiseases": [
+        {
+          "name": "Grippe saisonnière",
+          "startDate": "2020-01-01",
+          "observation": "Suivi régulier",
+          "treatments": "Paracétamol"
+        }
+      ],
+      "surgeries": [],
+      "hospitalizations": []
+    },
+    "exams": [
+      {
+        "examName": "Prise de sang",
+        "result": "Résultats anormaux confirmant le diagnostic",
+        "anatomy": "Zone concernée",
+        "requestDate": "2023-09-14"
+      }
+    ],
+    "treatments": [
+      {
+        "drugName": "Paracétamol",
+        "quantity": "1 boite",
+        "duration": "7 jours",
+        "storage": "Sec",
+        "instruction": "Prendre pendant les repas",
+        "frequency": "2 fois par jour"
+      }
+    ]
+  },
+  {
+    "id": "CAS-2023-039",
+    "status": "PENDING",
+    "submissionDate": "2023-12-11",
+    "patient": {
+      "id": "PAT-35618",
+      "birthDate": "1979-02-05",
+      "civilStatus": "Célibataire",
+      "job": "Ingénieur",
+      "bloodGroup": "O-",
+      "gender": "F",
+      "vitals": {
+        "temperature": 37,
+        "pulse": 88,
+        "weight": 75,
+        "height": 182,
+        "bloodPressure": "125/84",
+        "heartRate": 76
+      }
+    },
+    "consultation": {
+      "reason": "Patient se plaint de Fatigue générale",
+      "symptoms": [
+        {
+          "location": "Corps entier",
+          "startDate": "2023-08-09",
+          "frequency": "Progressive",
+          "duration": "7 jours",
+          "intensity": 3,
+          "triggerActivity": "Aucune"
+        }
+      ],
+      "physicalDiagnosis": [
+        {
+          "name": "Examen clinique",
+          "result": "Signes évocateurs de Grippe saisonnière",
+          "observation": "État général conservé"
+        }
+      ]
+    },
+    "history": {
+      "familyHistory": [],
+      "allergies": [],
+      "chronicDiseases": [],
+      "surgeries": [],
+      "hospitalizations": []
+    },
+    "exams": [
+      {
+        "examName": "Prise de sang",
+        "result": "Résultats anormaux confirmant le diagnostic",
+        "anatomy": "Zone concernée",
+        "requestDate": "2023-03-05"
+      }
+    ],
+    "treatments": [
+      {
+        "drugName": "Paracétamol",
+        "quantity": "1 boite",
+        "duration": "7 jours",
+        "storage": "Sec",
+        "instruction": "Prendre pendant les repas",
+        "frequency": "2 fois par jour"
+      }
+    ]
+  },
+  {
+    "id": "CAS-2023-040",
+    "status": "PENDING",
+    "submissionDate": "2023-12-25",
+    "patient": {
+      "id": "PAT-50114",
+      "birthDate": "1955-01-06",
+      "civilStatus": "Célibataire",
+      "job": "Sans emploi",
+      "bloodGroup": "A-",
+      "gender": "M",
+      "vitals": {
+        "temperature": 37.2,
+        "pulse": 94,
+        "weight": 86,
+        "height": 153,
+        "bloodPressure": "130/72",
+        "heartRate": 89
+      }
+    },
+    "consultation": {
+      "reason": "Patient se plaint de Fatigue générale",
+      "symptoms": [
+        {
+          "location": "Corps entier",
+          "startDate": "2023-06-25",
+          "frequency": "Constante",
+          "duration": "7 jours",
+          "intensity": 8,
+          "triggerActivity": "Aucune"
+        }
+      ],
+      "physicalDiagnosis": [
+        {
+          "name": "Examen clinique",
+          "result": "Signes évocateurs de Grippe saisonnière",
+          "observation": "État général conservé"
+        }
+      ]
+    },
+    "history": {
+      "familyHistory": [],
+      "allergies": [],
+      "chronicDiseases": [],
+      "surgeries": [],
+      "hospitalizations": []
+    },
+    "exams": [
+      {
+        "examName": "Prise de sang",
+        "result": "Résultats anormaux confirmant le diagnostic",
+        "anatomy": "Zone concernée",
+        "requestDate": "2023-11-23"
+      }
+    ],
+    "treatments": [
+      {
+        "drugName": "Paracétamol",
+        "quantity": "1 boite",
+        "duration": "7 jours",
+        "storage": "Sec",
+        "instruction": "Prendre pendant les repas",
+        "frequency": "2 fois par jour"
       }
     ]
   }

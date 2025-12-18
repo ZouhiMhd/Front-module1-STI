@@ -1,36 +1,74 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# MedExpert - Plateforme de Validation de Cas Cliniques
 
-## Getting Started
+MedExpert est une application web moderne permettant aux experts médicaux de valider, réviser et classifier des cas cliniques.
 
-First, run the development server:
+## Procédure Complète : De la Réception à l'Exécution
+
+Suivez ces étapes scrupuleusement pour lancer le projet.
+
+### 1. Prérequis
+
+Assurez-vous d'avoir installé :
+*   **Node.js** (v18 ou supérieur)
+*   **npm** (v9 ou supérieur)
+*   **PostgreSQL** (ou un accès à une base de données Render/Neon)
+
+### 2. Installation
+
+Clonez le projet et installez les dépendances :
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+git clone <votre-repo-url>
+cd Front-module1-STI
+npm install
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### 3. Configuration de l'Environnement
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Créez un fichier **.env.local** à la racine du projet en copiant l'exemple :
 
-## Learn More
+```bash
+cp .env.example .env.local
+```
 
-To learn more about Next.js, take a look at the following resources:
+Remplissez les variables suivantes dans .env.local :
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```bash
+# URL de connexion à votre base de données PostgreSQL
+DATABASE_URL=postgresql://user:password@host:5432/dbname
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+# Clés secrètes (générez-les avec: node -e "console.log(require('crypto').randomBytes(32).toString('hex'))")
+JWT_SECRET=votre_secret_jwt_ici
+BETTER_AUTH_SECRET=votre_secret_auth_ici
 
-## Deploy on Vercel
+# URL de base
+BETTER_AUTH_URL=http://localhost:3000
+NEXT_PUBLIC_APP_URL=http://localhost:3000
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## 34. Initialisation de la Base de Données
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Poussez le schéma de la base de données vers votre instance PostgreSQL :
+```bash
+npm run db:push
+```
+
+### 5. Génération des Données de Test (Mock Data)
+
+Générez les cas cliniques fictifs. Cette étape crée le fichier **public/data.json**.
+Note : Le script respecte la structure stricte et n'inclut pas de champ de classification pré-calculé.
+
+```bash
+npm run data:generate
+```
+
+### 6. Lancement de l'Application
+
+Lancez le serveur de développement :
+
+```basj
+npm run dev
+
+```
+Ouvrez votre navigateur sur http://localhost:3000.

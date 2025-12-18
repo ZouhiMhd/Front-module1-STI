@@ -1,22 +1,20 @@
-// types/clinicalCase.ts
-
 export type VitalParameters = {
   temperature: number;
   pulse: number;
   weight: number;
   height: number;
-  bloodPressure: string; // ex: "120/80"
+  bloodPressure: string;
   heartRate: number;
 };
 
 export type PatientInfo = {
   id: string;
-  birthDate: string; // ISO Date
+  birthDate: string; // ISO Date "YYYY-MM-DD"
   civilStatus: string;
   job: string;
   bloodGroup: string;
   gender: 'M' | 'F';
-  lastMenstrualPeriod?: string; // DDR
+  lastMenstrualPeriod?: string;
   vitals: VitalParameters;
 };
 
@@ -29,12 +27,41 @@ export type Symptom = {
   triggerActivity: string;
 };
 
+export type Consultation = {
+  reason: string;
+  symptoms: Symptom[];
+  physicalDiagnosis: Array<{
+    name: string;
+    result: string;
+    observation: string;
+  }>;
+};
+
 export type MedicalHistory = {
-  familyHistory: string[]; // Descriptions
-  allergies: Array<{ name: string; manifestation: string; trigger: string }>;
-  chronicDiseases: Array<{ name: string; startDate: string; endDate?: string; observation: string; treatments: string }>;
-  surgeries: Array<{ name: string; date: string; treatment: string; observation: string }>;
-  hospitalizations: Array<{ startDate: string; endDate: string; description: string }>;
+  familyHistory: string[];
+  allergies: Array<{
+    name: string;
+    manifestation: string;
+    trigger: string;
+  }>;
+  chronicDiseases: Array<{
+    name: string;
+    startDate: string;
+    endDate?: string;
+    observation: string;
+    treatments: string;
+  }>;
+  surgeries: Array<{
+    name: string;
+    date: string;
+    treatment: string;
+    observation: string;
+  }>;
+  hospitalizations: Array<{
+    startDate: string;
+    endDate: string;
+    description: string;
+  }>;
 };
 
 export type ExamResult = {
@@ -44,10 +71,11 @@ export type ExamResult = {
   requestDate: string;
 };
 
-export type Prescription = {
+export type Treatment = {
   drugName: string;
   quantity: string;
   duration: string;
+  storage: string;
   instruction: string;
   frequency: string;
 };
@@ -55,15 +83,11 @@ export type Prescription = {
 export type ClinicalCase = {
   id: string;
   status: 'PENDING' | 'VALIDATED' | 'REJECTED';
-  rejectionReason?: string; // Si rejeté
+  rejectionReason?: string;
   submissionDate: string;
   patient: PatientInfo;
-  consultation: {
-    reason: string;
-    symptoms: Symptom[];
-    physicalDiagnosis: { name: string; result: string; observation: string }[];
-  };
+  consultation: Consultation;
   history: MedicalHistory;
   exams: ExamResult[];
-  treatments: Prescription[];
+  treatments: Treatment[];
 };
