@@ -52,8 +52,12 @@
   "navbar": {
     "dashboard": "Dashboard",
     "patients": "Patients",
-    "parameters": "Parameters",
-    "medicalExpert": "Medical Expert"
+    "parameters": "Settings",
+    "medicalExpert": "Medical Expert",
+    "login": "Sign In",
+    "logout": "Sign Out",
+    "profile": "My Profile",
+    "settings": "Settings"
   },
   "hero": {
     "badge": "Trusted by 500+ Medical Experts",
@@ -126,6 +130,55 @@
     "contactSales": "Contact Sales",
     "trustedBy": "Trusted by leading healthcare institutions",
     "hospital": "Hospital"
+  },
+  "profile": {
+    "title": "My Profile",
+    "subtitle": "Manage your personal, professional and account information.",
+    "breadcrumb": {
+      "home": "Home",
+      "profile": "My Profile"
+    },
+    "personal": {
+      "title": "Personal Information",
+      "subtitle": "Update your photo and personal details here.",
+      "firstName": "First Name",
+      "lastName": "Last Name",
+      "email": "Email Address",
+      "emailNote": "Email address cannot be changed.",
+      "changePhoto": "Change",
+      "removePhoto": "Remove"
+    },
+    "professional": {
+      "title": "Professional Information",
+      "subtitle": "Manage your professional details.",
+      "specialty": "Specialty"
+    },
+    "password": {
+      "title": "Change Password",
+      "subtitle": "Update your password to secure your account.",
+      "current": "Current Password",
+      "new": "New Password",
+      "confirm": "Confirm Password",
+      "change": "Change Password",
+      "changing": "Changing...",
+      "changed": "Password changed successfully"
+    },
+    "specialties": {
+      "cardiology": "Cardiology",
+      "dermatology": "Dermatology",
+      "general_medicine": "General Medicine",
+      "pediatrics": "Pediatrics",
+      "neurology": "Neurology",
+      "orthopedics": "Orthopedics",
+      "psychiatry": "Psychiatry",
+      "radiology": "Radiology",
+      "surgery": "Surgery",
+      "other": "Other"
+    },
+    "save": "Save",
+    "saving": "Saving...",
+    "saved": "Saved successfully",
+    "cancel": "Cancel"
   },
   "footer": {
     "description": "Building reliable medical datasets through expert validation. Empowering healthcare professionals with accurate clinical data.",

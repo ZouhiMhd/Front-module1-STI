@@ -4,10 +4,45 @@ import Link from "next/link";
 import Image from "next/image";
 import { useState } from "react";
 import { useTranslations } from "next-intl";
+import { useRouter } from "next/navigation";
+import { useAuth } from "@/app/components/auth/AuthContext";
 
 export default function LoginPage() {
   const t = useTranslations("login");
+  const router = useRouter();
+  const { login } = useAuth();
+
   const [showPassword, setShowPassword] = useState(false);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({});
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setError(null);
+    setFieldErrors({});
+    setIsLoading(true);
+
+    try {
+      const result = await login({ email, password });
+
+      if (result.success) {
+        // Redirect to dashboard on success
+        router.push("/dashboard");
+      } else {
+        setError(result.message || result.error || "Login failed");
+        if (result.details) {
+          setFieldErrors(result.details);
+        }
+      }
+    } catch {
+      setError("An unexpected error occurred. Please try again.");
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   return (
     <div className="flex min-h-screen w-full flex-row overflow-hidden">
@@ -87,7 +122,14 @@ export default function LoginPage() {
             </p>
           </div>
 
-          <form className="space-y-6">
+          <form className="space-y-6" onSubmit={handleSubmit}>
+            {/* Error Message */}
+            {error && (
+              <div className="p-4 rounded-lg bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 text-red-700 dark:text-red-400 text-sm">
+                {error}
+              </div>
+            )}
+
             {/* Email Field */}
             <div className="flex flex-col gap-2">
               <label
@@ -98,15 +140,22 @@ export default function LoginPage() {
               </label>
               <div className="relative flex w-full items-stretch rounded-lg group">
                 <input
-                  className="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-slate-900 dark:text-white focus:outline-0 focus:ring-2 focus:ring-primary/20 border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 focus:border-primary h-14 placeholder:text-slate-400 p-[15px] pr-12 text-base font-normal leading-normal transition-all"
+                  className={`form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-slate-900 dark:text-white focus:outline-0 focus:ring-2 focus:ring-primary/20 border ${fieldErrors.email ? 'border-red-500' : 'border-slate-200 dark:border-slate-700'} bg-white dark:bg-slate-800 focus:border-primary h-14 placeholder:text-slate-400 p-[15px] pr-12 text-base font-normal leading-normal transition-all`}
                   id="email"
                   placeholder={t("emailPlaceholder")}
                   type="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  disabled={isLoading}
+                  required
                 />
                 <div className="absolute right-0 top-0 bottom-0 flex items-center justify-center pr-[15px] pointer-events-none text-slate-400 dark:text-slate-500">
                   <span className="material-symbols-outlined">mail</span>
                 </div>
               </div>
+              {fieldErrors.email && (
+                <span className="text-red-500 text-xs">{fieldErrors.email}</span>
+              )}
             </div>
 
             {/* Password Field */}
@@ -127,10 +176,14 @@ export default function LoginPage() {
               </div>
               <div className="relative flex w-full items-stretch rounded-lg">
                 <input
-                  className="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-slate-900 dark:text-white focus:outline-0 focus:ring-2 focus:ring-primary/20 border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 focus:border-primary h-14 placeholder:text-slate-400 p-[15px] pr-12 text-base font-normal leading-normal transition-all"
+                  className={`form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-slate-900 dark:text-white focus:outline-0 focus:ring-2 focus:ring-primary/20 border ${fieldErrors.password ? 'border-red-500' : 'border-slate-200 dark:border-slate-700'} bg-white dark:bg-slate-800 focus:border-primary h-14 placeholder:text-slate-400 p-[15px] pr-12 text-base font-normal leading-normal transition-all`}
                   id="password"
                   placeholder="••••••••"
                   type={showPassword ? "text" : "password"}
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  disabled={isLoading}
+                  required
                 />
                 <button
                   type="button"
@@ -142,15 +195,23 @@ export default function LoginPage() {
                   </span>
                 </button>
               </div>
+              {fieldErrors.password && (
+                <span className="text-red-500 text-xs">{fieldErrors.password}</span>
+              )}
             </div>
 
             {/* Submit Button */}
             <button
-              className="flex w-full items-center justify-center rounded-lg bg-primary hover:bg-primary-600 text-white font-bold h-14 px-4 transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary dark:focus:ring-offset-background-dark gap-2"
+              className="flex w-full items-center justify-center rounded-lg bg-primary hover:bg-primary-600 text-white font-bold h-14 px-4 transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary dark:focus:ring-offset-background-dark gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
               type="submit"
+              disabled={isLoading}
             >
-              <span className="material-symbols-outlined text-[20px]">lock</span>
-              {t("submit")}
+              {isLoading ? (
+                <span className="material-symbols-outlined text-[20px] animate-spin">progress_activity</span>
+              ) : (
+                <span className="material-symbols-outlined text-[20px]">lock</span>
+              )}
+              {isLoading ? "Signing in..." : t("submit")}
             </button>
           </form>
 

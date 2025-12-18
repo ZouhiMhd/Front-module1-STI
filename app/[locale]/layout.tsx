@@ -6,6 +6,7 @@ import { notFound } from "next/navigation";
 import { routing } from "@/config/i18n/routing";
 import "@/app/globals.css";
 import { ThemeProvider } from "@/app/components/ThemeProvider";
+import { AuthProvider } from "@/app/components/auth/AuthContext";
 import {Navbar} from "@/app/components/Navbar";
 import {Footer} from "@/app/components/landing/Footer";
 
@@ -52,11 +53,13 @@ export default async function LocaleLayout({
       >
         <NextIntlClientProvider messages={messages}>
           <ThemeProvider>
-            <Navbar />
-            <main className="mt-16">
-              {children}
-            </main>
-            <Footer />
+            <AuthProvider>
+              <Navbar />
+              <main className="mt-16">
+                {children}
+              </main>
+              <Footer />
+            </AuthProvider>
           </ThemeProvider>
         </NextIntlClientProvider>
       </body>
