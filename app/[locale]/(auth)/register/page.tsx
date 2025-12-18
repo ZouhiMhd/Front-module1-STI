@@ -4,12 +4,34 @@ import Link from "next/link";
 import Image from "next/image";
 import { useState } from "react";
 import { useTranslations } from "next-intl";
+import { useRouter } from "next/navigation";
+import { useAuth } from "@/app/components/auth/AuthContext";
 import DocTablet from "../../../../public/assets/doctor-using-tablet.png"
+
+// Map frontend specialty values to backend enum values
+const specialtyMapping: Record<string, string> = {
+  cardio: "cardiology",
+  derma: "dermatology",
+  gene: "general_medicine",
+  pedia: "pediatrics",
+  neuro: "neurology",
+};
 
 export default function RegisterPage() {
   const t = useTranslations("register");
+  const router = useRouter();
+  const { register } = useAuth();
+
   const [showPassword, setShowPassword] = useState(false);
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [specialty, setSpecialty] = useState("");
+  const [termsAccepted, setTermsAccepted] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({});
 
   const getPasswordStrength = (pwd: string) => {
     let strength = 0;
@@ -21,6 +43,50 @@ export default function RegisterPage() {
   };
 
   const passwordStrength = getPasswordStrength(password);
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setError(null);
+    setFieldErrors({});
+
+    // Validate terms accepted
+    if (!termsAccepted) {
+      setError("You must accept the terms and conditions");
+      return;
+    }
+
+    // Validate specialty selected
+    if (!specialty) {
+      setFieldErrors({ specialty: "Please select a medical specialty" });
+      return;
+    }
+
+    setIsLoading(true);
+
+    try {
+      const result = await register({
+        email,
+        password,
+        firstName,
+        lastName,
+        specialty: specialtyMapping[specialty] || specialty,
+      });
+
+      if (result.success) {
+        // Redirect to dashboard on success
+        router.push("/dashboard");
+      } else {
+        setError(result.message || result.error || "Registration failed");
+        if (result.details) {
+          setFieldErrors(result.details);
+        }
+      }
+    } catch {
+      setError("An unexpected error occurred. Please try again.");
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   return (
     <div className="flex min-h-screen w-full">
@@ -78,7 +144,14 @@ export default function RegisterPage() {
             </div>
 
             {/* Form */}
-            <form className="flex flex-col gap-5">
+            <form className="flex flex-col gap-5" onSubmit={handleSubmit}>
+              {/* Error Message */}
+              {error && (
+                <div className="p-4 rounded-lg bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 text-red-700 dark:text-red-400 text-sm">
+                  {error}
+                </div>
+              )}
+
               {/* Names */}
               <div className="flex flex-col md:flex-row gap-5">
                 <label className="flex flex-col flex-1 gap-2">
@@ -86,20 +159,34 @@ export default function RegisterPage() {
                     {t("firstName")}
                   </span>
                   <input
-                    className="form-input w-full h-12 rounded-lg border border-[#dbe1e6] dark:border-gray-600 bg-white dark:bg-gray-800 text-[#111518] dark:text-white px-4 placeholder:text-[#617989] dark:placeholder:text-gray-500 focus:border-primary focus:ring-1 focus:ring-primary focus:outline-none transition-all"
+                    className={`form-input w-full h-12 rounded-lg border ${fieldErrors.firstName ? 'border-red-500' : 'border-[#dbe1e6] dark:border-gray-600'} bg-white dark:bg-gray-800 text-[#111518] dark:text-white px-4 placeholder:text-[#617989] dark:placeholder:text-gray-500 focus:border-primary focus:ring-1 focus:ring-primary focus:outline-none transition-all`}
                     placeholder={t("firstNamePlaceholder")}
                     type="text"
+                    value={firstName}
+                    onChange={(e) => setFirstName(e.target.value)}
+                    disabled={isLoading}
+                    required
                   />
+                  {fieldErrors.firstName && (
+                    <span className="text-red-500 text-xs">{fieldErrors.firstName}</span>
+                  )}
                 </label>
                 <label className="flex flex-col flex-1 gap-2">
                   <span className="text-sm font-medium text-[#111518] dark:text-gray-200">
                     {t("lastName")}
                   </span>
                   <input
-                    className="form-input w-full h-12 rounded-lg border border-[#dbe1e6] dark:border-gray-600 bg-white dark:bg-gray-800 text-[#111518] dark:text-white px-4 placeholder:text-[#617989] dark:placeholder:text-gray-500 focus:border-primary focus:ring-1 focus:ring-primary focus:outline-none transition-all"
+                    className={`form-input w-full h-12 rounded-lg border ${fieldErrors.lastName ? 'border-red-500' : 'border-[#dbe1e6] dark:border-gray-600'} bg-white dark:bg-gray-800 text-[#111518] dark:text-white px-4 placeholder:text-[#617989] dark:placeholder:text-gray-500 focus:border-primary focus:ring-1 focus:ring-primary focus:outline-none transition-all`}
                     placeholder={t("lastNamePlaceholder")}
                     type="text"
+                    value={lastName}
+                    onChange={(e) => setLastName(e.target.value)}
+                    disabled={isLoading}
+                    required
                   />
+                  {fieldErrors.lastName && (
+                    <span className="text-red-500 text-xs">{fieldErrors.lastName}</span>
+                  )}
                 </label>
               </div>
 
@@ -112,7 +199,13 @@ export default function RegisterPage() {
                   <span className="material-symbols-outlined absolute right-4 top-1/2 -translate-y-1/2 text-[#617989] pointer-events-none">
                     medical_services
                   </span>
-                  <select className="form-select w-full h-12 rounded-lg border border-[#dbe1e6] dark:border-gray-600 bg-white dark:bg-gray-800 text-[#111518] dark:text-white px-4 pr-10 appearance-none focus:border-primary focus:ring-1 focus:ring-primary focus:outline-none transition-all">
+                  <select
+                    className={`form-select w-full h-12 rounded-lg border ${fieldErrors.specialty ? 'border-red-500' : 'border-[#dbe1e6] dark:border-gray-600'} bg-white dark:bg-gray-800 text-[#111518] dark:text-white px-4 pr-10 appearance-none focus:border-primary focus:ring-1 focus:ring-primary focus:outline-none transition-all`}
+                    value={specialty}
+                    onChange={(e) => setSpecialty(e.target.value)}
+                    disabled={isLoading}
+                    required
+                  >
                     <option disabled value="">
                       {t("specialtyPlaceholder")}
                     </option>
@@ -123,6 +216,9 @@ export default function RegisterPage() {
                     <option value="neuro">{t("specialties.neurology")}</option>
                   </select>
                 </div>
+                {fieldErrors.specialty && (
+                  <span className="text-red-500 text-xs">{fieldErrors.specialty}</span>
+                )}
               </label>
 
               {/* Email */}
@@ -131,10 +227,17 @@ export default function RegisterPage() {
                   {t("email")}
                 </span>
                 <input
-                  className="form-input w-full h-12 rounded-lg border border-[#dbe1e6] dark:border-gray-600 bg-white dark:bg-gray-800 text-[#111518] dark:text-white px-4 placeholder:text-[#617989] dark:placeholder:text-gray-500 focus:border-primary focus:ring-1 focus:ring-primary focus:outline-none transition-all"
+                  className={`form-input w-full h-12 rounded-lg border ${fieldErrors.email ? 'border-red-500' : 'border-[#dbe1e6] dark:border-gray-600'} bg-white dark:bg-gray-800 text-[#111518] dark:text-white px-4 placeholder:text-[#617989] dark:placeholder:text-gray-500 focus:border-primary focus:ring-1 focus:ring-primary focus:outline-none transition-all`}
                   placeholder={t("emailPlaceholder")}
                   type="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  disabled={isLoading}
+                  required
                 />
+                {fieldErrors.email && (
+                  <span className="text-red-500 text-xs">{fieldErrors.email}</span>
+                )}
               </label>
 
               {/* Password */}
@@ -146,11 +249,13 @@ export default function RegisterPage() {
                 </label>
                 <div className="relative">
                   <input
-                    className="form-input w-full h-12 rounded-lg border border-[#dbe1e6] dark:border-gray-600 bg-white dark:bg-gray-800 text-[#111518] dark:text-white px-4 placeholder:text-[#617989] dark:placeholder:text-gray-500 focus:border-primary focus:ring-1 focus:ring-primary focus:outline-none transition-all pr-12"
+                    className={`form-input w-full h-12 rounded-lg border ${fieldErrors.password ? 'border-red-500' : 'border-[#dbe1e6] dark:border-gray-600'} bg-white dark:bg-gray-800 text-[#111518] dark:text-white px-4 placeholder:text-[#617989] dark:placeholder:text-gray-500 focus:border-primary focus:ring-1 focus:ring-primary focus:outline-none transition-all pr-12`}
                     placeholder="••••••••"
                     type={showPassword ? "text" : "password"}
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
+                    disabled={isLoading}
+                    required
                   />
                   <button
                     className="absolute right-4 top-1/2 -translate-y-1/2 text-[#617989] hover:text-[#111518] dark:hover:text-white focus:outline-none"
@@ -178,6 +283,9 @@ export default function RegisterPage() {
                 <span className="text-xs text-[#617989]">
                   {t("passwordHint")}
                 </span>
+                {fieldErrors.password && (
+                  <span className="text-red-500 text-xs">{fieldErrors.password}</span>
+                )}
               </div>
 
               {/* Terms */}
@@ -185,6 +293,9 @@ export default function RegisterPage() {
                 <input
                   className="w-5 h-5 rounded border-[#dbe1e6] text-primary focus:ring-primary focus:ring-offset-0 bg-white dark:bg-gray-800 dark:border-gray-600 mt-0.5"
                   type="checkbox"
+                  checked={termsAccepted}
+                  onChange={(e) => setTermsAccepted(e.target.checked)}
+                  disabled={isLoading}
                 />
                 <span className="text-sm text-[#617989] dark:text-gray-400">
                   {t("termsText")}{" "}
@@ -207,10 +318,18 @@ export default function RegisterPage() {
 
               {/* Submit Button */}
               <button
-                className="mt-4 flex w-full cursor-pointer items-center justify-center overflow-hidden rounded-lg h-12 px-5 bg-primary hover:bg-primary-600 text-white text-base font-bold leading-normal tracking-[0.015em] transition-colors shadow-sm"
+                className="mt-4 flex w-full cursor-pointer items-center justify-center overflow-hidden rounded-lg h-12 px-5 bg-primary hover:bg-primary-600 text-white text-base font-bold leading-normal tracking-[0.015em] transition-colors shadow-sm disabled:opacity-50 disabled:cursor-not-allowed"
                 type="submit"
+                disabled={isLoading}
               >
-                {t("submit")}
+                {isLoading ? (
+                  <>
+                    <span className="material-symbols-outlined text-[20px] animate-spin mr-2">progress_activity</span>
+                    Creating account...
+                  </>
+                ) : (
+                  t("submit")
+                )}
               </button>
             </form>
 

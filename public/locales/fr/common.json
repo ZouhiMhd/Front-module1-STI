@@ -53,7 +53,11 @@
     "dashboard": "Tableau de bord",
     "patients": "Patients",
     "parameters": "Paramètres",
-    "medicalExpert": "Expert Médical"
+    "medicalExpert": "Expert Médical",
+    "login": "Se connecter",
+    "logout": "Se déconnecter",
+    "profile": "Mon Profil",
+    "settings": "Paramètres"
   },
   "hero": {
     "badge": "Approuvé par plus de 500 experts médicaux",
