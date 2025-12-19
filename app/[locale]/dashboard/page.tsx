@@ -1,436 +1,314 @@
 "use client";
+
 import React, { useState, useEffect, useMemo } from 'react';
-import { ClinicalCase } from '@/app/utils/types/clinicalCase';
+import { useRouter } from 'next/navigation';
 import {
-  Search, Inbox, ChevronRight, Stethoscope,
-  FileText, History, CheckCircle2, XCircle,
-  Microscope, Pill, Loader2, ArrowLeft,
-  AlertCircle
+    Inbox, Search, Filter, CheckCircle2, XCircle,
+    LayoutGrid, Calendar, User, Activity, Stethoscope,
+    RotateCcw, Loader2,
+    Microscope,
+    Briefcase
 } from 'lucide-react';
+
+// Types & Services
+import { ClinicalCase } from '@/app/utils/types/clinicalCase';
 import { useAuth } from '@/app/components/auth/AuthContext';
 import { classifyClinicalCase } from '@/lib/classification/classifier';
-import { VitalsCard } from '@/app/components/dashboard/VitalsCard';
-import { PatientIdentityCard } from '@/app/components/dashboard/PatientIdentityCard';
+import {
+    filterClinicalCases,
+    getCaseStats,
+    extractFilterOptions,
+    INITIAL_FILTERS,
+    CaseFilters,
+    ViewMode
+} from '@/services/clinicalCaseService';
 
-// Extension locale du type pour l'affichage uniquement
-// Cela permet de stocker le résultat de la classification sans modifier le type de base
+// Extension locale du type
 type ClassifiedClinicalCase = ClinicalCase & {
     detectedSpecialty: string;
 };
 
-const CaseListItem = ({ data, active, onClick }: { data: ClassifiedClinicalCase, active: boolean, onClick: () => void }) => (
-  <div
-    onClick={onClick}
-    className={`group flex items-start gap-4 p-4 border-b border-gray-50 cursor-pointer transition-all duration-200 hover:bg-blue-50/50 ${active ? 'bg-blue-50 border-l-4 border-l-blue-600' : 'border-l-4 border-l-transparent'}`}
-  >
-    <div className={`mt-1 h-10 w-10 rounded-full flex items-center justify-center shrink-0 ${active ? 'bg-blue-600 text-white shadow-blue-200 shadow-md' : 'bg-gray-100 text-gray-400 group-hover:bg-white group-hover:shadow-sm'}`}>
-      <Stethoscope size={18} />
+// --- COMPOSANT : CARTE DE CAS (GRILLE) ---
+const CaseGridCard = ({ data, onClick }: { data: ClassifiedClinicalCase, onClick: () => void }) => (
+    <div
+        onClick={onClick}
+        className="bg-white p-5 rounded-xl border border-gray-100 shadow-sm hover:shadow-md hover:border-blue-300 transition-all cursor-pointer group flex flex-col h-full relative overflow-hidden"
+    >
+        {/* Barre de couleur latérale selon statut */}
+        <div className={`absolute left-0 top-0 bottom-0 w-1 ${data.status === 'VALIDATED' ? 'bg-green-500' :
+            data.status === 'REJECTED' ? 'bg-red-500' : 'bg-amber-500'
+            }`}></div>
+
+        <div className="flex justify-between items-start mb-3 pl-2">
+            <div className="flex items-center gap-3">
+                <div className={`h-10 w-10 rounded-full flex items-center justify-center shrink-0 ${data.status === 'VALIDATED' ? 'bg-green-100 text-green-600' :
+                    data.status === 'REJECTED' ? 'bg-red-100 text-red-600' : 'bg-blue-100 text-blue-600'
+                    }`}>
+                    <Stethoscope size={20} />
+                </div>
+                <div>
+                    <span className={`px-2 py-0.5 text-[10px] rounded-full font-bold uppercase tracking-wider ${data.status === 'VALIDATED' ? 'bg-green-50 text-green-700' :
+                        data.status === 'REJECTED' ? 'bg-red-50 text-red-700' : 'bg-amber-50 text-amber-700'
+                        }`}>
+                        {data.status === 'PENDING' ? 'En attente' : data.status === 'VALIDATED' ? 'Validé' : 'Rejeté'}
+                    </span>
+                    <p className="text-xs text-gray-400 mt-1 flex items-center gap-1">
+                        <Briefcase size={16} /> {data.patient.job}
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <h3 className="text-base font-bold text-gray-800 mb-2 line-clamp-2 group-hover:text-blue-700 transition-colors pl-2">
+            {data.consultation.reason}
+        </h3>
+
+        <div className="mt-auto pt-4 border-t border-gray-50 grid grid-cols-2 gap-2 text-xs text-gray-500 pl-2">
+            <div className="flex items-center gap-1.5">
+                <User size={14} className="text-gray-400" />
+                {data.patient.gender === 'M' ? 'Homme' : 'Femme'}, {new Date().getFullYear() - new Date(data.patient.birthDate).getFullYear()} ans
+            </div>
+            {data.detectedSpecialty && (
+                <div className="flex items-center gap-1.5">
+                    <Activity size={14} className="text-gray-400" />
+                    <span className="truncate font-medium text-blue-600 bg-blue-50 px-1.5 py-0.5 rounded">
+                        {data.detectedSpecialty}
+                    </span>
+                </div>
+            )}
+        </div>
     </div>
-    <div className="flex-1 min-w-0">
-       <div className="flex justify-between items-start mb-1">
-          <span className={`text-sm font-bold truncate ${active ? 'text-blue-900' : 'text-gray-700'}`}>
-             {data.consultation.reason}
-          </span>
-       </div>
-       <p className="text-xs text-gray-500 mb-2 flex items-center gap-1">
-         {data.patient.gender === 'M' ? 'H' : 'F'} • {new Date().getFullYear() - new Date(data.patient.birthDate).getFullYear()} ans
-         {data.detectedSpecialty && (
-            <span className="ml-2 px-1.5 py-0.5 bg-gray-200 text-gray-600 rounded text-[9px] uppercase">
-                {data.detectedSpecialty}
-            </span>
-         )}
-       </p>
-       <div className="flex items-center gap-2">
-          <span className={`px-2 py-0.5 text-[10px] rounded-full font-medium ${
-              data.status === 'VALIDATED' ? 'bg-green-100 text-green-700' :
-              data.status === 'REJECTED' ? 'bg-red-100 text-red-700' : 'bg-amber-100 text-amber-700'
-          }`}>
-              {data.status}
-          </span>
-       </div>
-    </div>
-    {active && <ChevronRight size={16} className="text-blue-600 self-center" />}
-  </div>
 );
 
+// --- COMPOSANT : BOUTON ONGLET (KPI) ---
+const TabButton = ({ label, count, active, onClick, icon: Icon }: any) => (
+    <button
+        onClick={onClick}
+        className={`
+      flex items-center gap-3 px-5 py-3 rounded-t-lg border-b-2 transition-all min-w-[140px]
+      ${active
+                ? `border-blue-600 bg-blue-50/50 text-blue-800`
+                : 'border-transparent text-gray-500 hover:text-gray-700 hover:bg-gray-50'}
+    `}
+    >
+        <div className={`p-1.5 rounded-md ${active ? 'bg-white shadow-sm text-blue-600' : 'bg-gray-200 text-gray-500'}`}>
+            <Icon size={18} />
+        </div>
+        <div className="text-left">
+            <p className="text-[10px] font-bold uppercase tracking-wider opacity-70">{label}</p>
+            <p className="text-xl font-bold leading-none">{count}</p>
+        </div>
+    </button>
+);
+
+// --- PAGE PRINCIPALE ---
+
 export default function ClinicalReviewDashboard() {
-  const { doctor, isLoading: authLoading } = useAuth();
-  const [cases, setCases] = useState<ClassifiedClinicalCase[]>([]);
-  const [isLoadingData, setIsLoadingData] = useState(true);
-  const [selectedCaseId, setSelectedCaseId] = useState<string | null>(null);
+    const router = useRouter();
+    const { doctor, isLoading: authLoading } = useAuth();
 
-  const [showMobileDetail, setShowMobileDetail] = useState(false);
-  const [filterType, setFilterType] = useState<'SYMPTOM' | 'DISEASE'>('SYMPTOM');
-  const [searchQuery, setSearchQuery] = useState('');
-  const [rejectModalOpen, setRejectModalOpen] = useState(false);
-  const [rejectionReason, setRejectionReason] = useState('');
+    // Data State
+    const [cases, setCases] = useState<ClassifiedClinicalCase[]>([]);
+    const [isLoadingData, setIsLoadingData] = useState(true);
 
-  // Chargement et Classification des données
-  useEffect(() => {
-    const loadData = async () => {
-      if (authLoading) return;
+    // Filters State
+    const [viewMode, setViewMode] = useState<ViewMode>('ALL');
+    const [filters, setFilters] = useState<CaseFilters>(INITIAL_FILTERS);
 
-      try {
-        const response = await fetch('/data.json');
-        const rawData: ClinicalCase[] = await response.json();
+    // --- CHARGEMENT DES DONNÉES ---
+    useEffect(() => {
+        const loadData = async () => {
+            if (authLoading) return;
+            try {
+                const response = await fetch('/data.json');
+                const rawData: ClinicalCase[] = await response.json();
 
-        // 1. Classification à la volée (Linear Regression Model)
-        // On ajoute detectedSpecialty uniquement pour l'état local du composant
-        const classifiedData: ClassifiedClinicalCase[] = rawData.map((c) => ({
-            ...c,
-            detectedSpecialty: classifyClinicalCase(c)
-        }));
+                // Classification et Filtrage par spécialité du médecin connecté
+                const classifiedData = rawData.map((c) => ({
+                    ...c,
+                    detectedSpecialty: classifyClinicalCase(c)
+                }));
 
-        // 2. Filtrage intelligent basé sur la spécialité du docteur
-        let filteredBySpecialty = classifiedData;
+                let filteredBySpecialty = classifiedData;
+                if (doctor && doctor.specialty && doctor.specialty.toLowerCase() !== 'general_medicine') {
+                    const expertSpec = doctor.specialty.toLowerCase();
+                    filteredBySpecialty = classifiedData.filter((c) => c.detectedSpecialty === expertSpec);
+                }
 
-        if (doctor && doctor.specialty) {
-            const expertSpec = doctor.specialty.toLowerCase();
-            // Si médecin généraliste, il voit tout
-            if (expertSpec !== 'general_medicine') {
-                filteredBySpecialty = classifiedData.filter((c) => c.detectedSpecialty === expertSpec);
+                setCases(filteredBySpecialty);
+            } catch (e) {
+                console.error(e);
+            } finally {
+                setIsLoadingData(false);
             }
-        }
+        };
+        loadData();
+    }, [doctor, authLoading]);
 
-        setCases(filteredBySpecialty);
+    // --- DONNÉES CALCULÉES (Memo) ---
+    const stats = useMemo(() => getCaseStats(cases), [cases]);
+    const filterOptions = useMemo(() => extractFilterOptions(cases), [cases]);
 
-        // Sélection par défaut
-        if (window.innerWidth >= 768 && filteredBySpecialty.length > 0) {
-            setSelectedCaseId(filteredBySpecialty[0].id);
-        }
-      } catch (e) {
-          console.error("Erreur chargement données:", e);
-      } finally {
-          setIsLoadingData(false);
-      }
+    // Utilisation du service de filtrage
+    const filteredCases = useMemo(() =>
+        filterClinicalCases(cases, viewMode, filters),
+        [cases, viewMode, filters]);
+
+    // --- NAVIGATION ---
+    const handleCardClick = (id: string) => {
+        router.push(`/dashboard/${id}`);
     };
 
-    loadData();
-  }, [doctor, authLoading]);
-
-  const activeCase = cases.find(c => c.id === selectedCaseId);
-
-  const filteredCases = useMemo(() => {
-    if (!searchQuery) return cases;
-    const lowerQuery = searchQuery.toLowerCase();
-    return cases.filter(c =>
-      filterType === 'SYMPTOM'
-        ? c.consultation.reason.toLowerCase().includes(lowerQuery) ||
-          c.consultation.symptoms.some(s => s.location.toLowerCase().includes(lowerQuery))
-        : c.history.chronicDiseases.some(d => d.name.toLowerCase().includes(lowerQuery))
-    );
-  }, [cases, searchQuery, filterType]);
-
-  const handleCaseClick = (id: string) => {
-      setSelectedCaseId(id);
-      setShowMobileDetail(true);
-  };
-
-  const handleBackToList = () => {
-      setShowMobileDetail(false);
-  };
-
-  const updateCaseStatus = (id: string, status: string, reason?: string) => {
-    setCases(prev => prev.map(c => c.id === id ? ({ ...c, status: status as ClinicalCase['status'], rejectionReason: reason } as ClassifiedClinicalCase) : c));
-  };
-
-  const handleValidate = () => {
-      if(activeCase) updateCaseStatus(activeCase.id, 'VALIDATED');
-  };
-
-  const handleRejectConfirm = () => {
-      if(activeCase) {
-          updateCaseStatus(activeCase.id, 'REJECTED', rejectionReason);
-          setRejectModalOpen(false);
-          setRejectionReason('');
-      }
-  };
-
-  if (authLoading || isLoadingData) return (
-    <div className="h-screen flex items-center justify-center bg-slate-50 text-slate-400">
-        <Loader2 className="animate-spin mr-2"/> Chargement des cas...
-    </div>
-  );
-
-  return (
-    <div className="flex h-screen bg-slate-50 font-sans text-slate-600 overflow-hidden relative">
-
-      {/* SIDEBAR (LISTE) */}
-      <aside className={`
-          flex-col bg-white border-r border-gray-200 z-20 shadow-xl shadow-slate-200/50 transition-all
-          md:flex md:w-96 md:static
-          ${showMobileDetail ? 'hidden' : 'flex w-full absolute inset-0'}
-      `}>
-        <div className="p-6 border-b border-gray-100 shrink-0">
-          <h1 className="text-xl font-bold text-slate-800 flex items-center gap-2 mb-2">
-            <div className="bg-blue-600 text-white p-1.5 rounded-lg"><Inbox size={20}/></div>
-            Revue Clinique
-          </h1>
-          {doctor && (
-              <p className="text-xs text-blue-600 font-semibold mb-4 ml-1">
-                  Spécialité : {doctor.specialty}
-              </p>
-          )}
-
-          <div className="flex bg-gray-100 p-1 rounded-lg mb-4">
-             <button onClick={() => setFilterType('SYMPTOM')} className={`flex-1 py-1.5 text-xs font-medium rounded-md transition-all ${filterType === 'SYMPTOM' ? 'bg-white text-blue-700 shadow-sm' : 'text-gray-500 hover:text-gray-700'}`}>Symptômes</button>
-             <button onClick={() => setFilterType('DISEASE')} className={`flex-1 py-1.5 text-xs font-medium rounded-md transition-all ${filterType === 'DISEASE' ? 'bg-white text-blue-700 shadow-sm' : 'text-gray-500 hover:text-gray-700'}`}>Pathologies</button>
-          </div>
-
-          <div className="relative group">
-            <Search className="absolute left-3 top-2.5 h-4 w-4 text-gray-400" />
-            <input
-              type="text"
-              placeholder="Rechercher..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full pl-9 pr-4 py-2 bg-gray-50 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all"
-            />
-          </div>
-        </div>
-
-        <div className="flex-1 overflow-y-auto">
-           {filteredCases.length === 0 ? (
-               <div className="p-8 text-center text-gray-400 text-sm">
-                   Aucun cas trouvé pour votre spécialité.
-               </div>
-           ) : (
-               filteredCases.map(c => (
-                 <CaseListItem
-                    key={c.id}
-                    data={c}
-                    active={selectedCaseId === c.id}
-                    onClick={() => handleCaseClick(c.id)}
-                />
-               ))
-           )}
-        </div>
-      </aside>
-
-      {/* MAIN CONTENT (DETAIL) */}
-      <main className={`
-          flex-col min-w-0 bg-slate-50/50 h-full w-full
-          md:flex md:static
-          ${showMobileDetail ? 'flex absolute inset-0 z-30 bg-slate-50' : 'hidden'}
-      `}>
-        {activeCase ? (
-          <>
-            {/* Header Flottant */}
-            <header className="bg-white/80 backdrop-blur-md border-b border-gray-200 px-4 md:px-8 py-4 flex justify-between items-center sticky top-0 z-10 shrink-0">
-               <div className="flex items-center gap-3">
-                  <button
-                    onClick={handleBackToList}
-                    className="md:hidden p-2 -ml-2 text-slate-500 hover:bg-slate-100 rounded-full"
-                  >
-                    <ArrowLeft size={20} />
-                  </button>
-
-                  <div>
-                      <h2 className="text-lg font-bold text-slate-800 flex flex-col md:block">
-                        <span>Dossier #{activeCase.id}</span>
-                      </h2>
-                      <p className="text-xs text-slate-400 hidden md:block">Soumis le {activeCase.submissionDate}</p>
-                  </div>
-               </div>
-
-               {activeCase.status === 'PENDING' ? (
-                   <div className="flex items-center gap-3">
-                    <button
-                        onClick={() => setRejectModalOpen(true)}
-                        className="p-2 md:px-4 md:py-2 text-sm font-medium text-red-600 bg-red-50 hover:bg-red-100 rounded-lg border border-red-100 transition-colors"
-                    >
-                        <span className="hidden md:flex items-center gap-2">
-                            <XCircle size={18} /> Rejeter
-                        </span>
-                        <span className="md:hidden">
-                            <XCircle size={20} />
-                        </span>
-                    </button>
-
-                    <button
-                        onClick={handleValidate}
-                        className="p-2 md:px-6 md:py-2 text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 rounded-lg shadow-lg shadow-blue-200 transition-colors"
-                    >
-                        <span className="hidden md:flex items-center gap-2">
-                            <CheckCircle2 size={18} /> Valider
-                        </span>
-                        <span className="md:hidden">
-                            <CheckCircle2 size={20} />
-                        </span>
-                    </button>
-                </div>
-               ) : (
-                   <span className={`px-4 py-1.5 rounded-full text-sm font-bold border ${
-                       activeCase.status === 'VALIDATED' ? 'bg-green-50 text-green-700 border-green-100' : 'bg-red-50 text-red-700 border-red-100'
-                   }`}>
-                       {activeCase.status === 'VALIDATED' ? 'Validé' : 'Rejeté'}
-                   </span>
-               )}
-            </header>
-
-            {/* Corps Scrollable */}
-            <div className="flex-1 overflow-y-auto p-4 md:p-8">
-               <div className="max-w-6xl mx-auto space-y-6">
-
-                  <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                      <div className="lg:col-span-1">
-                          <PatientIdentityCard patient={activeCase.patient} />
-                      </div>
-                      <div className="lg:col-span-2">
-                          <VitalsCard vitals={activeCase.patient.vitals} />
-                      </div>
-                  </div>
-
-                  {/* Consultation */}
-                  <div className="bg-white rounded-2xl p-6 shadow-sm border border-slate-100">
-                      <div className="flex items-center gap-3 mb-6">
-                          <div className="p-2 bg-amber-100 text-amber-600 rounded-lg"><FileText size={20}/></div>
-                          <h3 className="text-lg font-bold text-slate-800">Consultation</h3>
-                      </div>
-                      <p className="text-lg font-medium text-slate-800 mb-6">{activeCase.consultation.reason}</p>
-
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                          <div>
-                              <h4 className="text-sm font-bold text-slate-700 mb-3 flex items-center gap-2">
-                                  <AlertCircle size={16} className="text-orange-500"/> Symptômes signalés
-                              </h4>
-                              <div className="space-y-3">
-                                  {activeCase.consultation.symptoms.map((sym, i) => (
-                                      <div key={i} className="flex flex-col p-3 bg-gray-50 rounded-lg border border-gray-100 hover:border-blue-200 transition-colors">
-                                          <div className="flex justify-between items-center mb-2">
-                                              <span className="font-semibold text-slate-700">{sym.location}</span>
-                                              <span className={`text-[10px] px-2 py-0.5 rounded-full font-bold ${sym.intensity > 7 ? 'bg-red-100 text-red-700' : 'bg-green-100 text-green-700'}`}>
-                                                  Intensité {sym.intensity}/10
-                                              </span>
-                                          </div>
-                                          <div className="text-xs text-slate-500 grid grid-cols-2 gap-2">
-                                              <span>Fréquence: {sym.frequency}</span>
-                                              <span>Déclencheur: {sym.triggerActivity}</span>
-                                          </div>
-                                      </div>
-                                  ))}
-                              </div>
-                          </div>
-                          <div>
-                              <h4 className="text-sm font-bold text-slate-700 mb-3 flex items-center gap-2">
-                                  <Stethoscope size={16} className="text-blue-500"/> Examen Physique
-                              </h4>
-                              {activeCase.consultation.physicalDiagnosis.length > 0 ? (
-                                  <div className="space-y-3">
-                                      {activeCase.consultation.physicalDiagnosis.map((diag, i) => (
-                                          <div key={i} className="p-3 bg-blue-50/30 rounded-lg border border-blue-100">
-                                              <span className="font-semibold text-blue-900 block text-sm">{diag.name}</span>
-                                              <span className="text-slate-700 text-sm">{diag.result}</span>
-                                          </div>
-                                      ))}
-                                  </div>
-                              ) : <p className="text-sm text-gray-400 italic">Aucune donnée</p>}
-                          </div>
-                      </div>
-                  </div>
-
-                   {/* Antécédents & Traitements */}
-                  <div className="grid grid-cols-1 xl:grid-cols-2 gap-6">
-                      <div className="bg-white rounded-2xl p-6 shadow-sm border border-slate-100">
-                          <div className="flex items-center gap-3 mb-4">
-                              <div className="p-2 bg-purple-100 text-purple-600 rounded-lg"><History size={20}/></div>
-                              <h3 className="text-lg font-bold text-slate-800">Antécédents</h3>
-                          </div>
-
-                          <div className="space-y-4">
-                              <div>
-                                  <h5 className="text-xs font-bold text-slate-400 uppercase mb-2">Maladies Chroniques</h5>
-                                  <div className="flex flex-wrap gap-2">
-                                      {activeCase.history.chronicDiseases.length > 0 ? activeCase.history.chronicDiseases.map((d, i) => (
-                                          <span key={i} className="px-3 py-1 bg-purple-50 text-purple-700 rounded-full text-sm border border-purple-100">
-                                              {d.name}
-                                          </span>
-                                      )) : <span className="text-sm text-gray-400">Aucun</span>}
-                                  </div>
-                              </div>
-                              <div className="h-px bg-gray-100 w-full"></div>
-                              <div>
-                                  <h5 className="text-xs font-bold text-slate-400 uppercase mb-2">Allergies</h5>
-                                  <div className="flex flex-wrap gap-2">
-                                      {activeCase.history.allergies.length > 0 ? activeCase.history.allergies.map((a, i) => (
-                                          <span key={i} className="px-3 py-1 bg-red-50 text-red-700 rounded-full text-sm border border-red-100">
-                                              {a.name}
-                                          </span>
-                                      )) : <span className="text-sm text-gray-400">Aucune</span>}
-                                  </div>
-                              </div>
-                          </div>
-                      </div>
-
-                      <div className="bg-white rounded-2xl p-6 shadow-sm border border-slate-100">
-                          <div className="flex items-center gap-3 mb-4">
-                              <div className="p-2 bg-emerald-100 text-emerald-600 rounded-lg"><Pill size={20}/></div>
-                              <h3 className="text-lg font-bold text-slate-800">Traitements Prescrits</h3>
-                          </div>
-                          <ul className="space-y-3">
-                               {activeCase.treatments.map((t, i) => (
-                                  <li key={i} className="flex items-start gap-3 pb-3 border-b border-gray-50 last:border-0 last:pb-0">
-                                      <div className="mt-1 h-2 w-2 rounded-full bg-emerald-400"></div>
-                                      <div>
-                                          <p className="font-bold text-slate-700 text-sm">{t.drugName} <span className="font-normal text-slate-500">- {t.quantity}</span></p>
-                                          <p className="text-xs text-slate-500">{t.frequency} • {t.duration}</p>
-                                          <p className="text-xs text-emerald-600 mt-1 italic">{t.instruction}</p>
-                                      </div>
-                                  </li>
-                               ))}
-                          </ul>
-                      </div>
-                  </div>
-
-                  {/* Examens */}
-                  <div className="bg-white rounded-2xl p-6 shadow-sm border border-slate-100 mb-10">
-                      <div className="flex items-center gap-3 mb-4">
-                          <div className="p-2 bg-indigo-100 text-indigo-600 rounded-lg"><Microscope size={20}/></div>
-                          <h3 className="text-lg font-bold text-slate-800">Examens Complémentaires</h3>
-                      </div>
-                      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                          {activeCase.exams.map((ex, i) => (
-                              <div key={i} className="p-4 rounded-xl bg-slate-50 border border-slate-200 hover:shadow-md transition-shadow">
-                                  <div className="flex justify-between items-start mb-2">
-                                      <span className="font-bold text-indigo-900 text-sm">{ex.examName}</span>
-                                      <span className="text-[10px] bg-white px-2 py-0.5 rounded border text-gray-500">{ex.requestDate}</span>
-                                  </div>
-                                  <p className="text-sm text-slate-700 mb-1"><strong>Résultat:</strong> {ex.result}</p>
-                                  <p className="text-xs text-slate-500">Zone: {ex.anatomy}</p>
-                              </div>
-                          ))}
-                      </div>
-                  </div>
-
-               </div>
+    // --- RENDU : LOADING ---
+    if (isLoadingData || authLoading) {
+        return (
+            <div className="h-screen flex items-center justify-center bg-slate-50 text-slate-400">
+                <Loader2 className="animate-spin mr-2" /> Chargement des dossiers...
             </div>
-          </>
-        ) : (
-          <div className="flex flex-col items-center justify-center h-full text-slate-300">
-             <Inbox size={64} className="mb-4 text-slate-200"/>
-             <p className="text-lg font-medium">Sélectionnez un cas clinique</p>
-          </div>
-        )}
-      </main>
+        );
+    }
 
-      {/* Modal Rejet */}
-      {rejectModalOpen && (
-        <div className="fixed inset-0 bg-slate-900/60 backdrop-blur-sm flex items-center justify-center z-50 px-4">
-           <div className="bg-white rounded-2xl shadow-2xl w-full max-w-md p-6">
-              <h3 className="text-xl font-bold text-slate-800 mb-2">Motif du rejet</h3>
-              <textarea
-                  className="w-full h-32 p-3 bg-gray-50 border border-gray-200 rounded-xl mb-4 focus:ring-2 focus:ring-red-200 focus:outline-none"
-                  value={rejectionReason}
-                  onChange={(e) => setRejectionReason(e.target.value)}
-                  placeholder="Expliquez pourquoi ce cas est rejeté..."
-              />
-              <div className="flex justify-end gap-3">
-                  <button onClick={() => setRejectModalOpen(false)} className="px-4 py-2 text-slate-600 hover:bg-slate-100 rounded-lg">Annuler</button>
-                  <button onClick={handleRejectConfirm} className="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700">Rejeter</button>
-              </div>
-           </div>
+    return (
+        <div className="flex h-screen bg-slate-50 font-sans text-slate-600 overflow-hidden">
+
+            {/* =================================================================================
+          1. SIDEBAR GAUCHE : FILTRES
+      ================================================================================= */}
+            <aside className="w-80 bg-white border-r border-gray-200 flex flex-col z-20 shadow-sm h-full overflow-y-auto shrink-0">
+                <div className="p-6">
+                    <h1 className="text-xl font-bold text-slate-800 flex items-center gap-2 mb-6">
+                        <div className="bg-blue-600 text-white p-1.5 rounded-lg"><Filter size={20} /></div>
+                        Filtres
+                    </h1>
+
+                    <div className="space-y-5">
+                        {/* Recherche */}
+                        <div>
+                            <label className="text-xs font-bold text-slate-400 uppercase mb-1.5 block">Recherche</label>
+                            <div className="relative">
+                                <Search className="absolute left-3 top-2.5 h-4 w-4 text-gray-400" />
+                                <input
+                                    type="text" placeholder="Symptôme, motif..."
+                                    value={filters.searchQuery} onChange={(e) => setFilters({ ...filters, searchQuery: e.target.value })}
+                                    className="w-full pl-9 pr-3 py-2.5 bg-gray-50 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all"
+                                />
+                            </div>
+                        </div>
+
+                        {/* Démographie */}
+                        <div>
+                            <label className="text-xs font-bold text-slate-400 uppercase mb-1.5 block">Patient</label>
+                            <div className="grid grid-cols-2 gap-2">
+                                <select
+                                    className="w-full p-2.5 bg-gray-50 border border-gray-200 rounded-lg text-sm outline-none focus:border-blue-500 text-slate-600"
+                                    value={filters.gender} onChange={(e) => setFilters({ ...filters, gender: e.target.value })}
+                                >
+                                    <option value="ALL">Tous genres</option>
+                                    <option value="M">Homme</option>
+                                    <option value="F">Femme</option>
+                                </select>
+                                <select
+                                    className="w-full p-2.5 bg-gray-50 border border-gray-200 rounded-lg text-sm outline-none focus:border-blue-500 text-slate-600"
+                                    value={filters.ageRange} onChange={(e) => setFilters({ ...filters, ageRange: e.target.value })}
+                                >
+                                    <option value="ALL">Tout âge</option>
+                                    <option value="0-18">0-18 ans</option>
+                                    <option value="19-35">19-35 ans</option>
+                                    <option value="36-60">36-60 ans</option>
+                                    <option value="60+">60+ ans</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        {/* Clinique */}
+                        {/* Dans app/dashboard/page.tsx, à l'intérieur de la Sidebar */}
+
+                        {/* Clinique */}
+                        <div>
+                            <label className="text-xs font-bold text-slate-400 uppercase mb-1.5 block">Clinique</label>
+                            <div className="space-y-3">
+
+                                {/* Le select des antécédents reste inchangé */}
+                                <select
+                                    className="w-full p-2.5 bg-gray-50 border border-gray-200 rounded-lg text-sm outline-none focus:border-blue-500 text-slate-600"
+                                    value={filters.medicalHistory} onChange={(e) => setFilters({ ...filters, medicalHistory: e.target.value })}
+                                >
+                                    <option value="ALL">Antécédents (Tous)</option>
+                                    {filterOptions.histories.map(h => <option key={h} value={h}>{h}</option>)}
+                                </select>
+
+                                {/* --- MODIFICATION ICI --- */}
+                                {/* Remplacement du Select par un Input pour la Pathologie/Diagnostic */}
+                                <div className="relative">
+                                    <input
+                                        type="text"
+                                        placeholder="Pathologie / Résultat diag..."
+                                        className="w-full p-2.5 bg-gray-50 border border-gray-200 rounded-lg text-sm outline-none focus:border-blue-500 text-slate-600 placeholder:text-slate-400"
+                                        value={filters.pathology === 'ALL' ? '' : filters.pathology}
+                                        onChange={(e) => setFilters({ ...filters, pathology: e.target.value || 'ALL' })}
+                                    />
+                                    {/* Petit icône optionnel pour indiquer la recherche */}
+                                    <div className="absolute right-3 top-2.5 text-slate-400 pointer-events-none">
+                                        <Microscope size={16} />
+                                    </div>
+                                </div>
+                                {/* --- FIN MODIFICATION --- */}
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </aside>
+
+            {/* =================================================================================
+          2. ZONE CENTRALE : GRILLE DES CAS
+      ================================================================================= */}
+            <main className="flex-1 flex flex-col min-w-0 bg-slate-50/50 h-full relative overflow-hidden">
+
+                {/* Header Navigation (Tabs) */}
+                <div className="bg-white border-b border-gray-200 px-8 pt-6 pb-0 shrink-0">
+                    <div className="flex items-center justify-between mb-6">
+                        <div>
+                            <h2 className="text-2xl font-bold text-slate-800">Tableau de bord</h2>
+                            <p className="text-sm text-slate-400 mt-1">Gérez et validez les cas cliniques soumis.</p>
+                        </div>
+                        <div className="bg-blue-50 text-blue-700 px-4 py-2 rounded-lg text-sm font-medium">
+                            {filteredCases.length} dossier{filteredCases.length > 1 ? 's' : ''} affiché{filteredCases.length > 1 ? 's' : ''}
+                        </div>
+                    </div>
+
+                    {/* Onglets de navigation */}
+                    <div className="flex gap-2 overflow-x-auto no-scrollbar">
+                        <TabButton icon={LayoutGrid} label="Tous" count={stats.total} active={viewMode === 'ALL'} onClick={() => setViewMode('ALL')} />
+                        <TabButton icon={Inbox} label="En attente" count={stats.pending} active={viewMode === 'PENDING'} onClick={() => setViewMode('PENDING')} />
+                        <TabButton icon={CheckCircle2} label="Validés" count={stats.validated} active={viewMode === 'VALIDATED'} onClick={() => setViewMode('VALIDATED')} />
+                        <TabButton icon={XCircle} label="Rejetés" count={stats.rejected} active={viewMode === 'REJECTED'} onClick={() => setViewMode('REJECTED')} />
+                    </div>
+                </div>
+
+                {/* Grille de Cartes */}
+                <div className="flex-1 overflow-y-auto p-8 bg-slate-50/50">
+                    {filteredCases.length === 0 ? (
+                        <div className="flex flex-col items-center justify-center h-64 text-slate-400 mt-10">
+                            <div className="bg-white p-6 rounded-full shadow-sm mb-4">
+                                <Inbox size={48} className="text-slate-300" />
+                            </div>
+                            <h3 className="text-lg font-medium text-slate-600">Aucun dossier trouvé</h3>
+                            <p className="text-sm">Essayez de modifier vos filtres ou changez d'onglet.</p>
+                        </div>
+                    ) : (
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 pb-10">
+                            {filteredCases.map(c => (
+                                <CaseGridCard
+                                    key={c.id}
+                                    data={c}
+                                    onClick={() => handleCardClick(c.id)}
+                                />
+                            ))}
+                        </div>
+                    )}
+                </div>
+            </main>
         </div>
-      )}
-    </div>
-  );
+    );
 }

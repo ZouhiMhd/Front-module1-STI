@@ -19,7 +19,7 @@ export const PatientIdentityCard = ({ patient }: { patient: PatientInfo }) => {
            </div>
            <h2 className="text-2xl font-bold flex items-center gap-2">
              {patient.gender === 'M' ? 'Homme' : 'Femme'} 
-             <span className="text-slate-400 font-normal text-lg">({age} ans)</span>
+             {/* <span className="text-slate-400 font-normal text-lg">({age} ans)</span> */}
            </h2>
         </div>
         <div className="h-12 w-12 rounded-full bg-white/10 flex items-center justify-center backdrop-blur-sm">
@@ -34,8 +34,11 @@ export const PatientIdentityCard = ({ patient }: { patient: PatientInfo }) => {
         <div className="flex items-center gap-2 text-slate-300 text-sm">
            <Droplet size={16} className="text-red-400" /> GS: {patient.bloodGroup}
         </div>
-        <div className="flex items-center gap-2 text-slate-300 text-sm col-span-2">
+        {/* <div className="flex items-center gap-2 text-slate-300 text-sm col-span-2">
            <Calendar size={16} /> Né(e) le {new Date(patient.birthDate).toLocaleDateString()}
+        </div> */}
+        <div className="flex items-center gap-2 text-slate-300 text-sm col-span-2">
+           <Calendar size={16} /> {patient.gender === 'M' ? 'Agé' : 'Agée'} de {age} ans
         </div>
       </div>
     </div>

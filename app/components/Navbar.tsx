@@ -4,7 +4,7 @@ import { useState, useRef, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { useTranslations } from "next-intl";
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation"; // 1. Import de usePathname
 import { LanguageSwitcher } from "./LanguageSwitcher";
 import { useAuth } from "./auth/AuthContext";
 
@@ -18,6 +18,7 @@ export function Navbar({ expertImage }: NavbarProps) {
   const dropdownRef = useRef<HTMLDivElement>(null);
   const t = useTranslations("navbar");
   const router = useRouter();
+  const pathname = usePathname(); // 2. Récupération du chemin actuel
   const { doctor, isAuthenticated, isLoading, logout } = useAuth();
 
   // Close dropdown when clicking outside
@@ -53,6 +54,12 @@ export function Navbar({ expertImage }: NavbarProps) {
       .slice(0, 2);
   };
 
+  // 3. Fonction utilitaire pour vérifier si un lien est actif
+  // Elle gère les locales (ex: /en/dashboard) et les sous-routes (ex: /patients/1)
+  const isActiveLink = (href: string) => {
+    return pathname === href || pathname.includes(href);
+  };
+
   return (
     <nav className="fixed mb-5 top-0 left-0 right-0 z-50 bg-white dark:bg-slate-900/70 backdrop-blur-sm border-b border-slate-200 dark:border-slate-800">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -81,15 +88,22 @@ export function Navbar({ expertImage }: NavbarProps) {
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex md:items-center md:gap-1">
-            {isAuthenticated && navItems.map((item) => (
-              <Link
-                key={item.name}
-                href={item.href}
-                className="rounded-lg px-4 py-2 text-sm font-medium text-slate-600 dark:text-slate-300 transition-colors hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-primary"
-              >
-                {item.name}
-              </Link>
-            ))}
+            {isAuthenticated && navItems.map((item) => {
+              const isActive = isActiveLink(item.href);
+              return (
+                <Link
+                  key={item.name}
+                  href={item.href}
+                  className={`rounded-lg px-4 py-2 text-sm font-medium transition-colors ${
+                    isActive
+                      ? "bg-primary/10 text-primary" // Style Actif
+                      : "text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-primary" // Style Inactif
+                  }`}
+                >
+                  {item.name}
+                </Link>
+              );
+            })}
 
             {/* Language Switcher */}
             <LanguageSwitcher />
@@ -145,7 +159,11 @@ export function Navbar({ expertImage }: NavbarProps) {
                       <Link
                         href="/profile"
                         onClick={() => setIsProfileDropdownOpen(false)}
-                        className="flex items-center gap-3 px-4 py-2 text-sm text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors"
+                        className={`flex items-center gap-3 px-4 py-2 text-sm transition-colors ${
+                          isActiveLink("/profile") 
+                            ? "bg-primary/5 text-primary" 
+                            : "text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700"
+                        }`}
                       >
                         <span className="material-symbols-outlined text-lg">person</span>
                         {t("profile") || "My Profile"}
@@ -153,7 +171,11 @@ export function Navbar({ expertImage }: NavbarProps) {
                       <Link
                         href="/settings"
                         onClick={() => setIsProfileDropdownOpen(false)}
-                        className="flex items-center gap-3 px-4 py-2 text-sm text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors"
+                        className={`flex items-center gap-3 px-4 py-2 text-sm transition-colors ${
+                          isActiveLink("/settings")
+                            ? "bg-primary/5 text-primary"
+                            : "text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700"
+                        }`}
                       >
                         <span className="material-symbols-outlined text-lg">settings</span>
                         {t("settings") || "Settings"}
@@ -206,16 +228,23 @@ export function Navbar({ expertImage }: NavbarProps) {
         {isMobileMenuOpen && (
           <div className="md:hidden border-t border-slate-200 dark:border-slate-700 py-4">
             <div className="flex flex-col gap-2">
-              {isAuthenticated && navItems.map((item) => (
-                <Link
-                  key={item.name}
-                  href={item.href}
-                  className="rounded-lg px-4 py-2 text-sm font-medium text-slate-600 dark:text-slate-300 transition-colors hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-primary"
-                  onClick={() => setIsMobileMenuOpen(false)}
-                >
-                  {item.name}
-                </Link>
-              ))}
+              {isAuthenticated && navItems.map((item) => {
+                const isActive = isActiveLink(item.href);
+                return (
+                  <Link
+                    key={item.name}
+                    href={item.href}
+                    className={`rounded-lg px-4 py-2 text-sm font-medium transition-colors ${
+                      isActive
+                        ? "bg-primary/10 text-primary"
+                        : "text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-primary"
+                    }`}
+                    onClick={() => setIsMobileMenuOpen(false)}
+                  >
+                    {item.name}
+                  </Link>
+                );
+              })}
 
               {/* Language Switcher Mobile */}
               <div className="px-4 py-2">
@@ -254,7 +283,11 @@ export function Navbar({ expertImage }: NavbarProps) {
                   {/* Mobile Menu Items */}
                   <Link
                     href="/profile"
-                    className="flex items-center gap-3 rounded-lg px-4 py-2 text-sm font-medium text-slate-600 dark:text-slate-300 transition-colors hover:bg-slate-100 dark:hover:bg-slate-800"
+                    className={`flex items-center gap-3 rounded-lg px-4 py-2 text-sm font-medium transition-colors ${
+                      isActiveLink("/profile")
+                        ? "bg-primary/10 text-primary"
+                        : "text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800"
+                    }`}
                     onClick={() => setIsMobileMenuOpen(false)}
                   >
                     <span className="material-symbols-outlined text-lg">person</span>
@@ -262,7 +295,11 @@ export function Navbar({ expertImage }: NavbarProps) {
                   </Link>
                   <Link
                     href="/settings"
-                    className="flex items-center gap-3 rounded-lg px-4 py-2 text-sm font-medium text-slate-600 dark:text-slate-300 transition-colors hover:bg-slate-100 dark:hover:bg-slate-800"
+                    className={`flex items-center gap-3 rounded-lg px-4 py-2 text-sm font-medium transition-colors ${
+                      isActiveLink("/settings")
+                        ? "bg-primary/10 text-primary"
+                        : "text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800"
+                    }`}
                     onClick={() => setIsMobileMenuOpen(false)}
                   >
                     <span className="material-symbols-outlined text-lg">settings</span>
