@@ -8,18 +8,6 @@ export async function GET(request: NextRequest) {
   try {
     // Extract token from Authorization header
     const authHeader = request.headers.get('authorization');
-    
-    if (!authHeader || !authHeader.startsWith('Bearer ')) {
-      return NextResponse.json(
-        {
-          success: false,
-          error: 'Unauthorized',
-          message: 'Authorization header missing or invalid',
-        },
-        { status: 401 }
-      );
-    }
-
     const token = extractTokenFromHeader(authHeader);
 
     if (!token) {
@@ -77,7 +65,7 @@ export async function GET(request: NextRequest) {
     }
 
     // Check if account is still active
-    if (!doctor.isActive) {
+    if (doctor.isActive !== 'true') {
       return NextResponse.json(
         {
           success: false,
