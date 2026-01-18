@@ -40,3 +40,6 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 /.idea/workspace.xml
+
+generate_context.ps1
+project_context.txt

@@ -1,5 +1,4 @@
 // app/components/stats/TopPathologiesList.tsx
-import React from 'react';
 import { Activity } from 'lucide-react';
 import { TopItem } from '@/services/statsService';
 

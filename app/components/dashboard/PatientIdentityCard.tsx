@@ -1,10 +1,10 @@
 // components/dashboard/PatientIdentityCard.tsx
 import React from 'react';
-import { User, Briefcase, Calendar, Droplet, UserCircle2 } from 'lucide-react';
+import { Briefcase, Calendar, Droplet, UserCircle2 } from 'lucide-react';
 import { PatientInfo } from '@/app/utils/types/clinicalCase';
 
 export const PatientIdentityCard = ({ patient }: { patient: PatientInfo }) => {
-  const age = new Date().getFullYear() - new Date(patient.birthDate).getFullYear();
+  // const age = new Date().getFullYear() - new Date(patient.year_range).getFullYear();
   
   return (
     <div className="bg-gradient-to-br from-slate-800 to-slate-900 text-white p-5 rounded-2xl shadow-lg flex flex-col justify-between h-full relative overflow-hidden">
@@ -38,7 +38,7 @@ export const PatientIdentityCard = ({ patient }: { patient: PatientInfo }) => {
            <Calendar size={16} /> Né(e) le {new Date(patient.birthDate).toLocaleDateString()}
         </div> */}
         <div className="flex items-center gap-2 text-slate-300 text-sm col-span-2">
-           <Calendar size={16} /> {patient.gender === 'M' ? 'Agé' : 'Agée'} de {age} ans
+           <Calendar size={16} /> {patient.gender === 'M' ? 'Agé' : 'Agée'} de {patient.yearRange} ans
         </div>
       </div>
     </div>

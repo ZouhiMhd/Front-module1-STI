@@ -1,6 +1,5 @@
 // app/components/stats/DemographicsChart.tsx
-import React from 'react';
-import { User, Users } from 'lucide-react';
+import { Users } from 'lucide-react';
 import { DemographicStats } from '@/services/statsService';
 
 export const DemographicsChart = ({ data }: { data: DemographicStats }) => {

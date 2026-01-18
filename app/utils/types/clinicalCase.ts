@@ -9,13 +9,15 @@ export type VitalParameters = {
 
 export type PatientInfo = {
   id: string;
-  birthDate: string; // ISO Date "YYYY-MM-DD"
+  yearRange: string; 
   civilStatus: string;
   job: string;
   bloodGroup: string;
   gender: 'M' | 'F';
   lastMenstrualPeriod?: string;
   vitals: VitalParameters;
+  condition : string;
+  medicalService: string;
 };
 
 export type Symptom = {
@@ -30,12 +32,29 @@ export type Symptom = {
 export type Consultation = {
   reason: string;
   symptoms: Symptom[];
+  type: string;
+  notes: Note[]; 
   physicalDiagnosis: Array<{
-    name: string;
     result: string;
-    observation: string;
+    date: string;
   }>;
+  status: string;
+  suspectedDisease : Disease[];
 };
+
+export type Disease={
+  name: string;
+  observation: string;
+  dateDebut:string;
+  dateFin:string;
+  treatments:string;
+};
+
+export type Note={
+  contenu:string;
+  date:string;
+  type:string;
+}
 
 export type MedicalHistory = {
   familyHistory: string[];
@@ -80,14 +99,24 @@ export type Treatment = {
   frequency: string;
 };
 
+export type Diagnostic = {
+  physicalFindings : string[];
+  exams : string[];
+  finalTreatments : string[];
+  lifeMode : string;
+  diagnostic_final : string;
+  specialty : string;
+}
+
 export type ClinicalCase = {
   id: string;
-  status: 'PENDING' | 'VALIDATED' | 'REJECTED';
-  rejectionReason?: string;
   submissionDate: string;
   patient: PatientInfo;
   consultation: Consultation;
   history: MedicalHistory;
   exams: ExamResult[];
+  diagnostic: Diagnostic;
   treatments: Treatment[];
+  status: 'PENDING' | 'VALIDATED' | 'REJECTED';
+  rejectionReason?: string;
 };

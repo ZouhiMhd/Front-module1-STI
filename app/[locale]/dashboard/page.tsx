@@ -1,19 +1,17 @@
 "use client";
 
-import React, { useState, useEffect, useMemo } from 'react';
+import { useState, useMemo } from 'react';
 import { useRouter } from 'next/navigation';
 import {
     Inbox, Search, Filter, CheckCircle2, XCircle,
-    LayoutGrid, Calendar, User, Activity, Stethoscope,
-    RotateCcw, Loader2,
+    LayoutGrid, User, Activity, Stethoscope, Loader2,
     Microscope,
-    Briefcase
 } from 'lucide-react';
-
+import { useClinicalCases } from '@/app/components/auth/ClinicalCaseContext'; // Ajuste le chemin
 // Types & Services
 import { ClinicalCase } from '@/app/utils/types/clinicalCase';
 import { useAuth } from '@/app/components/auth/AuthContext';
-import { classifyClinicalCase } from '@/lib/classification/classifier';
+// import { classifyClinicalCase } from '@/lib/classification/classifier';
 import {
     filterClinicalCases,
     getCaseStats,
@@ -27,6 +25,8 @@ import {
 type ClassifiedClinicalCase = ClinicalCase & {
     detectedSpecialty: string;
 };
+
+
 
 // --- COMPOSANT : CARTE DE CAS (GRILLE) ---
 const CaseGridCard = ({ data, onClick }: { data: ClassifiedClinicalCase, onClick: () => void }) => (
@@ -52,9 +52,9 @@ const CaseGridCard = ({ data, onClick }: { data: ClassifiedClinicalCase, onClick
                         }`}>
                         {data.status === 'PENDING' ? 'En attente' : data.status === 'VALIDATED' ? 'Validé' : 'Rejeté'}
                     </span>
-                    <p className="text-xs text-gray-400 mt-1 flex items-center gap-1">
+                    {/* <p className="text-xs text-gray-400 mt-1 flex items-center gap-1">
                         <Briefcase size={16} /> {data.patient.job}
-                    </p>
+                    </p> */}
                 </div>
             </div>
         </div>
@@ -66,7 +66,7 @@ const CaseGridCard = ({ data, onClick }: { data: ClassifiedClinicalCase, onClick
         <div className="mt-auto pt-4 border-t border-gray-50 grid grid-cols-2 gap-2 text-xs text-gray-500 pl-2">
             <div className="flex items-center gap-1.5">
                 <User size={14} className="text-gray-400" />
-                {data.patient.gender === 'M' ? 'Homme' : 'Femme'}, {new Date().getFullYear() - new Date(data.patient.birthDate).getFullYear()} ans
+                {data.patient.gender === 'M' ? 'Homme' : 'Femme'}, {data.patient.yearRange} ans
             </div>
             {data.detectedSpecialty && (
                 <div className="flex items-center gap-1.5">
@@ -106,53 +106,68 @@ const TabButton = ({ label, count, active, onClick, icon: Icon }: any) => (
 export default function ClinicalReviewDashboard() {
     const router = useRouter();
     const { doctor, isLoading: authLoading } = useAuth();
-
+    // const { cases, isLoading, error } = useClinicalCases(); 
     // Data State
-    const [cases, setCases] = useState<ClassifiedClinicalCase[]>([]);
-    const [isLoadingData, setIsLoadingData] = useState(true);
+    // const [cases, setCases] = useState<ClassifiedClinicalCase[]>([]);
+
+    // 1. On récupère les données directement du Contexte (plus de fetch local)
+    const { cases: allCases, isLoading: dataLoading, error } = useClinicalCases();
 
     // Filters State
     const [viewMode, setViewMode] = useState<ViewMode>('ALL');
     const [filters, setFilters] = useState<CaseFilters>(INITIAL_FILTERS);
 
     // --- CHARGEMENT DES DONNÉES ---
-    useEffect(() => {
-        const loadData = async () => {
-            if (authLoading) return;
-            try {
-                const response = await fetch('/data.json');
-                const rawData: ClinicalCase[] = await response.json();
+    // useEffect(() => {
+    //     const loadData = async () => {
+    //         if (authLoading) return;
+    //         try {
+    //             const response = await fetch('/data.json');
+    //             const rawData: ClinicalCase[] = await response.json();
 
-                // Classification et Filtrage par spécialité du médecin connecté
-                const classifiedData = rawData.map((c) => ({
-                    ...c,
-                    detectedSpecialty: classifyClinicalCase(c)
-                }));
+    //             // Classification et Filtrage par spécialité du médecin connecté
+    //             const classifiedData = rawData.map((c) => ({
+    //                 ...c,
+    //                 detectedSpecialty: classifyClinicalCase(c)
+    //             }));
 
-                let filteredBySpecialty = classifiedData;
-                if (doctor && doctor.specialty && doctor.specialty.toLowerCase() !== 'general_medicine') {
-                    const expertSpec = doctor.specialty.toLowerCase();
-                    filteredBySpecialty = classifiedData.filter((c) => c.detectedSpecialty === expertSpec);
-                }
+    //             let filteredBySpecialty = classifiedData;
+    //             if (doctor && doctor.specialty && doctor.specialty.toLowerCase() !== 'general_medicine') {
+    //                 const expertSpec = doctor.specialty.toLowerCase();
+    //                 filteredBySpecialty = classifiedData.filter((c) => c.detectedSpecialty === expertSpec);
+    //             }
 
-                setCases(filteredBySpecialty);
-            } catch (e) {
-                console.error(e);
-            } finally {
-                setIsLoadingData(false);
-            }
-        };
-        loadData();
-    }, [doctor, authLoading]);
+    //             setCases(filteredBySpecialty);
+    //         } catch (e) {
+    //             console.error(e);
+    //         } finally {
+    //             setIsLoadingData(false);
+    //         }
+    //     };
+    //     loadData();
+    // }, [doctor, authLoading]);
+
+    // 2. Filtrage initial par spécialité du médecin (remplace le useEffect de chargement)
+    const casesToDisplay = useMemo(() => {
+        if (!doctor || !allCases) return [];
+
+        // Si médecin généraliste, il voit tout
+        if (doctor.specialty === 'general_medicine') {
+            return allCases;
+        }
+
+        // Sinon, filtre par spécialité détectée
+        return allCases.filter(c => c.detectedSpecialty === doctor.specialty);
+    }, [allCases, doctor]);
 
     // --- DONNÉES CALCULÉES (Memo) ---
-    const stats = useMemo(() => getCaseStats(cases), [cases]);
-    const filterOptions = useMemo(() => extractFilterOptions(cases), [cases]);
+    const stats = useMemo(() => getCaseStats(casesToDisplay), [casesToDisplay]);
+    const filterOptions = useMemo(() => extractFilterOptions(casesToDisplay), [casesToDisplay]);
 
     // Utilisation du service de filtrage
     const filteredCases = useMemo(() =>
-        filterClinicalCases(cases, viewMode, filters),
-        [cases, viewMode, filters]);
+        filterClinicalCases(casesToDisplay, viewMode, filters),
+        [casesToDisplay, viewMode, filters]);
 
     // --- NAVIGATION ---
     const handleCardClick = (id: string) => {
@@ -160,7 +175,7 @@ export default function ClinicalReviewDashboard() {
     };
 
     // --- RENDU : LOADING ---
-    if (isLoadingData || authLoading) {
+    if (dataLoading || authLoading) {
         return (
             <div className="h-screen flex items-center justify-center bg-slate-50 text-slate-400">
                 <Loader2 className="animate-spin mr-2" /> Chargement des dossiers...
@@ -207,15 +222,29 @@ export default function ClinicalReviewDashboard() {
                                     <option value="M">Homme</option>
                                     <option value="F">Femme</option>
                                 </select>
+                                {/* Dans app/dashboard/page.tsx */}
+
+                                {/* ... select Genre ... */}
+
                                 <select
                                     className="w-full p-2.5 bg-gray-50 border border-gray-200 rounded-lg text-sm outline-none focus:border-blue-500 text-slate-600"
-                                    value={filters.ageRange} onChange={(e) => setFilters({ ...filters, ageRange: e.target.value })}
+                                    value={filters.yearRange}
+                                    onChange={(e) => setFilters({ ...filters, yearRange: e.target.value })}
                                 >
                                     <option value="ALL">Tout âge</option>
-                                    <option value="0-18">0-18 ans</option>
-                                    <option value="19-35">19-35 ans</option>
-                                    <option value="36-60">36-60 ans</option>
-                                    <option value="60+">60+ ans</option>
+                                    <option value="0-5">0-5 ans</option>
+                                    {/* Génération dynamique de 6-10 jusqu'à 76-80 */}
+                                    {[...Array(15)].map((_, i) => {
+                                        const start = 6 + (i * 5);
+                                        const end = start + 4;
+                                        const label = `${start}-${end}`;
+                                        return (
+                                            <option key={label} value={label}>
+                                                {label} ans
+                                            </option>
+                                        );
+                                    })}
+                                    <option value="81+">81+ ans</option>
                                 </select>
                             </div>
                         </div>

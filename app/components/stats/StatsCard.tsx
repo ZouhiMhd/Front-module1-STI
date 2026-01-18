@@ -1,5 +1,4 @@
 // app/components/stats/StatCard.tsx
-import React from 'react';
 import { LucideIcon } from 'lucide-react';
 
 interface StatCardProps {

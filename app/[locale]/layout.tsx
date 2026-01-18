@@ -9,6 +9,7 @@ import { ThemeProvider } from "@/app/components/ThemeProvider";
 import { AuthProvider } from "@/app/components/auth/AuthContext";
 import {Navbar} from "@/app/components/Navbar";
 import {Footer} from "@/app/components/landing/Footer";
+import { ClinicalCaseProvider } from '@/app/components/auth/ClinicalCaseContext'; // Ajuste le chemin
 
 const inter = Inter({
   variable: "--font-inter",
@@ -54,11 +55,13 @@ export default async function LocaleLayout({
         <NextIntlClientProvider messages={messages}>
           <ThemeProvider>
             <AuthProvider>
+              <ClinicalCaseProvider>
               <Navbar />
               <main className="mt-16">
                 {children}
               </main>
               <Footer />
+              </ClinicalCaseProvider>
             </AuthProvider>
           </ThemeProvider>
         </NextIntlClientProvider>

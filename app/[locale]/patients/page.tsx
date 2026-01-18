@@ -131,7 +131,7 @@ export default function PatientsStatsPage() {
                         <tr key={c.id} className="border-b border-gray-50 hover:bg-gray-50/50">
                             <td className="px-4 py-3 font-medium text-slate-700">#{c.id}</td>
                             <td className="px-4 py-3">{c.consultation.reason}</td>
-                            <td className="px-4 py-3">{c.patient.gender}, {new Date().getFullYear() - new Date(c.patient.birthDate).getFullYear()} ans</td>
+                            <td className="px-4 py-3">{c.patient.gender}, {c.patient.yearRange} ans</td>
                             <td className="px-4 py-3">{new Date(c.submissionDate).toLocaleDateString()}</td>
                             <td className="px-4 py-3">
                                 <span className={`px-2 py-1 rounded-full text-[10px] font-bold uppercase ${
