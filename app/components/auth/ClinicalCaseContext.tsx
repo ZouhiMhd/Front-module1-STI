@@ -11,6 +11,19 @@ export type ClassifiedClinicalCase = ClinicalCase & {
   detectedSpecialty: string;
 };
 
+// À mettre au début du fichier ClinicalCaseContext.tsx ou dans un utilitaire
+const normalizeBackendSpecialty = (spec: string | null): string => {
+    if (!spec) return "";
+    const s = spec.toLowerCase();
+    if (s.includes('cardio')) return 'cardiology';
+    if (s.includes('derma')) return 'dermatology';
+    if (s.includes('pedia')) return 'pediatrics';
+    if (s.includes('neuro')) return 'neurology';
+    if (s.includes('ortho')) return 'orthopedics';
+    if (s.includes('chirur') || s.includes('surg')) return 'surgery';
+    return 'general_medicine';
+};
+
 interface ClinicalCaseContextType {
   cases: ClassifiedClinicalCase[];
   isLoading: boolean;
@@ -73,9 +86,15 @@ const loadData = useCallback(async () => {
             const rawResults = response.results || [];
             const mappedList = rawResults.map((item: any) => {
                 const frontendCase = mapBackendCaseToFrontend(item);
+                
+                const rawSpec = item.specialite_confirmee || item.specialite_suggeree;
+                const finalSpecialty = rawSpec 
+                    ? normalizeBackendSpecialty(rawSpec) 
+                    : classifyClinicalCase(frontendCase);
+
                 return {
                     ...frontendCase,
-                    detectedSpecialty: classifyClinicalCase(frontendCase)
+                    detectedSpecialty: finalSpecialty
                 };
             });
 
@@ -83,6 +102,9 @@ const loadData = useCallback(async () => {
             
             // Si le backend renvoie une URL complète dans "next", on continue la boucle
             nextUrl = response.next || null;
+             if (aggregatedCases.length <= rawResults.length) {
+                setTotalCount(response.count || 0);
+            }
         }
 
         setCases(aggregatedCases);
