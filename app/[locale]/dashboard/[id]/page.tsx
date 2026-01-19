@@ -7,9 +7,11 @@ import {
   FileText, History, Pill, Microscope, 
   AlertCircle, Loader2, Activity,
   BrainCircuit, Calendar, User, ClipboardList,
-  Sticker, FileSignature,
+  FileSignature,
   Trash2,
   AlertOctagon,
+  MessageSquareQuote,
+  AlertTriangle
 } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 
@@ -29,7 +31,7 @@ export default function CaseDetailPage() {
 
   // Utilisation du contexte dédié au détail
   const { 
-    activeCase: caseData, // On renomme pour garder votre logique d'affichage
+    activeCase: caseData, 
     isLoading, 
     error, 
     fetchCaseDetail, 
@@ -40,34 +42,41 @@ export default function CaseDetailPage() {
   } = useCaseDetail();
 
   const [isActionLoading, setIsActionLoading] = useState(false);
+  
+  // États pour les Modaux
   const [rejectModalOpen, setRejectModalOpen] = useState(false);
   const [rejectionReason, setRejectionReason] = useState('');
+  
+  const [validateModalOpen, setValidateModalOpen] = useState(false);
+  const [confirmedDiag, setConfirmedDiag] = useState('');
+  
+  const [restoreModalOpen, setRestoreModalOpen] = useState(false);
 
   // --- CHARGEMENT ---
   useEffect(() => {
     if (caseId) {
       fetchCaseDetail(caseId);
     }
-    // Nettoyage quand on quitte la page
     return () => {
       clearActiveCase();
     };
   }, [caseId, fetchCaseDetail, clearActiveCase]);
 
-  // --- ACTIONS ---
-  const handleValidate = async () => {
-    if (!caseData) return;
-    
-    // On propose le diagnostic actuel par défaut, ou l'utilisateur peut le changer
-    const currentDiag = caseData.diagnostic.diagnostic_final || "Asthme bronchique"; // Valeur par défaut ou vide
-    const confirmedDiag = prompt("Confirmer le diagnostic final :", currentDiag);
+  // Initialisation du diagnostic lors de l'ouverture du modal de validation
+  useEffect(() => {
+    if (caseData && validateModalOpen) {
+        setConfirmedDiag(caseData.diagnostic.diagnostic_final || "Asthme bronchique");
+    }
+  }, [caseData, validateModalOpen]);
 
-    if (confirmedDiag === null) return; // Annulation
+  // --- ACTIONS ---
+  const handleValidateConfirm = async () => {
+    if (!caseData || !confirmedDiag.trim()) return;
 
     setIsActionLoading(true);
     try {
-        // On passe la spécialité ET le diagnostic final
         await validateActiveCase(caseData.detectedSpecialty || "general_medicine", confirmedDiag);
+        setValidateModalOpen(false);
     } catch (e) { 
         alert("Erreur lors de la validation."); 
     } finally { 
@@ -93,21 +102,21 @@ export default function CaseDetailPage() {
     }
   };
 
-  const handleRestore = async () => {
+  const handleRestoreConfirm = async () => {
       if (!caseData) return;
-      if (!confirm("Voulez-vous restaurer ce cas en 'En attente' ?")) return;
       
       setIsActionLoading(true);
       try {
           await restoreActiveCase();
+          setRestoreModalOpen(false);
       } catch (e) {
           alert("Erreur lors de la restauration.");
       } finally {
           setIsActionLoading(false);
       }
   };
+
   const getStatusLabel = (status: string) => {
-      // Mappe 'PENDING' -> t('status.PENDING')
       return t(`status.${status}`);
   };
 
@@ -121,8 +130,8 @@ export default function CaseDetailPage() {
     </div>
   );
 
-  if (!caseData) return null; // Rien à afficher tant que pas chargé
-   const isDeleted = caseData.status === 'DELETED';
+  if (!caseData) return null;
+  const isDeleted = caseData.status === 'DELETED';
 
   return (
     <div className="min-h-screen bg-slate-50 font-sans text-slate-600 pb-20">
@@ -158,11 +167,11 @@ export default function CaseDetailPage() {
                         <XCircle size={18}/>{t('actions.reject')}
                     </button>
                     <button 
-                        onClick={handleValidate} 
+                        onClick={() => setValidateModalOpen(true)} 
                         disabled={isActionLoading} 
                         className="flex items-center gap-2 px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors text-sm font-medium shadow-sm disabled:opacity-50"
                     >
-                        {isActionLoading ? <Loader2 size={18} className="animate-spin"/> : <CheckCircle2 size={18}/>} 
+                        <CheckCircle2 size={18}/> 
                         {t('actions.validate')}
                     </button>
                 </>
@@ -173,8 +182,8 @@ export default function CaseDetailPage() {
                  </button>
             )}
             {caseData.status === 'DELETED' && (
-                <button onClick={handleRestore} disabled={isActionLoading} className="flex items-center gap-2 px-4 py-2 bg-amber-100 text-amber-700 rounded-lg hover:bg-amber-200 transition-colors text-sm font-medium">
-                    {isActionLoading ? <Loader2 size={16} className="animate-spin"/> : <RotateCcw size={16}/>} {t('actions.restore')}
+                <button onClick={() => setRestoreModalOpen(true)} disabled={isActionLoading} className="flex items-center gap-2 px-4 py-2 bg-amber-100 text-amber-700 rounded-lg hover:bg-amber-200 transition-colors text-sm font-medium">
+                    <RotateCcw size={16}/> {t('actions.restore')}
                  </button>
             )}
          </div>
@@ -183,7 +192,7 @@ export default function CaseDetailPage() {
       {/* --- CONTENU PRINCIPAL --- */}
       <main className="max-w-7xl mx-auto px-4 md:px-8 py-8 space-y-6">
 
-        {(caseData.status === 'DELETED') && (
+        {isDeleted && (
             <div className="bg-red-50 border border-red-200 rounded-xl p-4 flex items-start gap-4 animate-in slide-in-from-top-2 shadow-sm">
                 <div className="p-2 bg-white rounded-full border border-red-100 shadow-sm shrink-0">
                     <AlertOctagon className="text-red-600" size={24} />
@@ -192,7 +201,6 @@ export default function CaseDetailPage() {
                     <h4 className="font-bold text-red-900 text-base mb-1">{tCommon('case')} {t('status.DELETED')}</h4>
                     <div className="text-sm text-red-700">
                         <span className="font-semibold">{t('rejectionReason')} : </span>
-                        {/* Affiche le motif ou un texte par défaut */}
                         {caseData.rejectionReason ? (
                             <span className="italic">« {caseData.rejectionReason} »</span>
                         ) : (
@@ -203,7 +211,6 @@ export default function CaseDetailPage() {
             </div>
         )}
 
-        {/* 1. INFO PATIENT & VITAUX */}
         <section className="grid grid-cols-1 lg:grid-cols-3 gap-6">
             <div className="lg:col-span-1 h-full flex flex-col gap-4">
                 <PatientIdentityCard patient={caseData.patient} />
@@ -219,14 +226,11 @@ export default function CaseDetailPage() {
             <div className="lg:col-span-2 h-full"><VitalsCard vitals={caseData.patient.vitals} /></div>
         </section>
 
-        {/* 2. CONSULTATION & ENRICHISSEMENT IA */}
         <section className="grid grid-cols-1 xl:grid-cols-3 gap-6">
-            
             <div className="xl:col-span-2 bg-white p-6 rounded-2xl shadow-sm border border-slate-100">
                 <h3 className="text-lg font-bold mb-4 flex items-center gap-2 text-slate-800">
                     <FileText className="text-blue-500" size={20}/> {t('sections.consultation')}
                 </h3>
-                
                 <div className="bg-slate-50 p-4 rounded-xl border border-slate-200 mb-6">
                     <span className="text-xs font-bold text-slate-400 uppercase">{t('labels.reason')}</span>
                     <p className="text-lg font-medium text-slate-800 mt-1">{caseData.consultation.reason}</p>
@@ -235,7 +239,6 @@ export default function CaseDetailPage() {
                         <span className="text-xs bg-white px-2 py-1 rounded border text-slate-500">Statut: {caseData.consultation.status}</span>
                     </div>
                 </div>
-
                 <h4 className="text-sm font-bold text-slate-700 mb-3 flex items-center gap-2"><FileSignature size={16}/> {t('labels.notes')}</h4>
                 <div className="space-y-3">
                     {caseData.consultation.notes.length > 0 ? caseData.consultation.notes.map((note, i) => (
@@ -254,7 +257,6 @@ export default function CaseDetailPage() {
                 <h3 className="text-lg font-bold mb-4 flex items-center gap-2 text-indigo-900">
                     <BrainCircuit className="text-indigo-600" size={20}/> {t('sections.aiAnalysis')}
                 </h3>
-
                 <div className="mb-6">
                     <h4 className="text-xs font-bold text-indigo-400 uppercase mb-2">{t('labels.symptoms')}</h4>
                     <div className="space-y-2">
@@ -273,7 +275,6 @@ export default function CaseDetailPage() {
                         ))}
                     </div>
                 </div>
-
                 <div>
                     <h4 className="text-xs font-bold text-indigo-400 uppercase mb-2">{t('labels.suspected')}</h4>
                     <div className="space-y-2">
@@ -289,24 +290,19 @@ export default function CaseDetailPage() {
             </div>
         </section>
 
-        {/* 3. HISTORIQUE MÉDICAL */}
         <section className="bg-white p-6 rounded-2xl shadow-sm border border-slate-100">
             <h3 className="text-lg font-bold mb-6 flex items-center gap-2 text-slate-800">
                 <History className="text-teal-500" size={20}/> {t('sections.history')}
             </h3>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                
                 <div className="p-4 bg-red-50/50 rounded-xl border border-red-100">
                     <h4 className="font-bold text-red-800 text-sm mb-3 flex items-center gap-2"><AlertCircle size={14}/> {t('labels.allergies')}</h4>
                     <div className="flex flex-wrap gap-2">
                         {caseData.history.allergies.length > 0 ? caseData.history.allergies.map((a, i) => (
-                            <span key={i} className="px-2 py-1 bg-white text-red-700 rounded-full border border-red-200 text-xs font-medium shadow-sm">
-                                {a.name}
-                            </span>
+                            <span key={i} className="px-2 py-1 bg-white text-red-700 rounded-full border border-red-200 text-xs font-medium shadow-sm">{a.name}</span>
                         )) : <span className="text-sm text-slate-400 italic">{t('labels.none')}</span>}
                     </div>
                 </div>
-
                 <div className="p-4 bg-blue-50/50 rounded-xl border border-blue-100">
                     <h4 className="font-bold text-blue-800 text-sm mb-3 flex items-center gap-2"><Activity size={14}/> {t('labels.chronic')}</h4>
                     <ul className="space-y-2">
@@ -318,7 +314,6 @@ export default function CaseDetailPage() {
                         )) : <span className="text-sm text-slate-400 italic">{t('labels.none')}</span>}
                     </ul>
                 </div>
-
                 <div className="p-4 bg-slate-50 rounded-xl border border-slate-200">
                     <h4 className="font-bold text-slate-700 text-sm mb-3 flex items-center gap-2"><ClipboardList size={14}/> {t('labels.otherHistory')}</h4>
                     <div className="space-y-3 text-sm">
@@ -343,32 +338,24 @@ export default function CaseDetailPage() {
             </div>
         </section>
 
-        {/* 4. DIAGNOSTIC & PRISE EN CHARGE */}
         <section className="grid grid-cols-1 xl:grid-cols-2 gap-6">
-            
             <div className="bg-white p-6 rounded-2xl shadow-sm border border-slate-100">
                 <h3 className="text-lg font-bold mb-6 flex items-center gap-2 text-slate-800">
                     <Microscope className="text-purple-500" size={20}/> {t('labels.examen')}
                 </h3>
-                
                 <div className="mb-6">
                     <h4 className="text-xs font-bold text-slate-400 uppercase mb-2">{t('labels.physicalDiagnosis')}</h4>
                     {caseData.consultation.physicalDiagnosis.length > 0 ? (
                         <div className="space-y-2">
                             {caseData.consultation.physicalDiagnosis.map((diag, i) => (
                                 <div key={i} className="p-3 bg-purple-50/30 rounded-lg border border-purple-100 text-sm">
-                                   <p className="font-medium text-purple-900">
-                        {typeof diag.result === 'object' 
-                            ? JSON.stringify(diag.result) 
-                            : diag.result}
-                    </p>
-                    <p className="text-xs text-slate-500">{new Date(diag.date).toLocaleDateString()}</p>
+                                   <p className="font-medium text-purple-900">{typeof diag.result === 'object' ? JSON.stringify(diag.result) : diag.result}</p>
+                                   <p className="text-xs text-slate-500">{new Date(diag.date).toLocaleDateString()}</p>
                                 </div> 
                             ))}
                         </div>
                     ) : <p className="text-sm text-slate-400 italic">{t('labels.none')}</p>}
                 </div>
-
                 <div>
                     <h4 className="text-xs font-bold text-slate-400 uppercase mb-2">{t('labels.complementaryExams')}</h4>
                     {caseData.exams.length > 0 ? (
@@ -388,7 +375,6 @@ export default function CaseDetailPage() {
                 <h3 className="text-lg font-bold mb-6 flex items-center gap-2 text-slate-800">
                     <Pill className="text-emerald-500" size={20}/> {t('sections.treatment')}
                 </h3>
-
                 <div className="flex-1 space-y-6">
                     <div>
                         <h4 className="text-xs font-bold text-slate-400 uppercase mb-2">{t('labels.prescribedTreatments')}</h4>
@@ -408,7 +394,6 @@ export default function CaseDetailPage() {
                             </ul>
                         ) : <p className="text-sm text-slate-400 italic">{t('labels.none')}</p>}
                     </div>
-
                     <div className="mt-auto p-4 bg-slate-800 text-white rounded-xl shadow-lg">
                         <h4 className="text-xs font-bold text-slate-400 uppercase mb-1">{t('labels.finalDiagnosis')}</h4>
                         <p className="text-xl font-bold">{caseData.diagnostic.diagnostic_final || t('labels.pendingConclusion')}</p>
@@ -422,25 +407,112 @@ export default function CaseDetailPage() {
                 </div>
             </div>
         </section>
-
       </main>
+
+      {/* --- MODAUX (UI POPUPS) --- */}
+
+      {/* Modal Validation (Confirmation Diagnostic) */}
+      {validateModalOpen && (
+        <div className="fixed inset-0 bg-slate-900/60 backdrop-blur-sm flex items-center justify-center z-50 px-4 animate-in fade-in duration-200">
+           <div className="bg-white rounded-2xl shadow-2xl w-full max-w-md p-6 animate-in zoom-in-95 duration-200">
+              <div className="flex items-center gap-3 mb-4">
+                  <div className="p-3 bg-blue-100 text-blue-600 rounded-full">
+                      <CheckCircle2 size={24} />
+                  </div>
+                  <h3 className="text-xl font-bold text-slate-800">{t('actions.validate')}</h3>
+              </div>
+              
+              <p className="text-sm text-slate-500 mb-4 font-medium">Confirmez ou modifiez le diagnostic final avant de valider ce cas :</p>
+              
+              <div className="relative mb-6">
+                <MessageSquareQuote size={18} className="absolute left-3 top-3 text-slate-400" />
+                <textarea 
+                    className="w-full h-24 p-3 pl-10 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 outline-none resize-none text-sm font-medium transition-all"
+                    value={confirmedDiag} 
+                    onChange={(e) => setConfirmedDiag(e.target.value)}
+                    placeholder="Saisir le diagnostic final..."
+                    autoFocus
+                />
+              </div>
+
+              <div className="flex justify-end gap-3">
+                  <button onClick={() => setValidateModalOpen(false)} className="px-4 py-2 text-slate-600 hover:bg-slate-100 rounded-lg font-medium text-sm transition-colors" disabled={isActionLoading}>
+                      {t('actions.cancel')}
+                  </button>
+                  <button 
+                    onClick={handleValidateConfirm} 
+                    className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 font-bold text-sm shadow-lg shadow-blue-200 flex items-center gap-2 disabled:opacity-50 transition-all"
+                    disabled={isActionLoading || !confirmedDiag.trim()}
+                  >
+                    {isActionLoading ? <Loader2 size={18} className="animate-spin"/> : <CheckCircle2 size={18}/>}
+                    {t('actions.confirm')}
+                  </button>
+              </div>
+           </div>
+        </div>
+      )}
 
       {/* Modal Rejet */}
       {rejectModalOpen && (
-        <div className="fixed inset-0 bg-slate-900/60 backdrop-blur-sm flex items-center justify-center z-50 px-4">
-           <div className="bg-white rounded-2xl shadow-2xl w-full max-w-md p-6">
-              <h3 className="text-xl font-bold text-slate-800 mb-2">{t('rejectionReason')}</h3>
+        <div className="fixed inset-0 bg-slate-900/60 backdrop-blur-sm flex items-center justify-center z-50 px-4 animate-in fade-in duration-200">
+           <div className="bg-white rounded-2xl shadow-2xl w-full max-w-md p-6 animate-in zoom-in-95 duration-200">
+              <div className="flex items-center gap-3 mb-2">
+                  <div className="p-3 bg-red-100 text-red-600 rounded-full">
+                      <AlertOctagon size={24} />
+                  </div>
+                  <h3 className="text-xl font-bold text-slate-800">{t('rejectionReason')}</h3>
+              </div>
+              <p className="text-sm text-slate-500 mb-4">{t('reject_modal_description')}</p>
+              
               <textarea 
-                  className="w-full h-32 p-3 bg-gray-50 border border-gray-200 rounded-xl mb-4 focus:ring-2 focus:ring-red-500/20 outline-none resize-none text-sm"
+                  className="w-full h-32 p-3 bg-slate-50 border border-slate-200 rounded-xl mb-4 focus:ring-2 focus:ring-red-500/20 focus:border-red-500 outline-none resize-none text-sm transition-all"
                   value={rejectionReason} 
                   onChange={(e) => setRejectionReason(e.target.value)}
-                  placeholder={t('reject_modal_description')}
+                  placeholder="Ex: Données cliniques incohérentes ou incomplètes..."
                   autoFocus
               />
               <div className="flex justify-end gap-3">
-                  <button onClick={() => setRejectModalOpen(false)} className="px-4 py-2 text-slate-600 hover:bg-slate-100 rounded-lg font-medium text-sm">{t('actions.cancel')}</button>
-                  <button onClick={handleRejectConfirm} className="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 font-medium text-sm shadow-lg shadow-red-200">
+                  <button onClick={() => setRejectModalOpen(false)} className="px-4 py-2 text-slate-600 hover:bg-slate-100 rounded-lg font-medium text-sm transition-colors" disabled={isActionLoading}>{t('actions.cancel')}</button>
+                  <button 
+                    onClick={handleRejectConfirm} 
+                    className="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 font-bold text-sm shadow-lg shadow-red-200 flex items-center gap-2 transition-all disabled:opacity-50"
+                    disabled={isActionLoading || !rejectionReason.trim()}
+                  >
+                      {isActionLoading && <Loader2 size={18} className="animate-spin" />}
                       {caseData.status === 'VALIDATED' ? t('actions.invalidate') : t('actions.reject')}
+                  </button>
+              </div>
+           </div>
+        </div>
+      )}
+
+      {/* Modal Restauration */}
+      {restoreModalOpen && (
+        <div className="fixed inset-0 bg-slate-900/60 backdrop-blur-sm flex items-center justify-center z-50 px-4 animate-in fade-in duration-200">
+           <div className="bg-white rounded-2xl shadow-2xl w-full max-w-sm p-6 animate-in zoom-in-95 duration-200 text-center">
+              <div className="mx-auto p-4 bg-amber-100 text-amber-600 rounded-full w-fit mb-4">
+                  <RotateCcw size={32} />
+              </div>
+              <h3 className="text-xl font-bold text-slate-800 mb-2">Restaurer le dossier ?</h3>
+              <p className="text-sm text-slate-500 mb-6">
+                  Ce cas sera remis en état <span className="font-bold text-amber-600">En attente</span>. Les motifs de rejet seront effacés.
+              </p>
+              
+              <div className="flex flex-col gap-2">
+                  <button 
+                    onClick={handleRestoreConfirm} 
+                    className="w-full py-3 bg-amber-500 text-white rounded-xl hover:bg-amber-600 font-bold text-sm shadow-lg shadow-amber-100 flex items-center justify-center gap-2 transition-all disabled:opacity-50"
+                    disabled={isActionLoading}
+                  >
+                      {isActionLoading ? <Loader2 size={18} className="animate-spin" /> : <RotateCcw size={18}/>}
+                      Confirmer la restauration
+                  </button>
+                  <button 
+                    onClick={() => setRestoreModalOpen(false)} 
+                    className="w-full py-3 text-slate-500 hover:bg-slate-50 rounded-xl font-medium text-sm transition-colors"
+                    disabled={isActionLoading}
+                  >
+                      {t('actions.cancel')}
                   </button>
               </div>
            </div>

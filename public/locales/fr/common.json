@@ -211,6 +211,7 @@
     "subtitle": "Gérez et validez les cas cliniques soumis.",
     "sync" : "Synchronisation",
     "case": "Dossier",
+    "createdOn": "Créé le :",
     "noCases": "Aucun dossier à valider",
     "years": "ans",
     "loadingCases": "Chargement des dossiers...",

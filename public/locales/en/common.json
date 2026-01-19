@@ -211,6 +211,7 @@
     "subtitle": "Manage and validate submitted clinical cases.",
     "sync" : "Sync Data",
     "case": "Case",
+    "createdOn": "Created on:",
     "noCases": "No cases to validate",
     "years": "years",
     "loadingCases": "Loading cases...",
