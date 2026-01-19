@@ -7,6 +7,7 @@ import { apiFetch } from '@/lib/apiClient';
 import { mapBackendCaseToFrontend } from '@/lib/mappers';
 import { useAuth } from '@/app/components/auth/AuthContext';
 
+
 export type ClassifiedClinicalCase = ClinicalCase & {
   detectedSpecialty: string;
 };
@@ -16,9 +17,12 @@ interface ClinicalCaseContextType {
   isLoading: boolean;
   error: string | null;
   getCaseById: (id: string) => Promise<ClassifiedClinicalCase | null>;
-  validateCase: (id: string, specialty?: string) => Promise<void>;
-  rejectCase: (id: string, reason?: string) => Promise<void>;
+ validateCase: (id: string, specialty: string, diagnosticFinal: string) => Promise<void>;
+  rejectCase: (id: string, reason: string) => Promise<void>;
+  restoreCase: (id: string) => Promise<void>;
   refreshCases: () => Promise<void>;
+  syncWithBackend: () => Promise<void>; // <--- Nouvelle fonction
+
 }
 
 const ClinicalCaseContext = createContext<ClinicalCaseContextType | undefined>(undefined);
@@ -46,6 +50,7 @@ export function ClinicalCaseProvider({ children }: { children: ReactNode }) {
         setIsLoading(false);
         return;
     }
+
     
     // On ne met le loader que si c'est vide au départ
     setCases(current => {
@@ -113,6 +118,25 @@ export function ClinicalCaseProvider({ children }: { children: ReactNode }) {
     loadData();
   }, [loadData]);
 
+    const syncWithBackend = useCallback(async () => {
+    if (!isAuthenticated) return;
+    
+    setIsLoading(true); // On montre le chargement car c'est une action explicite
+    try {
+        console.log("🔄 Synchronisation avec la source de données...");
+        // Appel de la route de sync
+        await apiFetch('/sync/'); 
+        
+        // Une fois synchronisé, on recharge la liste pour avoir les données à jour
+        await loadData();
+    } catch (err) {
+        console.error("Erreur de synchronisation:", err);
+        setError("Échec de la synchronisation avec le serveur.");
+        setIsLoading(false);
+    }
+  }, [isAuthenticated, loadData]);
+
+
   // --- RÉCUPÉRATION DÉTAIL ---
   const getCaseById = useCallback(async (id: string): Promise<ClassifiedClinicalCase | null> => {
     console.log('🔍 [getCaseById] Recherche du cas:', id);
@@ -152,61 +176,66 @@ export function ClinicalCaseProvider({ children }: { children: ReactNode }) {
     }
   }, []);
 
-  // --- VALIDATION ---
-  const validateCase = useCallback(async (id: string, specialty?: string) => {
-    console.log('✅ [validateCase] Validation du cas:', id, 'spécialité:', specialty);
-    const previousCases = casesRef.current;
-    
-    try {
-      setCases(prev => prev.map(c => 
-        c.id === id ? { ...c, status: 'VALIDATED' as const } : c
-      ));
+  // VALIDATION
+  const validateCase = useCallback(async (id: string, specialty: string, diagnosticFinal: string) => {
+    const previousCases = cases;
+    setCases(prev => prev.map(c => c.id === id ? { ...c, status: 'VALIDATED' } : c));
 
-      await apiFetch(`/cases/${id}/confirm_speciality/`, {
-        method: 'POST',
-        body: { specialty: specialty || 'general_medicine' }
+    try {
+      await apiFetch(`/cases/${id}/confirm-specialty/`, {
+        method: 'PATCH',
+        body: { 
+          specialite_confirmee: specialty,
+          diagnostic_final: diagnosticFinal
+        }
       });
-      
-      console.log('✅ [validateCase] Cas validé, rafraîchissement...');
-      await loadData();
     } catch (err) {
-      console.error('❌ [validateCase] Erreur validation:', err);
       setCases(previousCases);
-      setError("Échec de la validation du cas");
       throw err;
     }
-  }, [loadData]);
+  }, [cases]);
 
-  // --- REJET ---
-  const rejectCase = useCallback(async (id: string, reason?: string) => {
-    console.log('❌ [rejectCase] Rejet du cas:', id, 'raison:', reason);
-    const previousCases = casesRef.current;
-    
+  // REJET
+  const rejectCase = useCallback(async (id: string, reason: string) => {
+    const previousCases = cases;
+    setCases(prev => prev.map(c => c.id === id ? { ...c, status: 'DELETED', rejectionReason: reason } : c));
+
     try {
-      setCases(prev => prev.map(c => 
-        c.id === id 
-          ? { ...c, status: 'REJECTED' as const, rejectionReason: reason } 
-          : c
-      ));
-
-      await apiFetch(`/cases/${id}`, {
-        method: 'DELETE'
+      await apiFetch(`/cases/${id}/`, {
+        method: 'DELETE',
+        body: { rejection_reason: reason }
       });
-      
-      setCases(prev => prev.filter(c => c.id !== id));
-      console.log('✅ [rejectCase] Cas rejeté et supprimé');
     } catch (err) {
-      console.error('❌ [rejectCase] Erreur rejet:', err);
       setCases(previousCases);
-      setError("Échec du rejet du cas");
       throw err;
     }
-  }, []);
+  }, [cases]);
 
-  const refreshCases = useCallback(async () => {
-    console.log('🔄 [refreshCases] Rafraîchissement manuel...');
-    await loadData();
-  }, [loadData]);
+  // RESTAURATION
+  const restoreCase = useCallback(async (id: string) => {
+    const previousCases = cases;
+    setCases(prev => prev.map(c => c.id === id ? { ...c, status: 'PENDING' } : c));
+    
+    // On récupère le cas actuel pour envoyer quelques infos contextuelles si nécessaire
+    const currentCase = cases.find(c => c.id === id);
+
+    try {
+      await apiFetch(`/cases/${id}/restore/`, {
+        method: 'PATCH',
+        body: {
+          status: "PENDING",
+          rejection_reason: null,
+          specialite_confirmee: null,
+          // Données minimales pour satisfaire le schéma si nécessaire
+          age_tranche: currentCase?.patient.yearRange,
+          sexe: currentCase?.patient.gender
+        }
+      });
+    } catch (err) {
+      setCases(previousCases);
+      throw err;
+    }
+  }, [cases]);
 
   // LOG DU STATE À CHAQUE CHANGEMENT
   useEffect(() => {
@@ -227,7 +256,9 @@ export function ClinicalCaseProvider({ children }: { children: ReactNode }) {
         getCaseById,
         validateCase,
         rejectCase,
-        refreshCases
+        restoreCase,
+        refreshCases : loadData,
+        syncWithBackend 
       }}
     >
       {children}

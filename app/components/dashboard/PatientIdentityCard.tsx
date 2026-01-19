@@ -2,10 +2,12 @@
 import React from 'react';
 import { Briefcase, Calendar, Droplet, UserCircle2 } from 'lucide-react';
 import { PatientInfo } from '@/app/utils/types/clinicalCase';
+import { useTranslations } from 'next-intl';
 
 export const PatientIdentityCard = ({ patient }: { patient: PatientInfo }) => {
   // const age = new Date().getFullYear() - new Date(patient.year_range).getFullYear();
-  
+  const t = useTranslations('caseDetail');
+  const tCommon = useTranslations('dashboard');
   return (
     <div className="bg-gradient-to-br from-slate-800 to-slate-900 text-white p-5 rounded-2xl shadow-lg flex flex-col justify-between h-full relative overflow-hidden">
       {/* Decorative background circle */}
@@ -18,7 +20,7 @@ export const PatientIdentityCard = ({ patient }: { patient: PatientInfo }) => {
              <span className="text-xs text-slate-300">ID: {patient.id}</span>
            </div>
            <h2 className="text-2xl font-bold flex items-center gap-2">
-             {patient.gender === 'M' ? 'Homme' : 'Femme'} 
+             {patient.gender === 'M' ? tCommon('filters.male') : tCommon('filters.female')} 
              {/* <span className="text-slate-400 font-normal text-lg">({age} ans)</span> */}
            </h2>
         </div>
@@ -38,7 +40,7 @@ export const PatientIdentityCard = ({ patient }: { patient: PatientInfo }) => {
            <Calendar size={16} /> Né(e) le {new Date(patient.birthDate).toLocaleDateString()}
         </div> */}
         <div className="flex items-center gap-2 text-slate-300 text-sm col-span-2">
-           <Calendar size={16} /> {patient.gender === 'M' ? 'Agé' : 'Agée'} de {patient.yearRange} ans
+           <Calendar size={16} /> {tCommon('years')} {t('between')} {patient.yearRange}
         </div>
       </div>
     </div>

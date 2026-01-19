@@ -1,22 +1,20 @@
 // app/services/clinicalCaseService.ts
 import { ClinicalCase } from '@/app/utils/types/clinicalCase';
 
-export type ViewMode = 'ALL' | 'PENDING' | 'VALIDATED' | 'REJECTED';
+export type ViewMode = 'ALL' | 'PENDING' | 'VALIDATED' | 'DELETED';
 
 export interface CaseFilters {
   searchQuery: string;
   gender: string;      // 'ALL', 'M', 'F'
   yearRange: string;   // 'ALL' ou la valeur exacte (ex: "36-50")
-  medicalHistory: string; // 'ALL' ou nom de la maladie
-  pathology: string;   // 'ALL' ou résultat du diag physique
+  finalDiagnostic: string;  // 'ALL' ou résultat du diag physique
 }
 
 export const INITIAL_FILTERS: CaseFilters = {
   searchQuery: '',
   gender: 'ALL',
   yearRange: 'ALL',
-  medicalHistory: 'ALL',
-  pathology: 'ALL'
+  finalDiagnostic: 'ALL'
 };
 
 // --- Main Logic ---
@@ -26,7 +24,7 @@ export const getCaseStats = (cases: ClinicalCase[]) => {
     total: cases.length,
     pending: cases.filter(c => c.status === 'PENDING').length,
     validated: cases.filter(c => c.status === 'VALIDATED').length,
-    rejected: cases.filter(c => c.status === 'REJECTED').length,
+    deleted: cases.filter(c => c.status === 'DELETED').length,
   };
 };
 
@@ -51,38 +49,27 @@ export const filterClinicalCases = <T extends ClinicalCase>(
         return false;
     }
 
-    // 4. Filtre par Antécédent
-    if (filters.medicalHistory !== 'ALL') {
-      const hasHistory = c.history.chronicDiseases.some(d => d.name === filters.medicalHistory);
-      if (!hasHistory) return false;
-    }
+ 
 
-    // 5. Filtre par Pathologie (Diagnostic Physique)
-    if (filters.pathology && filters.pathology !== 'ALL') {
-      const searchTerm = filters.pathology.toLowerCase();
+       // 5. Filtre par Diagnostic Final
+    if (filters.finalDiagnostic && filters.finalDiagnostic !== 'ALL') {
+      const searchTerm = filters.finalDiagnostic.toLowerCase();
+      const diagFinal = c.diagnostic?.diagnostic_final?.toLowerCase() || '';
       
-      const hasPathology = c.consultation.physicalDiagnosis.some(d => 
-        d.result.toLowerCase().includes(searchTerm)
-      );
-      
-      if (!hasPathology) return false;
+      if (!diagFinal.includes(searchTerm)) {
+          return false;
+      }
     }
 
     // 6. Recherche Textuelle Globale
-   if (filters.searchQuery) {
+    if (filters.searchQuery) {
       const lowerQuery = filters.searchQuery.toLowerCase();
-      
       const inReason = c.consultation.reason.toLowerCase().includes(lowerQuery);
-      
-      const inSymptoms = c.consultation.symptoms.some(s => 
-        s.location.toLowerCase().includes(lowerQuery)
-      );
-      
-      const inDiagnosis = c.consultation.physicalDiagnosis.some(d => 
-          d.result.toLowerCase().includes(lowerQuery)
-      );
+      const inSymptoms = c.consultation.symptoms.some(s => s.location.toLowerCase().includes(lowerQuery));
+      // On ajoute aussi le diagnostic final dans la recherche globale pour être complet
+      const inDiag = c.diagnostic?.diagnostic_final?.toLowerCase().includes(lowerQuery);
 
-      if (!inReason && !inSymptoms && !inDiagnosis) return false;
+      if (!inReason && !inSymptoms && !inDiag) return false;
     }
 
     return true;
@@ -90,31 +77,33 @@ export const filterClinicalCases = <T extends ClinicalCase>(
 };
 
 // Extract unique options for Select inputs dynamically
+// --- MODIFICATION ICI ---
 export const extractFilterOptions = (cases: ClinicalCase[]) => {
   const histories = new Set<string>();
-  const pathologies = new Set<string>();
-  const yearRanges = new Set<string>(); // Ajout pour extraire les tranches d'âge existantes
+  const yearRanges = new Set<string>();
+  const diagnostics = new Set<string>(); // 1. Nouveau Set pour les diagnostics
 
   cases.forEach(c => {
     // Tranches d'âge
-    if (c.patient.yearRange) {
-        yearRanges.add(c.patient.yearRange);
-    }
-
+    if (c.patient.yearRange) yearRanges.add(c.patient.yearRange);
+    
     // Antécédents
     c.history.chronicDiseases.forEach(d => {
         if(d.name) histories.add(d.name);
     });
-    
-    // Pathologies (Diagnostic Physique)
-    c.consultation.physicalDiagnosis.forEach(d => {
-        if(d.result) pathologies.add(d.result); 
-    });
+
+    // 2. Extraction des Diagnostics Finals
+    if (c.diagnostic?.diagnostic_final) {
+        // On nettoie les espaces inutiles
+        diagnostics.add(c.diagnostic.diagnostic_final.trim());
+    }
+    console.log(c.diagnostic?.diagnostic_final);
   });
 
   return {
     histories: Array.from(histories).sort(),
-    pathologies: Array.from(pathologies).sort(),
-    yearRanges: Array.from(yearRanges).sort() // Retourne les tranches triées (ex: "0-5", "36-50")
+    yearRanges: Array.from(yearRanges).sort(),
+    // 3. On retourne la liste triée
+    finalDiagnostics: Array.from(diagnostics).sort() 
   };
 };

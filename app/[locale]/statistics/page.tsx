@@ -1,13 +1,11 @@
-// app/patients/page.tsx
 "use client";
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import { 
   Users, Activity, FileBarChart, AlertTriangle, 
   CheckCircle2, Loader2 
 } from 'lucide-react';
 
 // Types & Services
-import { ClinicalCase } from '@/app/utils/types/clinicalCase';
 import { 
   calculateGlobalStats, 
   calculateDemographics, 
@@ -19,32 +17,30 @@ import { StatCard } from '@/app/components/stats/StatsCard';
 import { DemographicsChart } from '@/app/components/stats/DemographicsChart';
 import { TopPathologiesList } from '@/app/components/stats/TopPathologiestList';
 
-export default function PatientsStatsPage() {
-  const [cases, setCases] = useState<ClinicalCase[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
+// IMPORT DU CONTEXTE GLOBAL
+import { useClinicalCases } from '@/app/components/auth/ClinicalCaseContext';
+import { useAuth } from '@/app/components/auth/AuthContext';
 
-  // Chargement des données
+export default function PatientsStatsPage() {
+  const { isAuthenticated, isLoading: authLoading } = useAuth();
+  
+  // Utilisation du contexte pour récupérer les données réelles
+  const { cases, isLoading: dataLoading, refreshCases } = useClinicalCases();
+
+  // Rafraîchissement des données à l'arrivée sur la page (optionnel mais recommandé)
   useEffect(() => {
-    const loadData = async () => {
-      try {
-        const response = await fetch('/data.json'); // Ou votre API
-        const data = await response.json();
-        setCases(data);
-      } catch (e) {
-        console.error(e);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-    loadData();
-  }, []);
+    if (isAuthenticated) {
+        refreshCases();
+    }
+  }, [isAuthenticated, refreshCases]);
 
   // Calcul des statistiques (Memoized pour la performance)
   const globalStats = useMemo(() => calculateGlobalStats(cases), [cases]);
   const demographics = useMemo(() => calculateDemographics(cases), [cases]);
   const topPathologies = useMemo(() => getTopPathologies(cases), [cases]);
 
-  if (isLoading) {
+  // Gestion du chargement
+  if (authLoading || (dataLoading && cases.length === 0)) {
     return (
       <div className="h-screen flex items-center justify-center bg-slate-50 text-slate-400">
         <Loader2 className="animate-spin mr-2"/> Chargement des statistiques...
@@ -112,9 +108,12 @@ export default function PatientsStatsPage() {
 
       </div>
 
-      {/* 3. Section Supplémentaire (Optionnel : Tableau récapitulatif rapide) */}
+      {/* 3. Tableau récapitulatif rapide */}
       <div className="mt-8 bg-white p-6 rounded-xl border border-gray-100 shadow-sm">
-         <h3 className="font-bold text-slate-800 mb-4">Derniers cas soumis</h3>
+         <div className="flex justify-between items-center mb-4">
+            <h3 className="font-bold text-slate-800">Derniers cas soumis</h3>
+            <span className="text-xs text-slate-400">5 plus récents</span>
+         </div>
          <div className="overflow-x-auto">
             <table className="w-full text-sm text-left">
                 <thead className="text-xs text-gray-400 uppercase bg-gray-50">
@@ -127,22 +126,33 @@ export default function PatientsStatsPage() {
                     </tr>
                 </thead>
                 <tbody>
-                    {cases.slice(0, 5).map((c) => (
-                        <tr key={c.id} className="border-b border-gray-50 hover:bg-gray-50/50">
-                            <td className="px-4 py-3 font-medium text-slate-700">#{c.id}</td>
-                            <td className="px-4 py-3">{c.consultation.reason}</td>
-                            <td className="px-4 py-3">{c.patient.gender}, {c.patient.yearRange} ans</td>
+                    {/* On trie par date décroissante et on prend les 5 premiers */}
+                    {[...cases]
+                        .sort((a, b) => new Date(b.submissionDate).getTime() - new Date(a.submissionDate).getTime())
+                        .slice(0, 5)
+                        .map((c) => (
+                        <tr key={c.id} className="border-b border-gray-50 hover:bg-gray-50/50 transition-colors">
+                            <td className="px-4 py-3 font-medium text-slate-700">#{c.id.slice(0, 8)}...</td>
+                            <td className="px-4 py-3 truncate max-w-[200px]">{c.consultation.reason}</td>
+                            <td className="px-4 py-3">{c.patient.gender === 'M' ? 'H' : 'F'}, {c.patient.yearRange} ans</td>
                             <td className="px-4 py-3">{new Date(c.submissionDate).toLocaleDateString()}</td>
                             <td className="px-4 py-3">
                                 <span className={`px-2 py-1 rounded-full text-[10px] font-bold uppercase ${
                                     c.status === 'VALIDATED' ? 'bg-green-100 text-green-700' : 
-                                    c.status === 'REJECTED' ? 'bg-red-100 text-red-700' : 'bg-amber-100 text-amber-700'
+                                    c.status === 'DELETED' ? 'bg-red-100 text-red-700' : 'bg-amber-100 text-amber-700'
                                 }`}>
-                                    {c.status}
+                                    {c.status === 'DELETED' ? 'REJECTED' : c.status}
                                 </span>
                             </td>
                         </tr>
                     ))}
+                    {cases.length === 0 && (
+                        <tr>
+                            <td colSpan={5} className="px-4 py-8 text-center text-slate-400 italic">
+                                Aucun dossier disponible.
+                            </td>
+                        </tr>
+                    )}
                 </tbody>
             </table>
          </div>

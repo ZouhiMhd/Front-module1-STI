@@ -35,8 +35,8 @@ export function Navbar({ expertImage }: NavbarProps) {
 
   const navItems = [
     { name: t("dashboard"), href: "/dashboard" },
-    { name: t("patients"), href: "/patients" },
-    { name: t("parameters"), href: "/parameters" },
+    { name: t("statistics"), href: "/statistics" },
+    // { name: t("parameters"), href: "/parameters" },
   ];
 
   const handleLogout = () => {
@@ -168,7 +168,7 @@ export function Navbar({ expertImage }: NavbarProps) {
                         <span className="material-symbols-outlined text-lg">person</span>
                         {t("profile") || "My Profile"}
                       </Link>
-                      <Link
+                      {/* <Link
                         href="/settings"
                         onClick={() => setIsProfileDropdownOpen(false)}
                         className={`flex items-center gap-3 px-4 py-2 text-sm transition-colors ${
@@ -179,7 +179,7 @@ export function Navbar({ expertImage }: NavbarProps) {
                       >
                         <span className="material-symbols-outlined text-lg">settings</span>
                         {t("settings") || "Settings"}
-                      </Link>
+                      </Link> */}
                     </div>
                     <div className="border-t border-slate-100 dark:border-slate-700 py-1">
                       <button
@@ -293,7 +293,7 @@ export function Navbar({ expertImage }: NavbarProps) {
                     <span className="material-symbols-outlined text-lg">person</span>
                     {t("profile") || "My Profile"}
                   </Link>
-                  <Link
+                  {/* <Link
                     href="/settings"
                     className={`flex items-center gap-3 rounded-lg px-4 py-2 text-sm font-medium transition-colors ${
                       isActiveLink("/settings")
@@ -304,7 +304,7 @@ export function Navbar({ expertImage }: NavbarProps) {
                   >
                     <span className="material-symbols-outlined text-lg">settings</span>
                     {t("settings") || "Settings"}
-                  </Link>
+                  </Link> */}
                   <button
                     onClick={() => {
                       handleLogout();

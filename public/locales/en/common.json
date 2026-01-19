@@ -52,6 +52,7 @@
   "navbar": {
     "dashboard": "Dashboard",
     "patients": "Patients",
+    "statistics": "Statistics",
     "parameters": "Settings",
     "medicalExpert": "Medical Expert",
     "login": "Sign In",
@@ -204,5 +205,116 @@
     "compliance": "Compliance",
     "copyright": "MedExpert. All rights reserved.",
     "systemsOperational": "All systems operational"
+  },
+   "dashboard": {
+    "title": "Dashboard",
+    "subtitle": "Manage and validate submitted clinical cases.",
+    "sync" : "Sync Data",
+    "case": "Case",
+    "noCases": "No cases to validate",
+    "years": "years",
+    "loadingCases": "Loading cases...",
+    "tryDifferentFilters": "Try adjusting your filters or changing the tab.",
+    "filters": {
+      "title": "Filters",
+      "searchPlaceholder": "Symptom, reason...",
+      "patient": "Patient",
+      "clinical": "Clinical",
+      "allGenders": "All genders",
+      "male": "Male",
+      "female": "Female",
+      "allAges": "All ages",
+      "allHistory": "History (All)",
+      "allDiagnostics": "Diagnostics (All)",
+      "reset": "Reset filters"
+    },
+    "tabs": {
+      "all": "All",
+      "pending": "Pending",
+      "validated": "Validated",
+      "rejected": "Rejected"
+    },
+    "empty": {
+      "title": "No cases found",
+      "description": "Try adjusting your filters or change the tab."
+    }
+  },
+  "caseDetail": {
+    "back": "Back",
+    "createdOn": "Created on:",
+    "rejectionReason": "Rejection Reason",
+    "civilStatus": "Civil Status",
+    "condition": "Condition",
+    "medicalService": "Medical Service",
+    "between": "between",
+    "reject_modal_description": "Please provide the reason why this clinical case is not validated.",
+    "status": {
+      "PENDING": "Pending",
+      "VALIDATED": "Validated",
+      "REJECTED": "Rejected",
+      "DELETED": "Deleted"
+    },
+    "actions": {
+      "validate": "Validate",
+      "reject": "Reject",
+      "restore": "Restore",
+      "invalidate": "Invalidate",
+      "cancel": "Cancel",
+      "confirm": "Confirm"
+    },
+    "sections": {
+      "administrative": "Administrative Info",
+      "vitals": "Vital Parameters",
+      "consultation": "Consultation",
+      "aiAnalysis": "AI Analysis",
+      "history": "History & Background",
+      "exams": "Exams & Diagnosis",
+      "treatment": "Treatment & Conclusion"
+    },
+    "labels": {
+      "reason": "Main Reason",
+      "noNotes": "No notes recorded.",
+      "symptoms": "Detected Symptoms",
+      "suspected": "Suspected Diseases",
+      "notes": "Clinical Notes",
+      "chronic": "Chronic Diseases",
+      "allergies": "Allergies",
+      "surgeries": "Surgeries",
+      "family": "Family History",
+      "finalDiag": "Final Diagnosis Retained",
+      "frequency": "Frequency",
+      "duration": "Duration", 
+      "triggerActivity": "Trigger Activity",
+      "noSuggestions": "No suggestions.",
+      "none": "None",
+      "otherHistory": "Other History",
+      "examen": "Exams & Physical Diagnosis",
+      "pendingConclusion": "No pending conclusion",
+      "complementaryExams": "Complementary Exams",
+      "prescribedTreatments": "Prescribed Treatments",
+      "lifestyleAndAdvice": "Lifestyle / Advice",
+        "pendingExams": "No pending exams",
+        "physicalDiagnosis": "Physical Diagnosis",
+        "finalDiagnosis": "Final Diagnosis"
+    },
+    "modals": {
+      "rejectTitle": "Rejection Reason",
+      "rejectDesc": "Please indicate the reason why this clinical case is not validated.",
+      "placeholder": "Ex: Inconsistent data..."
+    },
+    "vitals": {
+      "bloodPressure": "Blood Pressure",
+      "heartRate": "Heart Rate",
+      "pulse": "Pulse",
+      "temperature": "Temperature",
+      "weight": "Weight",
+      "height": "Height"
+  },
+    "notifications": {
+      "validated": "Clinical case validated successfully.",
+      "rejected": "Clinical case rejected.",
+      "restored": "Clinical case restored to pending.",
+      "invalidated": "Clinical case marked as invalid."
+    }
   }
 }

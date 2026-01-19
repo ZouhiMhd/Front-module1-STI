@@ -52,6 +52,7 @@
   "navbar": {
     "dashboard": "Tableau de bord",
     "patients": "Patients",
+    "statistics": "Statistiques",
     "parameters": "Paramètres",
     "medicalExpert": "Expert Médical",
     "login": "Se connecter",
@@ -131,6 +132,55 @@
     "trustedBy": "Approuvé par les principales institutions de santé",
     "hospital": "Hôpital"
   },
+  "profile": {
+    "title": "Mon Profil",
+    "subtitle": "Gérez vos informations personnelles, professionnelles et de compte.",
+    "breadcrumb": {
+      "home": "Accueil",
+      "profile": "Mon Profil"
+    },
+    "personal": {
+      "title": "Informations Personnelles",
+      "subtitle": "Mettez à jour votre photo et vos détails personnels ici.",
+      "firstName": "Prénom",
+      "lastName": "Nom",
+      "email": "Adresse Email",
+      "emailNote": "L'adresse email ne peut pas être modifiée.",
+      "changePhoto": "Modifier",
+      "removePhoto": "Supprimer"
+    },
+    "professional": {
+      "title": "Informations Professionnelles",
+      "subtitle": "Gérez vos détails professionnels.",
+      "specialty": "Spécialité"
+    },
+    "password": {
+      "title": "Changer le mot de passe",
+      "subtitle": "Mettez à jour votre mot de passe pour sécuriser votre compte.",
+      "current": "Mot de passe actuel",
+      "new": "Nouveau mot de passe",
+      "confirm": "Confirmer le mot de passe",
+      "change": "Changer le mot de passe",
+      "changing": "Modification...",
+      "changed": "Mot de passe modifié avec succès"
+    },
+    "specialties": {
+      "cardiology": "Cardiologie",
+      "dermatology": "Dermatologie",
+      "general_medicine": "Médecine Générale",
+      "pediatrics": "Pédiatrie",
+      "neurology": "Neurologie",
+      "orthopedics": "Orthopédie",
+      "psychiatry": "Psychiatrie",
+      "radiology": "Radiologie",
+      "surgery": "Chirurgie",
+      "other": "Autre"
+    },
+    "save": "Enregistrer",
+    "saving": "Enregistrement...",
+    "saved": "Enregistré avec succès",
+    "cancel": "Annuler"
+  },
   "footer": {
     "description": "Construction d'ensembles de données médicales fiables grâce à la validation par des experts. Accompagner les professionnels de santé avec des données cliniques précises.",
     "product": "Produit",
@@ -155,5 +205,116 @@
     "compliance": "Conformité",
     "copyright": "MedExpert. Tous droits réservés.",
     "systemsOperational": "Tous les systèmes opérationnels"
+  },
+  "dashboard": {
+    "title": "Tableau de bord",
+    "subtitle": "Gérez et validez les cas cliniques soumis.",
+    "sync" : "Synchronisation",
+    "case": "Dossier",
+    "noCases": "Aucun dossier à valider",
+    "years": "ans",
+    "loadingCases": "Chargement des dossiers...",
+    "tryDifferentFilters": "Essayez de modifier vos filtres ou changez d'onglet.",
+    "filters": {
+      "title": "Filtres",
+      "searchPlaceholder": "Symptôme, motif...",
+      "patient": "Patient",
+      "clinical": "Clinique",
+      "allGenders": "Tous genres",
+      "male": "Homme",
+      "female": "Femme",
+      "allAges": "Tout âge",
+      "allHistory": "Antécédents (Tous)",
+      "allDiagnostics": "Diagnostics (Tous)",
+      "reset": "Réinitialiser les filtres"
+    },
+    "tabs": {
+      "all": "Tous",
+      "pending": "En attente",
+      "validated": "Validés",
+      "rejected": "Rejetés"
+    },
+    "empty": {
+      "title": "Aucun dossier trouvé",
+      "description": "Essayez de modifier vos filtres ou changez d'onglet."
+    }
+  },
+  "caseDetail": {
+    "back": "Retour",
+    "createdOn": "Créé le :",
+    "rejectionReason": "Motif du rejet",
+    "civilStatus": "État Civil",
+    "condition": "Condition",
+    "medicalService": "Service",
+    "between": "entre",
+    "reject_modal_description": "Veuillez indiquer la raison pour laquelle ce cas clinique n'est pas validé.",
+    "status": {
+      "PENDING": "En attente",
+      "VALIDATED": "Validé",
+      "REJECTED": "Rejeté",
+      "DELETED": "Supprimé"
+    },
+    "actions": {
+      "validate": "Valider",
+      "reject": "Rejeter",
+      "restore": "Restaurer",
+      "invalidate": "Invalider",
+      "cancel": "Annuler",
+      "confirm": "Confirmer"
+    },
+    "sections": {
+      "administrative": "Infos Administratives",
+      "vitals": "Paramètres Vitaux",
+      "consultation": "Consultation",
+      "aiAnalysis": "Analyse IA",
+      "history": "Antécédents & Historique",
+      "exams": "Examens & Diagnostic",
+      "treatment": "Traitement & Conclusion"
+    },
+    "labels": {
+      "reason": "Motif Principal",
+      "noNotes": "Aucune note enregistrée.",
+      "symptoms": "Symptômes Détectés",
+      "suspected": "Maladies Suspectées",
+      "notes": "Notes Cliniques",
+      "chronic": "Maladies Chroniques",
+      "allergies": "Allergies",
+      "surgeries": "Chirurgies",
+      "family": "Familiaux",
+      "finalDiag": "Diagnostic Final Retenu",
+      "frequency": "Fréquence",
+      "duration": "Durée",  
+      "triggerActivity": "Déclencheur",
+      "noSuggestions": "Aucune suggestion.",
+      "none": "Néant",
+      "otherHistory": "Autres Antécédents",
+      "examen": "Examen & Diagnostique Physique",
+      "pendingConclusion": "En attente de conclusion",
+      "complementaryExams": "Examens Complémentaires",
+      
+      "prescribedTreatments": "Traitements Prescrits",
+     "lifestyleAndAdvice": "Mode de vie / Conseils",
+      "pendingExams": "Aucun examen en attente",
+      "physicalDiagnosis": "Diagnostic Physique",
+      "finalDiagnosis": "Diagnostic Final"
+    },
+    "modals": {
+      "rejectTitle": "Motif du rejet",
+      "rejectDesc": "Veuillez indiquer la raison pour laquelle ce cas clinique n'est pas validé.",
+      "placeholder": "Ex: Données incohérentes..."
+    },
+    "vitals": {
+      "bloodPressure": "Tension",
+      "heartRate": "Fréquence",
+      "pulse": "Pouls",
+      "temperature": "Temp.",
+      "weight": "Poids",
+      "height": "Taille"
+  },  "notifications": {
+      "validated": "Le dossier a été validé avec succès.",
+      "rejected": "Le dossier a été rejeté.",
+      "restored": "Le dossier a été restauré.",
+      "invalidated": "Le dossier a été invalidé."
+    }
   }
 }

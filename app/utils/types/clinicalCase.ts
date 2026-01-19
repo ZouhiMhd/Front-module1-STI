@@ -117,6 +117,6 @@ export type ClinicalCase = {
   exams: ExamResult[];
   diagnostic: Diagnostic;
   treatments: Treatment[];
-  status: 'PENDING' | 'VALIDATED' | 'REJECTED';
+  status: 'PENDING' | 'VALIDATED' | 'DELETED';
   rejectionReason?: string;
 };

@@ -6,7 +6,6 @@ import { classifyClinicalCase } from '@/lib/classification/classifier';
 import { apiFetch } from '@/lib/apiClient';
 import { mapBackendCaseToFrontend } from '@/lib/mappers';
 
-// Type étendu
 export type ClassifiedClinicalCase = ClinicalCase & {
   detectedSpecialty: string;
 };
@@ -16,8 +15,10 @@ interface CaseDetailContextType {
   isLoading: boolean;
   error: string | null;
   fetchCaseDetail: (id: string) => Promise<void>;
-  validateActiveCase: (specialty?: string) => Promise<void>;
-  rejectActiveCase: (reason?: string) => Promise<void>;
+  // Mise à jour des signatures
+  validateActiveCase: (specialty: string, diagnosticFinal: string) => Promise<void>;
+  rejectActiveCase: (reason: string) => Promise<void>;
+  restoreActiveCase: () => Promise<void>;
   clearActiveCase: () => void;
 }
 
@@ -25,79 +26,101 @@ const CaseDetailContext = createContext<CaseDetailContextType | undefined>(undef
 
 export function CaseDetailProvider({ children }: { children: ReactNode }) {
   const [activeCase, setActiveCase] = useState<ClassifiedClinicalCase | null>(null);
-  const [isLoading, setIsLoading] = useState(false); // False par défaut, activé à la demande
+  const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  // 1. Récupérer les détails complets depuis le serveur
+  // 1. Fetch Detail
   const fetchCaseDetail = useCallback(async (id: string) => {
     setIsLoading(true);
     setError(null);
-    
     try {
-      console.log(`📡 [CaseDetailContext] Fetching full details for ${id}...`);
-      const rawData = await apiFetch<any>(`/cases/${id}`);
-      
+      const rawData = await apiFetch<any>(`/cases/${id}/`);
       const frontendCase = mapBackendCaseToFrontend(rawData);
-      const classifiedCase = {
+      setActiveCase({
         ...frontendCase,
         detectedSpecialty: classifyClinicalCase(frontendCase)
-      };
-
-      setActiveCase(classifiedCase);
+      });
     } catch (err) {
-      console.error(`❌ [CaseDetailContext] Error fetching case ${id}:`, err);
-      setError("Impossible de charger le dossier. Veuillez vérifier votre connexion.");
+      console.error(`Erreur fetch case ${id}:`, err);
+      setError("Impossible de charger le dossier.");
       setActiveCase(null);
     } finally {
       setIsLoading(false);
     }
   }, []);
 
-  // 2. Valider le cas actif
-  const validateActiveCase = useCallback(async (specialty?: string) => {
+  // 2. Validation (PATCH confirm-specialty)
+  const validateActiveCase = useCallback(async (specialty: string, diagnosticFinal: string) => {
     if (!activeCase) return;
-    
     const previousStatus = activeCase.status;
+    
     // Optimistic Update
     setActiveCase(prev => prev ? { ...prev, status: 'VALIDATED' } : null);
 
     try {
-      await apiFetch(`/cases/${activeCase.id}/confirm_speciality/`, {
-        method: 'POST',
-        body: { specialty: specialty || 'general_medicine' }
-      });
-    } catch (err) {
-      console.error("Erreur validation:", err);
-      // Rollback
-      setActiveCase(prev => prev ? { ...prev, status: previousStatus } : null);
-      throw err;
-    }
-  }, [activeCase]);
-
-  // 3. Rejeter le cas actif
-  const rejectActiveCase = useCallback(async (reason?: string) => {
-    if (!activeCase) return;
-
-    const previousStatus = activeCase.status;
-    // Optimistic Update
-    setActiveCase(prev => prev ? { ...prev, status: 'REJECTED', rejectionReason: reason } : null);
-
-    try {
-      await apiFetch(`/cases/${activeCase.id}`, {
-        method: 'DELETE',
+      await apiFetch(`/cases/${activeCase.id}/confirm-specialty/`, {
+        method: 'PATCH',
         body: { 
-            rejection_reason: reason || "Rejeté par le spécialiste" 
+          specialite_confirmee: specialty,
+          diagnostic_final: diagnosticFinal
         }
       });
     } catch (err) {
-      console.error("Erreur rejet:", err);
-      // Rollback
+      console.error("Erreur validation:", err);
       setActiveCase(prev => prev ? { ...prev, status: previousStatus } : null);
       throw err;
     }
   }, [activeCase]);
 
-  // 4. Nettoyer (quand on quitte la page)
+  // 3. Rejet (DELETE avec Body)
+  const rejectActiveCase = useCallback(async (reason: string) => {
+    if (!activeCase) return;
+    const previousStatus = activeCase.status;
+
+    setActiveCase(prev => prev ? { ...prev, status: 'DELETED', rejectionReason: reason } : null);
+
+    try {
+      await apiFetch(`/cases/${activeCase.id}/`, {
+        method: 'DELETE',
+        body: { rejection_reason: reason }
+      });
+    } catch (err) {
+      console.error("Erreur rejet:", err);
+      setActiveCase(prev => prev ? { ...prev, status: previousStatus } : null);
+      throw err;
+    }
+  }, [activeCase]);
+
+  // 4. Restauration (PATCH restore)
+  const restoreActiveCase = useCallback(async () => {
+    if (!activeCase) return;
+    const previousStatus = activeCase.status;
+
+    setActiveCase(prev => prev ? { ...prev, status: 'PENDING', rejectionReason: undefined } : null);
+
+    try {
+      // On envoie les champs clés pour la restauration
+      // Note: Si le backend a besoin de tout l'objet, on pourrait devoir mapper l'inverse (Frontend -> Backend)
+      // Ici, on envoie les champs qui changent d'état.
+      await apiFetch(`/cases/${activeCase.id}/restore/`, {
+        method: 'PATCH',
+        body: {
+          status: "PENDING",
+          rejection_reason: null,
+          specialite_confirmee: null,
+          // On renvoie les infos de base pour s'assurer que l'objet reste cohérent côté backend
+          diagnostic_final: activeCase.diagnostic.diagnostic_final,
+          age_tranche: activeCase.patient.yearRange,
+          sexe: activeCase.patient.gender
+        }
+      });
+    } catch (err) {
+      console.error("Erreur restauration:", err);
+      setActiveCase(prev => prev ? { ...prev, status: previousStatus } : null);
+      throw err;
+    }
+  }, [activeCase]);
+
   const clearActiveCase = useCallback(() => {
     setActiveCase(null);
     setError(null);
@@ -106,13 +129,8 @@ export function CaseDetailProvider({ children }: { children: ReactNode }) {
 
   return (
     <CaseDetailContext.Provider value={{ 
-      activeCase, 
-      isLoading, 
-      error, 
-      fetchCaseDetail, 
-      validateActiveCase, 
-      rejectActiveCase,
-      clearActiveCase
+      activeCase, isLoading, error, fetchCaseDetail, 
+      validateActiveCase, rejectActiveCase, restoreActiveCase, clearActiveCase
     }}>
       {children}
     </CaseDetailContext.Provider>
@@ -121,8 +139,6 @@ export function CaseDetailProvider({ children }: { children: ReactNode }) {
 
 export function useCaseDetail() {
   const context = useContext(CaseDetailContext);
-  if (context === undefined) {
-    throw new Error('useCaseDetail must be used within a CaseDetailProvider');
-  }
+  if (context === undefined) throw new Error('useCaseDetail must be used within a CaseDetailProvider');
   return context;
 }

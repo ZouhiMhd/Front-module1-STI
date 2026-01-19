@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { use } from 'react';
 import { Thermometer, Activity, Scale, Heart, Ruler, Gauge } from 'lucide-react';
 import { VitalParameters } from '@/app/utils/types/clinicalCase';
+import { useTranslations } from 'next-intl';
 
 // Interface pour les props de VitalItem
 interface VitalItemProps {
@@ -40,11 +41,13 @@ const VitalItem = ({ icon: Icon, label, value, unit, colorClass }: VitalItemProp
 );
 
 export const VitalsCard = ({ vitals }: { vitals: VitalParameters }) => {
+  const t = useTranslations('caseDetail');
+  const tCommon = useTranslations('dashboard');
   return (
     <div className="bg-white p-5 rounded-2xl shadow-sm border border-slate-100 h-full">
       <h3 className="text-sm font-bold text-slate-800 mb-4 flex items-center gap-2">
         <Activity className="text-blue-500" size={18} /> 
-        Paramètres Vitaux
+        {t('sections.vitals')}
       </h3>
       
       {/* 
@@ -56,42 +59,42 @@ export const VitalsCard = ({ vitals }: { vitals: VitalParameters }) => {
       <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-3">
         <VitalItem 
           icon={Gauge} 
-          label="Tension" 
+          label={t('vitals.bloodPressure')} 
           value={vitals.bloodPressure} 
           unit="mmHg" 
           colorClass="bg-blue-50/50" 
         />
         <VitalItem 
           icon={Heart} 
-          label="Fréquence" 
+          label={t('vitals.heartRate')} 
           value={vitals.heartRate} 
           unit="bpm" 
           colorClass="bg-red-50/50" 
         />
         <VitalItem 
           icon={Activity} 
-          label="Pouls" 
+          label={t('vitals.pulse')} 
           value={vitals.pulse} 
           unit="bpm" 
           colorClass="bg-rose-50/50" 
         />
         <VitalItem 
           icon={Thermometer} 
-          label="Temp." 
+          label={t('vitals.temperature')} 
           value={vitals.temperature} 
           unit="°C" 
           colorClass="bg-orange-50/50" 
         />
         <VitalItem 
           icon={Scale} 
-          label="Poids" 
+          label={t('vitals.weight')} 
           value={vitals.weight} 
           unit="kg" 
           colorClass="bg-emerald-50/50" 
         />
         <VitalItem 
           icon={Ruler} 
-          label="Taille" 
+          label={t('vitals.height')} 
           value={vitals.height} 
           unit="cm" 
           colorClass="bg-indigo-50/50" 
