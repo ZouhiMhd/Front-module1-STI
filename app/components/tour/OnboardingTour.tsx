@@ -34,50 +34,7 @@ const OnboardingTour: React.FC = () => {
 
   const steps = useMemo(() => {
     let allSteps: Step[] = [];
-    const commonSteps: Step[] = [
-      {
-        target: '#main-navbar',
-        content: 'This is the main navigation bar. You can access different sections of the application from here.',
-        placement: 'bottom',
-        disableBeacon: true,
-      },
-      {
-        target: '#tour-logo-link',
-        content: 'Click here to go back to the main page.',
-        placement: 'bottom',
-        disableBeacon: true,
-      },
-      {
-        target: '#tour-dashboard-link',
-        content: 'Access the dashboard to see the clinical cases.',
-        placement: 'bottom',
-        disableBeacon: true,
-      },
-      {
-        target: '#tour-statistics-link',
-        content: 'View statistics about the clinical cases.',
-        placement: 'bottom',
-        disableBeacon: true,
-      },
-      {
-        target: '#tour-start-button',
-        content: 'You can restart this tour anytime by clicking here.',
-        placement: 'bottom',
-        disableBeacon: true,
-      },
-      {
-        target: '#tour-language-switcher-button',
-        content: 'Change the display language of the application.',
-        placement: 'bottom',
-        disableBeacon: true,
-      },
-      {
-        target: '#tour-profile-dropdown-button',
-        content: 'Access your profile and logout from here.',
-        placement: 'bottom',
-        disableBeacon: true,
-      },
-    ];
+    const commonSteps: Step[] = [];
 
     let pageSpecificSteps: Step[] = [];
 
@@ -237,6 +194,48 @@ const OnboardingTour: React.FC = () => {
     } else if (pathname.startsWith('/dashboard')) {
       pageSpecificSteps = [
         {
+            target: '#main-navbar',
+            content: 'This is the main navigation bar. You can access different sections of the application from here.',
+            placement: 'bottom',
+            disableBeacon: true,
+        },
+        {
+            target: '#tour-logo-link',
+            content: 'Click here to go back to the main page.',
+            placement: 'bottom',
+            disableBeacon: true,
+        },
+        {
+            target: '#tour-dashboard-link',
+            content: 'Access the dashboard to see the clinical cases.',
+            placement: 'bottom',
+            disableBeacon: true,
+        },
+        {
+            target: '#tour-statistics-link',
+            content: 'View statistics about the clinical cases.',
+            placement: 'bottom',
+            disableBeacon: true,
+        },
+        {
+            target: '#tour-start-button',
+            content: 'You can restart this tour anytime by clicking here.',
+            placement: 'bottom',
+            disableBeacon: true,
+        },
+        {
+            target: '#tour-language-switcher-button',
+            content: 'Change the display language of the application.',
+            placement: 'bottom',
+            disableBeacon: true,
+        },
+        {
+            target: '#tour-profile-dropdown-button',
+            content: 'Access your profile and logout from here.',
+            placement: 'bottom',
+            disableBeacon: true,
+        },
+        {
           target: '#patient-identity-card',
           content: 'This card displays the patient\'s identity information.',
           placement: 'right',
@@ -365,6 +364,11 @@ const OnboardingTour: React.FC = () => {
       showSkipButton
       callback={handleJoyrideCallback}
       debug={true}
+      disableScrolling={true}
+      spotlightClicks={true}
+      floaterProps={{
+        offset: 0,
+      }}
       styles={{
         options: {
           zIndex: 10000,
