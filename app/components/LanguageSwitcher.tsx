@@ -39,6 +39,7 @@ export function LanguageSwitcher() {
   return (
     <div className="relative" ref={dropdownRef}>
       <button
+        id="tour-language-switcher-button"
         onClick={() => setIsOpen(!isOpen)}
         className="flex items-center gap-2 rounded-lg px-3 py-2 text-sm font-medium text-text-secondary transition-colors hover:bg-background-light hover:text-text-primary"
         aria-label="Select language"

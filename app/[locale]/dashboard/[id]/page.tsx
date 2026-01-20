@@ -139,7 +139,7 @@ export default function CaseDetailPage() {
       {/* --- HEADER --- */}
       <header className="bg-white border-b border-gray-200 sticky top-0 z-30 shadow-sm px-4 md:px-8 py-4 flex flex-col md:flex-row justify-between items-center gap-4">
          <div className="flex items-center gap-4 w-full md:w-auto">
-            <button onClick={() => router.back()} title={t('back')} className="p-2 hover:bg-slate-100 rounded-full transition-colors"><ArrowLeft size={24}/></button>
+            <button id="tour-back-button" onClick={() => router.back()} title={t('back')} className="p-2 hover:bg-slate-100 rounded-full transition-colors"><ArrowLeft size={24}/></button>
             <div>
                 <div className="flex items-center gap-2">
                     <h1 className="text-xl font-bold text-slate-800">{tCommon('case')} #{caseData.id.slice(0, 8)}...</h1>
@@ -159,14 +159,16 @@ export default function CaseDetailPage() {
          <div className="flex gap-3 w-full md:w-auto justify-end">
             {caseData.status === 'PENDING' && (
                 <>
-                   <button 
+                   <button
+                        id="tour-reject-button"
                         onClick={() => setRejectModalOpen(true)} 
                         disabled={isActionLoading} 
                         className="flex items-center gap-2 px-4 py-2 border border-red-200 text-red-600 rounded-lg hover:bg-red-50 transition-colors text-sm font-medium disabled:opacity-50"
                     >
                         <XCircle size={18}/>{t('actions.reject')}
                     </button>
-                    <button 
+                    <button
+                        id="tour-validate-button"
                         onClick={() => setValidateModalOpen(true)} 
                         disabled={isActionLoading} 
                         className="flex items-center gap-2 px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors text-sm font-medium shadow-sm disabled:opacity-50"
@@ -177,12 +179,12 @@ export default function CaseDetailPage() {
                 </>
             )}
             {caseData.status === 'VALIDATED' && (
-                 <button onClick={() => setRejectModalOpen(true)} disabled={isActionLoading} className="flex items-center gap-2 px-4 py-2 border border-red-200 text-red-600 bg-white rounded-lg hover:bg-red-50 transition-colors text-sm font-medium">
+                 <button id="tour-invalidate-button" onClick={() => setRejectModalOpen(true)} disabled={isActionLoading} className="flex items-center gap-2 px-4 py-2 border border-red-200 text-red-600 bg-white rounded-lg hover:bg-red-50 transition-colors text-sm font-medium">
                     <Trash2 size={16}/> {t('actions.reject')}
                  </button>
             )}
             {caseData.status === 'DELETED' && (
-                <button onClick={() => setRestoreModalOpen(true)} disabled={isActionLoading} className="flex items-center gap-2 px-4 py-2 bg-amber-100 text-amber-700 rounded-lg hover:bg-amber-200 transition-colors text-sm font-medium">
+                <button id="tour-restore-button" onClick={() => setRestoreModalOpen(true)} disabled={isActionLoading} className="flex items-center gap-2 px-4 py-2 bg-amber-100 text-amber-700 rounded-lg hover:bg-amber-200 transition-colors text-sm font-medium">
                     <RotateCcw size={16}/> {t('actions.restore')}
                  </button>
             )}
@@ -214,12 +216,12 @@ export default function CaseDetailPage() {
         <section className="grid grid-cols-1 lg:grid-cols-3 gap-6">
             <div className="lg:col-span-1 h-full flex flex-col gap-4">
                 <PatientIdentityCard patient={caseData.patient} />
-                <div className="bg-white p-4 rounded-xl border border-slate-100 shadow-sm text-sm">
+                <div id="tour-admin-section" className="bg-white p-4 rounded-xl border border-slate-100 shadow-sm text-sm">
                     <h4 className="font-bold text-slate-700 mb-2 flex items-center gap-2"><User size={14}/> {t('sections.administrative')}</h4>
                     <div className="space-y-2 text-slate-600">
-                        <div className="flex justify-between"><span>{t('civilStatus')}:</span> <span className="font-medium">{caseData.patient.civilStatus}</span></div>
-                        <div className="flex justify-between"><span>{t('condition')}:</span> <span className="font-medium text-amber-600">{caseData.patient.condition}</span></div>
-                        <div className="flex justify-between"><span>{t('medicalService')}:</span> <span className="font-medium">{caseData.patient.medicalService}</span></div>
+                        <div id="tour-civil-status" className="flex justify-between"><span>{t('civilStatus')}:</span> <span className="font-medium">{caseData.patient.civilStatus}</span></div>
+                        <div id="tour-condition" className="flex justify-between"><span>{t('condition')}:</span> <span className="font-medium text-amber-600">{caseData.patient.condition}</span></div>
+                        <div id="tour-medical-service" className="flex justify-between"><span>{t('medicalService')}:</span> <span className="font-medium">{caseData.patient.medicalService}</span></div>
                     </div>
                 </div>
             </div>
@@ -227,11 +229,11 @@ export default function CaseDetailPage() {
         </section>
 
         <section className="grid grid-cols-1 xl:grid-cols-3 gap-6">
-            <div className="xl:col-span-2 bg-white p-6 rounded-2xl shadow-sm border border-slate-100">
+            <div id="tour-consultation-section" className="xl:col-span-2 bg-white p-6 rounded-2xl shadow-sm border border-slate-100">
                 <h3 className="text-lg font-bold mb-4 flex items-center gap-2 text-slate-800">
                     <FileText className="text-blue-500" size={20}/> {t('sections.consultation')}
                 </h3>
-                <div className="bg-slate-50 p-4 rounded-xl border border-slate-200 mb-6">
+                <div id="tour-consultation-reason" className="bg-slate-50 p-4 rounded-xl border border-slate-200 mb-6">
                     <span className="text-xs font-bold text-slate-400 uppercase">{t('labels.reason')}</span>
                     <p className="text-lg font-medium text-slate-800 mt-1">{caseData.consultation.reason}</p>
                     <div className="mt-2 flex gap-2">
@@ -240,7 +242,7 @@ export default function CaseDetailPage() {
                     </div>
                 </div>
                 <h4 className="text-sm font-bold text-slate-700 mb-3 flex items-center gap-2"><FileSignature size={16}/> {t('labels.notes')}</h4>
-                <div className="space-y-3">
+                <div id="tour-consultation-notes" className="space-y-3">
                     {caseData.consultation.notes.length > 0 ? caseData.consultation.notes.map((note, i) => (
                         <div key={i} className="p-4 border-l-4 border-blue-400 bg-blue-50/30 rounded-r-lg">
                             <p className="text-sm text-slate-700 whitespace-pre-wrap">{note.contenu}</p>
@@ -253,11 +255,11 @@ export default function CaseDetailPage() {
                 </div>
             </div>
 
-            <div className="bg-gradient-to-b from-indigo-50 to-white p-6 rounded-2xl shadow-sm border border-indigo-100">
+            <div id="tour-ai-analysis-section" className="bg-gradient-to-b from-indigo-50 to-white p-6 rounded-2xl shadow-sm border border-indigo-100">
                 <h3 className="text-lg font-bold mb-4 flex items-center gap-2 text-indigo-900">
                     <BrainCircuit className="text-indigo-600" size={20}/> {t('sections.aiAnalysis')}
                 </h3>
-                <div className="mb-6">
+                <div id="tour-ai-symptoms" className="mb-6">
                     <h4 className="text-xs font-bold text-indigo-400 uppercase mb-2">{t('labels.symptoms')}</h4>
                     <div className="space-y-2">
                         {caseData.consultation.symptoms.map((sym, i) => (
@@ -275,7 +277,7 @@ export default function CaseDetailPage() {
                         ))}
                     </div>
                 </div>
-                <div>
+                <div id="tour-ai-suspected-diseases">
                     <h4 className="text-xs font-bold text-indigo-400 uppercase mb-2">{t('labels.suspected')}</h4>
                     <div className="space-y-2">
                         {caseData.consultation.suspectedDisease.map((dis, i) => (
@@ -290,12 +292,12 @@ export default function CaseDetailPage() {
             </div>
         </section>
 
-        <section className="bg-white p-6 rounded-2xl shadow-sm border border-slate-100">
+        <section id="tour-history-section" className="bg-white p-6 rounded-2xl shadow-sm border border-slate-100">
             <h3 className="text-lg font-bold mb-6 flex items-center gap-2 text-slate-800">
                 <History className="text-teal-500" size={20}/> {t('sections.history')}
             </h3>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                <div className="p-4 bg-red-50/50 rounded-xl border border-red-100">
+                <div id="tour-history-allergies" className="p-4 bg-red-50/50 rounded-xl border border-red-100">
                     <h4 className="font-bold text-red-800 text-sm mb-3 flex items-center gap-2"><AlertCircle size={14}/> {t('labels.allergies')}</h4>
                     <div className="flex flex-wrap gap-2">
                         {caseData.history.allergies.length > 0 ? caseData.history.allergies.map((a, i) => (
@@ -303,7 +305,7 @@ export default function CaseDetailPage() {
                         )) : <span className="text-sm text-slate-400 italic">{t('labels.none')}</span>}
                     </div>
                 </div>
-                <div className="p-4 bg-blue-50/50 rounded-xl border border-blue-100">
+                <div id="tour-history-chronic" className="p-4 bg-blue-50/50 rounded-xl border border-blue-100">
                     <h4 className="font-bold text-blue-800 text-sm mb-3 flex items-center gap-2"><Activity size={14}/> {t('labels.chronic')}</h4>
                     <ul className="space-y-2">
                         {caseData.history.chronicDiseases.length > 0 ? caseData.history.chronicDiseases.map((d, i) => (
@@ -314,7 +316,7 @@ export default function CaseDetailPage() {
                         )) : <span className="text-sm text-slate-400 italic">{t('labels.none')}</span>}
                     </ul>
                 </div>
-                <div className="p-4 bg-slate-50 rounded-xl border border-slate-200">
+                <div id="tour-history-other" className="p-4 bg-slate-50 rounded-xl border border-slate-200">
                     <h4 className="font-bold text-slate-700 text-sm mb-3 flex items-center gap-2"><ClipboardList size={14}/> {t('labels.otherHistory')}</h4>
                     <div className="space-y-3 text-sm">
                         <div>
@@ -339,11 +341,11 @@ export default function CaseDetailPage() {
         </section>
 
         <section className="grid grid-cols-1 xl:grid-cols-2 gap-6">
-            <div className="bg-white p-6 rounded-2xl shadow-sm border border-slate-100">
+            <div id="tour-exams-section" className="bg-white p-6 rounded-2xl shadow-sm border border-slate-100">
                 <h3 className="text-lg font-bold mb-6 flex items-center gap-2 text-slate-800">
                     <Microscope className="text-purple-500" size={20}/> {t('labels.examen')}
                 </h3>
-                <div className="mb-6">
+                <div id="tour-physical-diagnosis" className="mb-6">
                     <h4 className="text-xs font-bold text-slate-400 uppercase mb-2">{t('labels.physicalDiagnosis')}</h4>
                     {caseData.consultation.physicalDiagnosis.length > 0 ? (
                         <div className="space-y-2">
@@ -356,7 +358,7 @@ export default function CaseDetailPage() {
                         </div>
                     ) : <p className="text-sm text-slate-400 italic">{t('labels.none')}</p>}
                 </div>
-                <div>
+                <div id="tour-complementary-exams">
                     <h4 className="text-xs font-bold text-slate-400 uppercase mb-2">{t('labels.complementaryExams')}</h4>
                     {caseData.exams.length > 0 ? (
                         <div className="space-y-2">
@@ -371,12 +373,12 @@ export default function CaseDetailPage() {
                 </div>
             </div>
 
-            <div className="bg-white p-6 rounded-2xl shadow-sm border border-slate-100 flex flex-col">
+            <div id="tour-treatment-section" className="bg-white p-6 rounded-2xl shadow-sm border border-slate-100 flex flex-col">
                 <h3 className="text-lg font-bold mb-6 flex items-center gap-2 text-slate-800">
                     <Pill className="text-emerald-500" size={20}/> {t('sections.treatment')}
                 </h3>
                 <div className="flex-1 space-y-6">
-                    <div>
+                    <div id="tour-prescribed-treatments">
                         <h4 className="text-xs font-bold text-slate-400 uppercase mb-2">{t('labels.prescribedTreatments')}</h4>
                         {caseData.treatments.length > 0 ? (
                             <ul className="space-y-2">
@@ -394,7 +396,7 @@ export default function CaseDetailPage() {
                             </ul>
                         ) : <p className="text-sm text-slate-400 italic">{t('labels.none')}</p>}
                     </div>
-                    <div className="mt-auto p-4 bg-slate-800 text-white rounded-xl shadow-lg">
+                    <div id="tour-final-diagnosis" className="mt-auto p-4 bg-slate-800 text-white rounded-xl shadow-lg">
                         <h4 className="text-xs font-bold text-slate-400 uppercase mb-1">{t('labels.finalDiagnosis')}</h4>
                         <p className="text-xl font-bold">{caseData.diagnostic.diagnostic_final || t('labels.pendingConclusion')}</p>
                         {caseData.diagnostic.lifeMode && (

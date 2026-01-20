@@ -7,6 +7,7 @@ import { useTranslations } from "next-intl";
 import { useRouter, usePathname } from "next/navigation"; // 1. Import de usePathname
 import { LanguageSwitcher } from "./LanguageSwitcher";
 import { useAuth } from "./auth/AuthContext";
+import { useOnboardingTour } from "./tour/OnboardingTourContext";
 
 interface NavbarProps {
   expertImage?: string;
@@ -20,6 +21,7 @@ export function Navbar({ expertImage }: NavbarProps) {
   const router = useRouter();
   const pathname = usePathname(); // 2. Récupération du chemin actuel
   const { doctor, isAuthenticated, isLoading, logout } = useAuth();
+  const { startTour, resetTour } = useOnboardingTour();
 
   // Close dropdown when clicking outside
   useEffect(() => {
@@ -45,6 +47,11 @@ export function Navbar({ expertImage }: NavbarProps) {
     router.push("/login");
   };
 
+  const handleStartTour = () => {
+    resetTour();
+    startTour();
+  }
+
   const getInitials = (name: string) => {
     return name
       .split(" ")
@@ -61,11 +68,11 @@ export function Navbar({ expertImage }: NavbarProps) {
   };
 
   return (
-    <nav className="fixed mb-5 top-0 left-0 right-0 z-50 bg-white dark:bg-slate-900/70 backdrop-blur-sm border-b border-slate-200 dark:border-slate-800">
+    <nav id="main-navbar" className="fixed mb-5 top-0 left-0 right-0 z-50 bg-white dark:bg-slate-900/70 backdrop-blur-sm border-b border-slate-200 dark:border-slate-800">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="flex h-16 items-center justify-between">
           {/* Logo */}
-          <Link href="/" className="flex items-center gap-2">
+          <Link id="tour-logo-link" href="/" className="flex items-center gap-2">
             <div className="flex h-10 w-10 items-center justify-center rounded-lg text-primary">
               <svg
                 className="w-full h-full"
@@ -92,6 +99,7 @@ export function Navbar({ expertImage }: NavbarProps) {
               const isActive = isActiveLink(item.href);
               return (
                 <Link
+                  id={item.href === "/dashboard" ? "tour-dashboard-link" : "tour-statistics-link"}
                   key={item.name}
                   href={item.href}
                   className={`rounded-lg px-4 py-2 text-sm font-medium transition-colors ${
@@ -105,6 +113,17 @@ export function Navbar({ expertImage }: NavbarProps) {
               );
             })}
 
+            {isAuthenticated && (
+              <button
+                id="tour-start-button"
+                onClick={handleStartTour}
+                className="ml-4 p-2 rounded-full text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800"
+                aria-label="Start onboarding tour"
+              >
+                <span className="material-symbols-outlined">help</span>
+              </button>
+            )}
+
             {/* Language Switcher */}
             <LanguageSwitcher />
 
@@ -115,6 +134,7 @@ export function Navbar({ expertImage }: NavbarProps) {
               /* Authenticated: Profile Dropdown */
               <div className="relative ml-4" ref={dropdownRef}>
                 <button
+                  id="tour-profile-dropdown-button"
                   type="button"
                   onClick={() => setIsProfileDropdownOpen(!isProfileDropdownOpen)}
                   className="flex items-center gap-3 rounded-full border border-slate-200 dark:border-slate-700 py-1 pl-1 pr-4 transition-colors hover:bg-slate-50 dark:hover:bg-slate-800"
@@ -157,6 +177,7 @@ export function Navbar({ expertImage }: NavbarProps) {
                     </div>
                     <div className="py-1">
                       <Link
+                        id="tour-profile-link"
                         href="/profile"
                         onClick={() => setIsProfileDropdownOpen(false)}
                         className={`flex items-center gap-3 px-4 py-2 text-sm transition-colors ${
@@ -183,6 +204,7 @@ export function Navbar({ expertImage }: NavbarProps) {
                     </div>
                     <div className="border-t border-slate-100 dark:border-slate-700 py-1">
                       <button
+                        id="tour-logout-button"
                         onClick={handleLogout}
                         className="flex w-full items-center gap-3 px-4 py-2 text-sm text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors"
                       >

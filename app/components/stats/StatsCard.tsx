@@ -10,7 +10,7 @@ interface StatCardProps {
 }
 
 export const StatCard = ({ title, value, subtitle, icon: Icon, colorClass }: StatCardProps) => (
-  <div className="bg-white p-6 rounded-xl border border-gray-100 shadow-sm flex items-start justify-between">
+  <div id="stats-card" className="bg-white p-6 rounded-xl border border-gray-100 shadow-sm flex items-start justify-between">
     <div>
       <p className="text-xs font-bold text-gray-400 uppercase tracking-wider mb-1">{title}</p>
       <h3 className="text-2xl font-bold text-slate-800">{value}</h3>

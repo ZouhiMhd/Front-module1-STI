@@ -1,6 +1,6 @@
 import fs from 'fs';
 import path from 'path';
-import { ClinicalCase, PatientInfo, VitalParameters, Consultation, MedicalHistory, ExamResult, Treatment } from '../app/utils/types/clinicalCase';
+import { ClinicalCase, PatientInfo, VitalParameters, Consultation, MedicalHistory, ExamResult, Treatment, Diagnostic } from '../app/utils/types/clinicalCase';
 import { KNOWLEDGE_BASE, SpecialtyKey } from '../lib/classification/knowledgeBase';
 
 const OUTPUT_PATH = path.join(process.cwd(), 'public', 'data.json');
@@ -24,18 +24,47 @@ const generateVitals = (): VitalParameters => ({
     heartRate: getRandomInt(60, 100)
 });
 
-const generatePatient = (isChild: boolean): PatientInfo => {
+    const generatePatient = (isChild: boolean): PatientInfo => {
     const currentYear = new Date().getFullYear();
     const birthYear = isChild ? currentYear - getRandomInt(1, 14) : currentYear - getRandomInt(20, 80);
 
+    const getYearRange = (year: number): string => {
+        const age = currentYear - year;
+        if (age <= 1) return "0-1";
+        if (age <= 5) return "1-5";
+        if (age <= 10) return "5-10";
+        if (age <= 15) return "10-15";
+        if (age <= 20) return "15-20";
+        if (age <= 30) return "20-30";
+        if (age <= 40) return "30-40";
+        if (age <= 50) return "40-50";
+        if (age <= 60) return "50-60";
+        if (age <= 70) return "60-70";
+        if (age <= 80) return "70-80";
+        return "80+";
+    };
+
     return {
         id: `PAT-${getRandomInt(10000, 99999)}`,
-        birthDate: randomDate(birthYear, birthYear + 1),
+        yearRange: getYearRange(birthYear),
         civilStatus: isChild ? "Célibataire" : getRandomItem(["Marié", "Célibataire", "Divorcé", "Veuf"]),
         job: isChild ? "Écolier" : getRandomItem(["Enseignant", "Ingénieur", "Ouvrier", "Retraité", "Sans emploi", "Commerçant"]),
         bloodGroup: getRandomItem(["A+", "A-", "B+", "B-", "O+", "O-", "AB+"]),
         gender: getRandomItem(["M", "F"]),
-        vitals: generateVitals()
+        vitals: generateVitals(),
+        condition : getRandomItem(["Stable", "Critique", "En Observation"]),
+        medicalService: getRandomItem(["Urgence", "Consultation", "Hospitalisation"]),
+    };
+};
+
+const generateDiagnostic = (specialty: SpecialtyKey): Diagnostic => {
+    return {
+        physicalFindings: ["Bon état général", "Conscient et orienté"],
+        exams: ["Bilan sanguin standard", "Radio pulmonaire"],
+        finalTreatments: ["Repos", "Hydratation", "Traitement symptomatique"],
+        lifeMode: "Mode de vie sain recommandé",
+        diagnostic_final: `Diagnostic final pour la ${specialty} (mock)`,
+        specialty: specialty,
     };
 };
 
@@ -68,13 +97,15 @@ const generateCaseForSpecialty = (index: number, specialty: SpecialtyKey): Clini
         ],
         physicalDiagnosis: [
             {
-                name: "Examen clinique",
                 result: `Signes évocateurs de ${disease}`,
-                observation: "État général conservé"
+                date: randomDate(2023, 2024),
             }
-        ]
+        ],
+        type: getRandomItem(["Consultation initiale", "Suivi", "Urgence"]),
+        notes: [{contenu: "Examen initial", date: randomDate(2023,2024), type: "Observation"}],
+        status: getRandomItem(["En attente", "Confirmé", "Résolu"]),
+        suspectedDisease : [{name: disease, observation: "Présence de symptômes", dateDebut:randomDate(2023,2024), dateFin:randomDate(2024,2025), treatments:treatmentMain}],
     };
-
     const history: MedicalHistory = {
         familyHistory: Math.random() > 0.5 ? ["Père: Hypertension"] : [],
         allergies: Math.random() > 0.8 ? [{ name: "Pénicilline", manifestation: "Urticaire", trigger: "Prise médicament" }] : [],
@@ -119,7 +150,8 @@ const generateCaseForSpecialty = (index: number, specialty: SpecialtyKey): Clini
         consultation,
         history,
         exams,
-        treatments
+        treatments,
+        diagnostic: generateDiagnostic(specialty),
     };
 };
 

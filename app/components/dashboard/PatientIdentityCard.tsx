@@ -9,7 +9,7 @@ export const PatientIdentityCard = ({ patient }: { patient: PatientInfo }) => {
   const t = useTranslations('caseDetail');
   const tCommon = useTranslations('dashboard');
   return (
-    <div className="bg-gradient-to-br from-slate-800 to-slate-900 text-white p-5 rounded-2xl shadow-lg flex flex-col justify-between h-full relative overflow-hidden">
+    <div id="patient-identity-card" className="bg-gradient-to-br from-slate-800 to-slate-900 text-white p-5 rounded-2xl shadow-lg flex flex-col justify-between h-full relative overflow-hidden">
       {/* Decorative background circle */}
       <div className="absolute -right-6 -top-6 w-32 h-32 bg-white/5 rounded-full blur-2xl"></div>
       

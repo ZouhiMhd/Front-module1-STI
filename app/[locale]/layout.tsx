@@ -10,6 +10,8 @@ import { AuthProvider } from "@/app/components/auth/AuthContext";
 import {Navbar} from "@/app/components/Navbar";
 import {Footer} from "@/app/components/landing/Footer";
 import { ClinicalCaseProvider } from '@/app/components/auth/ClinicalCaseContext'; // Ajuste le chemin
+import OnboardingTour from '@/app/components/tour/OnboardingTour';
+import { OnboardingTourProvider } from '@/app/components/tour/OnboardingTourContext';
 
 const inter = Inter({
   variable: "--font-inter",
@@ -56,11 +58,14 @@ export default async function LocaleLayout({
           <ThemeProvider>
             <AuthProvider>
               <ClinicalCaseProvider>
-              <Navbar />
-              <main className="mt-16">
-                {children}
-              </main>
-              <Footer />
+                <OnboardingTourProvider>
+                  <OnboardingTour />
+                  <Navbar />
+                  <main className="mt-16">
+                    {children}
+                  </main>
+                  <Footer />
+                </OnboardingTourProvider>
               </ClinicalCaseProvider>
             </AuthProvider>
           </ThemeProvider>

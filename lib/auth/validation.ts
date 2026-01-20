@@ -39,7 +39,7 @@ export const registerSchema = z.object({
     .max(100, 'Last name must be less than 100 characters')
     .regex(/^[a-zA-ZÀ-ÿ\s'-]+$/, 'Last name contains invalid characters'),
   specialty: z.enum(medicalSpecialties, {
-    errorMap: () => ({ message: 'Please select a valid medical specialty' }),
+    message: 'Please select a valid medical specialty'
   }),
 });
 

@@ -44,7 +44,7 @@ export const VitalsCard = ({ vitals }: { vitals: VitalParameters }) => {
   const t = useTranslations('caseDetail');
   const tCommon = useTranslations('dashboard');
   return (
-    <div className="bg-white p-5 rounded-2xl shadow-sm border border-slate-100 h-full">
+    <div id="vitals-card" className="bg-white p-5 rounded-2xl shadow-sm border border-slate-100 h-full">
       <h3 className="text-sm font-bold text-slate-800 mb-4 flex items-center gap-2">
         <Activity className="text-blue-500" size={18} /> 
         {t('sections.vitals')}

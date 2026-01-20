@@ -13,20 +13,6 @@ const normalizeText = (text: string): string => {
 };
 
 /**
- * Calcule l'âge du patient.
- */
-const calculateAge = (birthDate: string): number => {
-  const birth = new Date(birthDate);
-  const now = new Date();
-  let age = now.getFullYear() - birth.getFullYear();
-  const m = now.getMonth() - birth.getMonth();
-  if (m < 0 || (m === 0 && now.getDate() < birth.getDate())) {
-    age--;
-  }
-  return age;
-};
-
-/**
  * Compte les occurrences de mots-clés dans un corpus de texte.
  * C'est notre variable X dans le modèle linéaire.
  */
@@ -39,6 +25,7 @@ const countOccurrences = (corpus: string, keywords: string[]): number => {
   });
   return count;
 };
+
 
 /**
  * Classificateur basé sur un Modèle Linéaire.
@@ -60,15 +47,16 @@ export const classifyClinicalCase = (clinicalCase: ClinicalCase): SpecialtyKey =
     ...clinicalCase.consultation.symptoms.map(s => `${s.location} ${s.triggerActivity}`),
     ...clinicalCase.history.chronicDiseases.map(d => d.name),
     ...clinicalCase.history.surgeries.map(s => s.name),
-    ...clinicalCase.consultation.physicalDiagnosis.map(p => `${p.name} ${p.result} ${p.observation}`),
+    ...clinicalCase.consultation.physicalDiagnosis.map(p => `${p.result} (Date: ${p.date})`),
     ...clinicalCase.exams.map(e => `${e.examName} ${e.result} ${e.anatomy}`),
     ...clinicalCase.treatments.map(t => t.drugName)
   ].join(" "));
 
   // 3. Calcul du Biais (Bias B)
   // Le biais permet d'ajuster le score de base selon des critères démographiques (ex: âge)
-  const age = calculateAge(clinicalCase.patient.birthDate);
-  const pediatricBias = age < 15 ? 30.0 : 0.0; // Biais fort vers la pédiatrie si enfant
+  const yearRangeParts = clinicalCase.patient.yearRange.split('-');
+  const upperBound = parseInt(yearRangeParts[1], 10);
+  const pediatricBias = upperBound < 15 ? 30.0 : 0.0; // Biais fort vers la pédiatrie si enfant
 
   // 4. Calcul des scores pour chaque spécialité (Régression/Score Linéaire)
   let bestSpecialty: SpecialtyKey = 'general_medicine';

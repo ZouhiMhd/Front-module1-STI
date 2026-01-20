@@ -4,7 +4,7 @@ import { TopItem } from '@/services/statsService';
 
 export const TopPathologiesList = ({ items }: { items: TopItem[] }) => {
   return (
-    <div className="bg-white p-6 rounded-xl border border-gray-100 shadow-sm h-full">
+    <div id="top-pathologist-list" className="bg-white p-6 rounded-xl border border-gray-100 shadow-sm h-full">
       <h3 className="text-lg font-bold text-slate-800 mb-6 flex items-center gap-2">
         <Activity size={20} className="text-emerald-500"/> Motifs Fréquents
       </h3>

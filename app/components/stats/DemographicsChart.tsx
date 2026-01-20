@@ -7,7 +7,7 @@ export const DemographicsChart = ({ data }: { data: DemographicStats }) => {
   const malePercent = total ? Math.round((data.maleCount / total) * 100) : 0;
 
   return (
-    <div className="bg-white p-6 rounded-xl border border-gray-100 shadow-sm h-full">
+    <div id="demographics-chart" className="bg-white p-6 rounded-xl border border-gray-100 shadow-sm h-full">
       <h3 className="text-lg font-bold text-slate-800 mb-6 flex items-center gap-2">
         <Users size={20} className="text-blue-500"/> Démographie
       </h3>
