@@ -107,7 +107,7 @@ export default function RegisterPage() {
             </div>
 
             {/* Social Login */}
-            <div className="grid grid-cols-2 gap-4">
+            {/* <div className="grid grid-cols-2 gap-4">
               <button className="flex items-center justify-center gap-3 h-12 px-4 rounded-lg border border-[#dbe1e6] dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors">
                 <Image
                   alt="Google"
@@ -132,16 +132,16 @@ export default function RegisterPage() {
                   LinkedIn
                 </span>
               </button>
-            </div>
+            </div> */}
 
             {/* Divider */}
-            <div className="relative flex items-center py-2">
+            {/* <div className="relative flex items-center py-2">
               <div className="flex-grow border-t border-[#dbe1e6] dark:border-gray-700"></div>
               <span className="flex-shrink-0 mx-4 text-xs font-medium text-[#617989] dark:text-gray-500 uppercase tracking-wider">
                 {t("divider")}
               </span>
               <div className="flex-grow border-t border-[#dbe1e6] dark:border-gray-700"></div>
-            </div>
+            </div> */}
 
             {/* Form */}
             <form className="flex flex-col gap-5" onSubmit={handleSubmit}>

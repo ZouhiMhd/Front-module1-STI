@@ -97,19 +97,19 @@ export default function PatientsStatsPage() {
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 h-auto lg:h-96">
         
         {/* Colonne Gauche : Démographie */}
-        <div className="lg:col-span-1 h-full">
+        <div className="lg:col-span-1 h-full w-full">
             <DemographicsChart data={demographics} />
         </div>
 
         {/* Colonne Droite : Pathologies Fréquentes */}
-        <div className="lg:col-span-2 h-full">
+        {/* <div className="lg:col-span-2 h-full">
             <TopPathologiesList items={topPathologies} />
-        </div>
+        </div> */}
 
-      </div>
+      
 
       {/* 3. Tableau récapitulatif rapide */}
-      <div className="mt-8 bg-white p-6 rounded-xl border border-gray-100 shadow-sm">
+      <div className="bg-white p-6 rounded-xl lg:col-span-2 h-full border border-gray-100 shadow-sm">
          <div className="flex justify-between items-center mb-4">
             <h3 className="font-bold text-slate-800">Derniers cas soumis</h3>
             <span className="text-xs text-slate-400">5 plus récents</span>
@@ -156,6 +156,7 @@ export default function PatientsStatsPage() {
                 </tbody>
             </table>
          </div>
+      </div>
       </div>
 
     </div>
